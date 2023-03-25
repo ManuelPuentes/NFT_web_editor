@@ -30,27 +30,32 @@ const directory_tree_mapping = (
         });
 
     } else {
-        
-        const file_name = (path.basename(input_path)).replace('.svg', '');
-        
-        const assets_application_relative_path = ".\\imgs"+ input_path.split("assets")[1];
 
-        let result = new Object();
-        result[`${file_name}`] = assets_application_relative_path;
-        return result;
+        const file_name = (path.basename(input_path)).replace('.svg', '');
+
+        const assets_web_app_relative_path = ".\\imgs" + input_path.split("assets")[1];
+
+        return {
+            file_name: `${file_name}`,
+            file_asset_path: assets_web_app_relative_path
+        }
     }
 
 }
 
 
+const web_app_assets_path = path.join(process.env.WEB_APP_PATH, "static", "imgs", "assets")
 
-directory_tree_mapping(process.env.ASSETS_FOLDER_PATH);
+
+
+directory_tree_mapping(web_app_assets_path);
 
 
 
 fs.writeFileSync(
-    path.join(__dirname, "..", "data.json"),
-    JSON.stringify(TRAITS_DIRECTORY_TREE)
+    path.join(process.env.WEB_APP_PATH, "src", "data", "assets_data.json"),
+    JSON.stringify(TRAITS_DIRECTORY_TREE),
+    { recursive: true }
 );
 
 

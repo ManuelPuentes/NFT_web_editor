@@ -1,8 +1,14 @@
+<script>
+  export let file_data = {
+    file_name: "file_name.svg",
+    file_asset_path: "notfound.svg"
+  };
 
+</script>
 
 
 <div class="file_name">
-  &nbsp &nbsp file_name.svg
+  &nbsp &nbsp {file_data.file_name}
 </div>
 
 
@@ -16,7 +22,7 @@
     margin: 20px 0;
 
     padding: 5px;
-    text-align: center;
+    /* text-align: center; */
 
     /* color: black; */
 
@@ -26,5 +32,13 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+  }
+
+
+  .file_name:hover{
+
+    background-color: #3F4E4F;
+    /* background-color: #3F4E4F; */
+
   }
 </style>

@@ -1,6 +1,11 @@
 <script>
   import { linear } from "svelte/easing";
   import { slide } from "svelte/transition";
+  
+  
+  export let folder_name = "folder_name";
+  export let folder_files = [];
+  
   let flag = false;
 
   const handleClick = () => {
@@ -24,7 +29,7 @@
       &nbsp
       <i class="fa-solid fa-folder" />
     {/if}
-    &nbsp folder_name
+    &nbsp {folder_name}
   </div>
 
   {#if folder_expanded}
