@@ -1,6 +1,7 @@
 <script>
-  import { selected_item, selected_items } from "../stores/web_app_state";
+  import { selected_items, selected_element } from "../stores/web_app_state";
 
+  let file = null;
   let active_item = false;
 
   export let file_data = {
@@ -22,13 +23,20 @@
       };
 
       selected_items.set(new_state);
-
+      selected_element.set({
+        element_ref: file,
+        element_details: file_data,
+      });
     } else {
       const new_state = $selected_items;
       delete $selected_items[`${file_data.directory_name}`];
       selected_items.set(new_state);
-    }
 
+      selected_element.set({
+        element_ref: null,
+        element_details: null,
+      });
+    }
   };
 
   // const handleClick = (e) => {
@@ -42,12 +50,14 @@
   //     });
   //   }
   // };
-
-
-
 </script>
 
-<div class="file_name" on:click={handleClick} on:keyup={handleClick}>
+<div
+  class="file_name"
+  on:click={handleClick}
+  on:keyup={handleClick}
+  bind:this={file}
+>
   {#if active_item}
     <span class="fa-regular fa-eye" />
   {/if}
@@ -58,20 +68,9 @@
 <style>
   .file_name {
     width: 100%;
-    /* height: 50px; */
-
     list-style: none;
-
     margin: 20px 0;
-
     padding: 5px;
-    /* text-align: center; */
-
-    /* color: black; */
-
-    /* border: 1px solid black; */
-    /* background-color: yellow; */
-
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;

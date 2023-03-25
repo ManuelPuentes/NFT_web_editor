@@ -4,10 +4,15 @@ import { writable } from 'svelte/store';
 export const selected_items = writable({})
 
 
-export const selected_item = writable({
-    file_name: null,
-    file_asset_path: null,
-    directory_name: null
+export const canvas_details = writable({
+    canvas_bounding_rect : {},
+    canvas_def_color: "#dbdbdb"
+});
+
+
+export const selected_element = writable({
+    element_ref: null,
+    element_details: null
 })
 
 

@@ -2,6 +2,7 @@
   import Toolbar from "../components/Toolbar.svelte";
   import Sidebar from "../components/Sidebar.svelte";
   import Workspace from "../components/Workspace.svelte";
+  import DetailsBar from "../components/DetailsBar.svelte";
 </script>
 
 <div class="app">
@@ -9,6 +10,8 @@
   <div class="container">
     <Sidebar />
     <Workspace />
+
+    <DetailsBar/>
   </div>
 
 </div>
