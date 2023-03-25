@@ -3,14 +3,17 @@
   import Sidebar from "../components/Sidebar.svelte";
   import Workspace from "../components/Workspace.svelte";
   import DetailsBar from "../components/DetailsBar.svelte";
+
 </script>
 
 <div class="app">
-  <!-- <Toolbar /> -->
+  <Toolbar>
+
+  </Toolbar>
+
   <div class="container">
     <Sidebar />
     <Workspace />
-
     <DetailsBar/>
   </div>
 
@@ -36,10 +39,9 @@
   }
 
   .container {
-    /* height: 85%; */
     /* flex-grow: 5; */
     width: 100%;
-    height: 100%;
+    height: 90%;
     display: flex;
     background-color: white;
   }

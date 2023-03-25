@@ -77,7 +77,7 @@
   }
 
   .file_name:hover {
-    background-color: #3f4e4f;
+    background-color: var(--secondary_hover_color);
     /* background-color: #3F4E4F; */
   }
 </style>

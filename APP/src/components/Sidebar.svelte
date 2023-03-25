@@ -28,11 +28,12 @@
     min-width: 0;
     padding: 10px 0px;
     overflow-y: auto;
-    background-color: #282a36;
+    background-color: var(--background_color);
 
     display: flex;
     flex-flow: column nowrap;
     align-items: center;
 
+    border-right: 1px solid var(--border_color);
   }
 </style>

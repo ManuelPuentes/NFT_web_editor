@@ -1,16 +1,53 @@
-<div class="tool-bar">tool-bar</div>
+<script>
+  import Tool from "../components/Tool.svelte";
+
+
+</script>
+<div class="tool-bar">
+  <Tool></Tool>
+  <Tool></Tool>
+  <Tool></Tool>
+  <Tool></Tool>
+  <Tool></Tool>
+  <Tool></Tool>
+  <Tool></Tool>
+  <Tool></Tool>
+  <Tool></Tool>
+  <Tool></Tool>
+  <Tool></Tool>
+  <Tool></Tool>
+  <Tool></Tool>
+  <Tool></Tool>
+  <Tool></Tool>
+  <Tool></Tool>
+  <Tool></Tool>
+  <Tool></Tool>
+  <Tool></Tool>
+  <Tool></Tool>
+  <Tool></Tool>
+  <Tool></Tool>
+  <Tool></Tool>
+  <Tool></Tool>
+  <Tool></Tool>
+  <Tool></Tool>
+  <Tool></Tool>
+  <Tool></Tool>
+</div>
 
 <style>
   .tool-bar {
-    padding: 20px;
+
+    height: 10%;
+    width: 100%;
+    
+    background-color: var(--background_color);
     
 
+    display: flex;
 
+    flex-flow: column wrap;
+    overflow-x: auto;
+    overflow-y: hidden;
 
-    flex-grow: 1;
-
-    width: 100%;
-    height: 15%;
-    background-color: #323A4E;
   }
 </style>

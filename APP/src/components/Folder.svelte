@@ -44,7 +44,7 @@
     min-width: 0;
     margin: 5px;
     padding: 15px;
-    background-color: #282a36;
+    background-color: var(--background_color);
     -webkit-user-select: none; /* Safari */
     -ms-user-select: none; /* IE 10 and IE 11 */
     user-select: none; /* Standard syntax */
@@ -53,7 +53,7 @@
   }
 
   .folder:hover {
-    background-color: #44475a;
+    background-color: var(--primary_hover_color);
   }
 
   .folder_name {

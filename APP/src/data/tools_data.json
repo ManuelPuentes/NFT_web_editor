@@ -1,0 +1,17 @@
+[
+  {
+    "tool_name": "canvas_details",
+    "value": "Canvas Details",
+    "tool_icon": "fa-solid fa-file"
+  },
+  {
+    "tool_name": "guide_lines",
+    "value": "Guide Lines",
+    "tool_icon": "fa-solid fa-border-all"
+  },
+  {
+    "tool_name": "drawing_order",
+    "value": "Drawing Order",
+    "tool_icon": "fa-solid fa-list"
+  }
+]
