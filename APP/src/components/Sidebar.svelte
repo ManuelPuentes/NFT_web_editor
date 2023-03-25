@@ -2,93 +2,11 @@
   import Folder from "./Folder.svelte";
   import File from "./File.svelte";
   import { Assets } from "../stores/assets";
-  import { each } from "svelte/internal";
 
   const folders = Object.keys($Assets);
 </script>
 
 <div class="side-bar">
-  <!-- <Folder />
-  <Folder>
-    <File />
-    <File />
-    <File />
-    <File />
-  </Folder>  <Folder>
-    <File />
-    <File />
-    <File />
-    <File />
-  </Folder>  <Folder>
-    <File />
-    <File />
-    <File />
-    <File />
-  </Folder>  <Folder>
-    <File />
-    <File />
-    <File />
-    <File />
-  </Folder>
-  <Folder>
-    <File />
-    <File />
-    <File />
-    <File />
-  </Folder>  <Folder>
-    <File />
-    <File />
-    <File />
-    <File />
-  </Folder>  <Folder>
-    <File />
-    <File />
-    <File />
-    <File />
-  </Folder>  <Folder>
-    <File />
-    <File />
-    <File />
-    <File />
-  </Folder>
-
-  <Folder>
-    <File />
-    <File />
-    <File />
-    <File />
-  </Folder>
-  <Folder>
-    <File />
-    <File />
-    <File />
-    <File />
-  </Folder>
-  <Folder>
-    <File />
-    <File />
-    <File />
-    <File />
-  </Folder>
-  <Folder>
-    <File />
-    <File />
-    <File />
-    <File />
-  </Folder>
-  <Folder>
-    <File />
-    <File />
-    <File />
-    <File />
-  </Folder>
-  <Folder>
-    <File />
-    <File />
-    <File />
-    <File />
-  </Folder> -->
-
   {#each folders as folder_name, folder_id}
     <Folder {folder_name}>
       {#each $Assets[folder_name] as file_data, file_id}
@@ -115,5 +33,6 @@
     display: flex;
     flex-flow: column nowrap;
     align-items: center;
+
   }
 </style>

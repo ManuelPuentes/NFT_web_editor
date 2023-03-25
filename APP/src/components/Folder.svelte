@@ -1,16 +1,13 @@
 <script>
   import { linear } from "svelte/easing";
   import { slide } from "svelte/transition";
-  
-  
+
   export let folder_name = "folder_name";
-  export let folder_files = [];
-  
+
   let flag = false;
 
   const handleClick = () => {
     flag = !flag;
-    console.log("click");
   };
 
   let animation_options = { duration: 200, easing: linear };
@@ -35,9 +32,7 @@
   {#if folder_expanded}
     <div class="folder_content" transition:slide={animation_options}>
       <slot>
-
         <div class="empty_folder_msg">&nbsp &nbsp empty folder</div>
-
       </slot>
     </div>
   {/if}
@@ -84,6 +79,4 @@
     overflow: hidden;
     text-overflow: ellipsis;
   }
-
-
 </style>

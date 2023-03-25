@@ -16,5 +16,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
+
+    border-left: 1px solid lightslategray;
+
   }
 </style>

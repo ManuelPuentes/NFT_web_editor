@@ -33,11 +33,14 @@ const directory_tree_mapping = (
 
         const file_name = (path.basename(input_path)).replace('.svg', '');
 
-        const assets_web_app_relative_path = ".\\imgs" + input_path.split("assets")[1];
+        const directory_name  = path.basename(path.dirname(input_path))
+
+        const assets_web_app_relative_path = ".\\imgs" + "\\assets" + input_path.split("assets")[1];
 
         return {
             file_name: `${file_name}`,
-            file_asset_path: assets_web_app_relative_path
+            file_asset_path: assets_web_app_relative_path,
+            directory_name
         }
     }
 

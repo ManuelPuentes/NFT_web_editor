@@ -13,7 +13,12 @@
 
 </div>
 
-<svelte:body on:contextmenu|preventDefault={()=>{}} />
+<svelte:body 
+  on:contextmenu|preventDefault={()=>{}} 
+  on:resize|preventDefault={(console.log("resize"))}
+  
+/>
+
 
 
 
