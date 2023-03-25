@@ -45,9 +45,7 @@
     margin: 5px;
     padding: 15px;
     background-color: var(--background_color);
-    -webkit-user-select: none; /* Safari */
-    -ms-user-select: none; /* IE 10 and IE 11 */
-    user-select: none; /* Standard syntax */
+
     /* display: flex;
     flex-flow: column wrap; */
   }
