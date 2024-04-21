@@ -45,9 +45,6 @@
     margin: 5px;
     padding: 15px;
     background-color: var(--background_color);
-
-    /* display: flex;
-    flex-flow: column wrap; */
   }
 
   .folder:hover {
@@ -57,7 +54,6 @@
   .folder_name {
     width: 100%;
     min-width: 0;
-
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -65,11 +61,8 @@
 
   .folder_content {
     width: 100%;
-
     margin: 0 auto;
-
     padding: 5px;
-    /* background-color: green; */
   }
 
   .empty_folder_msg {

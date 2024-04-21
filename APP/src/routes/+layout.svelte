@@ -3,30 +3,19 @@
   import Sidebar from "../components/Sidebar.svelte";
   import Workspace from "../components/Workspace.svelte";
   import DetailsBar from "../components/DetailsBar.svelte";
-
 </script>
 
 <div class="app">
-  <Toolbar>
-
-  </Toolbar>
-
   <div class="container">
     <Sidebar />
     <Workspace />
-    <DetailsBar/>
   </div>
-
 </div>
 
-<svelte:body 
-  on:contextmenu|preventDefault={()=>{}} 
-  on:resize|preventDefault={(console.log("resize"))}
-  
+<svelte:body
+  on:contextmenu|preventDefault={() => {}}
+  on:resize|preventDefault={console.log("resize")}
 />
-
-
-
 
 <style>
   .app {
@@ -39,10 +28,12 @@
   }
 
   .container {
-    /* flex-grow: 5; */
     width: 100%;
-    height: 90%;
+    height: 100%;
     display: flex;
-    background-color: white;
+    background-color: var(--background_color);
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--border_color);
   }
 </style>

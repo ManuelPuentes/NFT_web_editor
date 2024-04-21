@@ -33,6 +33,8 @@
     min-width: 0;
     padding: 10px;
     overflow-y: auto;
+    height: 80%;
+
     /* overflow-x: hidden; */
     background-color: var(--background_color);
     border-left: 1px solid var(--border_color);
@@ -40,6 +42,9 @@
     display: flex;
     flex-flow: row wrap;
     align-items: center;
+
+    border: 1px solid var(--border_color);
+
 
   }
 
@@ -51,6 +56,7 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+
 
     
 

@@ -9,12 +9,11 @@
 <style>
   .workspace {
     width: 60%;
-    height: 100%;
-    /* padding: 10px; */
+    height: 80%;
     background-color: var(--background_color);
-
     display: flex;
     justify-content: center;
     align-items: center;
+    border: 1px solid var(--border_color);
   }
 </style>

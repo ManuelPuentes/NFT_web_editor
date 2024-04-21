@@ -7,8 +7,9 @@
   export let file_data = {
     file_name: "file_name.svg",
     file_asset_path: "notfound.svg",
-    directory_name: "directory_name",
   };
+
+  export let folder_name = 'folder';
 
   $: active_item = $selected_items[`${file_data.directory_name}`] == file_data;
 
@@ -37,6 +38,10 @@
         element_details: null,
       });
     }
+
+    console.log(folder_name);
+
+    console.log($selected_items);
   };
 
   // const handleClick = (e) => {
@@ -62,7 +67,7 @@
     <span class="fa-regular fa-eye" />
   {/if}
 
-  &nbsp &nbsp {file_data.file_name}
+  {file_data.file_name}
 </div>
 
 <style>

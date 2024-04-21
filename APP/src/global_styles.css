@@ -21,11 +21,12 @@ body {
   background-color: #12151C;
 }
 
-
-
-
-
-
+ul{
+  width: 100%;
+  font-size: 15px;
+  overflow-y: auto;
+  margin: 0;
+}
 
 
 *,

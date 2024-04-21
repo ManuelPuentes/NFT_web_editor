@@ -3,17 +3,24 @@
   import File from "./File.svelte";
   import { Assets } from "../stores/assets";
 
-  const folders = Object.keys($Assets);
+  import { draw_order } from "../stores/web_app_state";
+  import SortableList from "svelte-sortable-list";
+
+  let folders = Object.keys($Assets);
+  const sortList = (ev) => {
+    folders = ev.detail;
+    $draw_order = ev.detail;
+  };
 </script>
 
 <div class="side-bar">
-  {#each folders as folder_name, folder_id}
-    <Folder {folder_name}>
-      {#each $Assets[folder_name] as file_data, file_id}
-        <File {file_data} />
+  <SortableList list={folders} on:sort={sortList} let:item let:index>
+    <Folder folder_name={item}>
+      {#each $Assets[item] as file_data, file_id}
+        <File {file_data} folder_name = {item} />
       {/each}
     </Folder>
-  {/each}
+  </SortableList>
 </div>
 
 <style>
@@ -26,14 +33,11 @@
   .side-bar {
     width: 20%;
     min-width: 0;
-    padding: 10px 0px;
-    overflow-y: auto;
+    height: 80%;
     background-color: var(--background_color);
-
     display: flex;
     flex-flow: column nowrap;
     align-items: center;
-
-    border-right: 1px solid var(--border_color);
+    border: 1px solid var(--border_color);
   }
 </style>
