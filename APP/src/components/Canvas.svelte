@@ -1,50 +1,35 @@
 <script>
   import {
+    draw_order,
     selected_items,
     canvas_details,
-    selected_element,
   } from "../stores/web_app_state";
 
+  import { onMount } from "svelte";
   import Image from "./Image.svelte";
 
-  import { onMount } from "svelte";
-
-  let rendered_imgs = [];
-
-  let canvas = null;
+  const handleClick = (e) => {};
 
   onMount(() => {
     let canvas_store_state = $canvas_details;
     canvas_store_state["canvas_bounding_rect"] = canvas.getBoundingClientRect();
     canvas_details.set(canvas_store_state);
-
-    selected_items.subscribe((value) => {
-      rendered_imgs = Object.keys(value);
-    });
   });
 
-  const rightClick = (e) => {
-    console.log("click derecho en el componente canvas");
-  };
-
-  const handleClick = (e) => {
-    selected_element.set({
-      element_ref: canvas,
-      element_details: $canvas_details,
-    });
-  };
+  let canvas = null;
 </script>
 
 <div
   class="canvas"
-  on:keyup={handleClick}
-  on:contextmenu|preventDefault={rightClick}
-  on:click|preventDefault={handleClick}
+  id="canvas"
   bind:this={canvas}
-  style:background-color={$canvas_details.canvas_def_color}
+  on:click|preventDefault={handleClick}
+  on:keyup={handleClick}
 >
-  {#each rendered_imgs as img_data, img_id}
-    <Image src={$selected_items[img_data].file_asset_path} />
+  {#each $draw_order as element, img_id}
+    {#if $selected_items[element] != undefined}
+      <Image id={element} src={$selected_items[element].file_asset_path} />
+    {/if}
   {/each}
 </div>
 
@@ -52,7 +37,6 @@
   .canvas {
     width: 80%;
     height: 80%;
-    overflow: hidden;
-
+    background-color: #dbdbdb;
   }
 </style>

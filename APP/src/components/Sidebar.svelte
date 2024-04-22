@@ -2,6 +2,7 @@
   import Folder from "./Folder.svelte";
   import File from "./File.svelte";
   import { Assets } from "../stores/assets";
+  import { onMount } from "svelte";
 
   import { draw_order } from "../stores/web_app_state";
   import SortableList from "svelte-sortable-list";
@@ -17,7 +18,7 @@
   <SortableList list={folders} on:sort={sortList} let:item let:index>
     <Folder folder_name={item}>
       {#each $Assets[item] as file_data, file_id}
-        <File {file_data} folder_name = {item} />
+        <File {file_data} folder_name={item} />
       {/each}
     </Folder>
   </SortableList>

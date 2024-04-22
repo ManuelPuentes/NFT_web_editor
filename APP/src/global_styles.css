@@ -23,7 +23,7 @@ body {
 
 ul{
   width: 100%;
-  font-size: 15px;
+  /* font-size: 15px; */
   overflow-y: auto;
   margin: 0;
 }

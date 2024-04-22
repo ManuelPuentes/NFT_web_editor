@@ -1,0 +1,785 @@
+{
+    "aditionals": [
+        {
+            "file_name": "angel",
+            "file_asset_path": "imgs\\assets\\aditionals\\angel.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "baronesa",
+            "file_asset_path": "imgs\\assets\\aditionals\\baronesa.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "catrin",
+            "file_asset_path": "imgs\\assets\\aditionals\\catrin.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "felinojr",
+            "file_asset_path": "imgs\\assets\\aditionals\\felinojr.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "flameboy",
+            "file_asset_path": "imgs\\assets\\aditionals\\flameboy.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "generic",
+            "file_asset_path": "imgs\\assets\\aditionals\\generic.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "juventud",
+            "file_asset_path": "imgs\\assets\\aditionals\\juventud.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "konnan",
+            "file_asset_path": "imgs\\assets\\aditionals\\konnan.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "laredokid",
+            "file_asset_path": "imgs\\assets\\aditionals\\laredokid.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "psychoclown",
+            "file_asset_path": "imgs\\assets\\aditionals\\psychoclown.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "psychosis",
+            "file_asset_path": "imgs\\assets\\aditionals\\psychosis.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "psychosis2",
+            "file_asset_path": "imgs\\assets\\aditionals\\psychosis2.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "rush",
+            "file_asset_path": "imgs\\assets\\aditionals\\rush.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "shuriken",
+            "file_asset_path": "imgs\\assets\\aditionals\\shuriken.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "superastro",
+            "file_asset_path": "imgs\\assets\\aditionals\\superastro.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "ultimodragon",
+            "file_asset_path": "imgs\\assets\\aditionals\\ultimodragon.svg",
+            "styles": ""
+        }
+    ],
+    "backgrounds": [
+        {
+            "file_name": "background-0",
+            "file_asset_path": "imgs\\assets\\backgrounds\\background-0.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "background-1",
+            "file_asset_path": "imgs\\assets\\backgrounds\\background-1.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "background-10",
+            "file_asset_path": "imgs\\assets\\backgrounds\\background-10.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "background-11",
+            "file_asset_path": "imgs\\assets\\backgrounds\\background-11.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "background-12",
+            "file_asset_path": "imgs\\assets\\backgrounds\\background-12.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "background-13",
+            "file_asset_path": "imgs\\assets\\backgrounds\\background-13.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "background-14",
+            "file_asset_path": "imgs\\assets\\backgrounds\\background-14.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "background-15",
+            "file_asset_path": "imgs\\assets\\backgrounds\\background-15.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "background-16",
+            "file_asset_path": "imgs\\assets\\backgrounds\\background-16.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "background-17",
+            "file_asset_path": "imgs\\assets\\backgrounds\\background-17.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "background-18",
+            "file_asset_path": "imgs\\assets\\backgrounds\\background-18.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "background-19",
+            "file_asset_path": "imgs\\assets\\backgrounds\\background-19.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "background-2",
+            "file_asset_path": "imgs\\assets\\backgrounds\\background-2.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "background-20",
+            "file_asset_path": "imgs\\assets\\backgrounds\\background-20.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "background-21",
+            "file_asset_path": "imgs\\assets\\backgrounds\\background-21.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "background-22",
+            "file_asset_path": "imgs\\assets\\backgrounds\\background-22.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "background-3",
+            "file_asset_path": "imgs\\assets\\backgrounds\\background-3.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "background-4",
+            "file_asset_path": "imgs\\assets\\backgrounds\\background-4.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "background-5",
+            "file_asset_path": "imgs\\assets\\backgrounds\\background-5.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "background-6",
+            "file_asset_path": "imgs\\assets\\backgrounds\\background-6.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "background-7",
+            "file_asset_path": "imgs\\assets\\backgrounds\\background-7.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "background-8",
+            "file_asset_path": "imgs\\assets\\backgrounds\\background-8.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "background-9",
+            "file_asset_path": "imgs\\assets\\backgrounds\\background-9.svg",
+            "styles": ""
+        }
+    ],
+    "basemasks": [
+        {
+            "file_name": "aeroboy",
+            "file_asset_path": "imgs\\assets\\basemasks\\aeroboy.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "aeroboyclosed",
+            "file_asset_path": "imgs\\assets\\basemasks\\aeroboyclosed.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "angel",
+            "file_asset_path": "imgs\\assets\\basemasks\\angel.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "baronesa",
+            "file_asset_path": "imgs\\assets\\basemasks\\baronesa.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "catrin",
+            "file_asset_path": "imgs\\assets\\basemasks\\catrin.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "chicatormenta",
+            "file_asset_path": "imgs\\assets\\basemasks\\chicatormenta.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "dragonlee",
+            "file_asset_path": "imgs\\assets\\basemasks\\dragonlee.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "felinojr",
+            "file_asset_path": "imgs\\assets\\basemasks\\felinojr.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "flameboy",
+            "file_asset_path": "imgs\\assets\\basemasks\\flameboy.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "generic",
+            "file_asset_path": "imgs\\assets\\basemasks\\generic.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "generic2",
+            "file_asset_path": "imgs\\assets\\basemasks\\generic2.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "generic3",
+            "file_asset_path": "imgs\\assets\\basemasks\\generic3.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "juventud",
+            "file_asset_path": "imgs\\assets\\basemasks\\juventud.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "konnan",
+            "file_asset_path": "imgs\\assets\\basemasks\\konnan.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "laredokid--5",
+            "file_asset_path": "imgs\\assets\\basemasks\\laredokid--5.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "laredokid",
+            "file_asset_path": "imgs\\assets\\basemasks\\laredokid.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "luchamask",
+            "file_asset_path": "imgs\\assets\\basemasks\\luchamask.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "matematico",
+            "file_asset_path": "imgs\\assets\\basemasks\\matematico.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "psychoclown",
+            "file_asset_path": "imgs\\assets\\basemasks\\psychoclown.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "psychosis",
+            "file_asset_path": "imgs\\assets\\basemasks\\psychosis.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "psychosis2",
+            "file_asset_path": "imgs\\assets\\basemasks\\psychosis2.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "rush",
+            "file_asset_path": "imgs\\assets\\basemasks\\rush.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "shuriken",
+            "file_asset_path": "imgs\\assets\\basemasks\\shuriken.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "solar",
+            "file_asset_path": "imgs\\assets\\basemasks\\solar.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "superastro",
+            "file_asset_path": "imgs\\assets\\basemasks\\superastro.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "ultimodragon",
+            "file_asset_path": "imgs\\assets\\basemasks\\ultimodragon.svg",
+            "styles": ""
+        }
+    ],
+    "eyes": [
+        {
+            "file_name": "aaaa",
+            "file_asset_path": "imgs\\assets\\eyes\\aaaa.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "aeroboy",
+            "file_asset_path": "imgs\\assets\\eyes\\aeroboy.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "aeroboyclosed",
+            "file_asset_path": "imgs\\assets\\eyes\\aeroboyclosed.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "angel",
+            "file_asset_path": "imgs\\assets\\eyes\\angel.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "baronesa",
+            "file_asset_path": "imgs\\assets\\eyes\\baronesa.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "catrin",
+            "file_asset_path": "imgs\\assets\\eyes\\catrin.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "chicatormenta",
+            "file_asset_path": "imgs\\assets\\eyes\\chicatormenta.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "dragonlee",
+            "file_asset_path": "imgs\\assets\\eyes\\dragonlee.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "felinojr",
+            "file_asset_path": "imgs\\assets\\eyes\\felinojr.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "flameboy",
+            "file_asset_path": "imgs\\assets\\eyes\\flameboy.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "generic",
+            "file_asset_path": "imgs\\assets\\eyes\\generic.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "generic2",
+            "file_asset_path": "imgs\\assets\\eyes\\generic2.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "generic3",
+            "file_asset_path": "imgs\\assets\\eyes\\generic3.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "juventud",
+            "file_asset_path": "imgs\\assets\\eyes\\juventud.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "konnan",
+            "file_asset_path": "imgs\\assets\\eyes\\konnan.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "laredokid - Copy",
+            "file_asset_path": "imgs\\assets\\eyes\\laredokid - Copy.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "laredokid",
+            "file_asset_path": "imgs\\assets\\eyes\\laredokid.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "luchamask",
+            "file_asset_path": "imgs\\assets\\eyes\\luchamask.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "matematico",
+            "file_asset_path": "imgs\\assets\\eyes\\matematico.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "psychoclown",
+            "file_asset_path": "imgs\\assets\\eyes\\psychoclown.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "psychosis",
+            "file_asset_path": "imgs\\assets\\eyes\\psychosis.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "psychosis2",
+            "file_asset_path": "imgs\\assets\\eyes\\psychosis2.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "rush",
+            "file_asset_path": "imgs\\assets\\eyes\\rush.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "shuriken",
+            "file_asset_path": "imgs\\assets\\eyes\\shuriken.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "solar",
+            "file_asset_path": "imgs\\assets\\eyes\\solar.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "superastro",
+            "file_asset_path": "imgs\\assets\\eyes\\superastro.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "ultimodragon",
+            "file_asset_path": "imgs\\assets\\eyes\\ultimodragon.svg",
+            "styles": ""
+        }
+    ],
+    "faces": [
+        {
+            "file_name": "---",
+            "file_asset_path": "imgs\\assets\\faces\\---.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "aeroboy",
+            "file_asset_path": "imgs\\assets\\faces\\aeroboy.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "aeroboyclosed",
+            "file_asset_path": "imgs\\assets\\faces\\aeroboyclosed.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "angel",
+            "file_asset_path": "imgs\\assets\\faces\\angel.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "catrin",
+            "file_asset_path": "imgs\\assets\\faces\\catrin.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "chicatormenta",
+            "file_asset_path": "imgs\\assets\\faces\\chicatormenta.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "dragonlee",
+            "file_asset_path": "imgs\\assets\\faces\\dragonlee.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "felinojr",
+            "file_asset_path": "imgs\\assets\\faces\\felinojr.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "generic",
+            "file_asset_path": "imgs\\assets\\faces\\generic.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "generic3",
+            "file_asset_path": "imgs\\assets\\faces\\generic3.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "konnan",
+            "file_asset_path": "imgs\\assets\\faces\\konnan.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "laredokid",
+            "file_asset_path": "imgs\\assets\\faces\\laredokid.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "luchamask",
+            "file_asset_path": "imgs\\assets\\faces\\luchamask.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "matematico",
+            "file_asset_path": "imgs\\assets\\faces\\matematico.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "psychoclown",
+            "file_asset_path": "imgs\\assets\\faces\\psychoclown.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "psychosis",
+            "file_asset_path": "imgs\\assets\\faces\\psychosis.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "psychosis2",
+            "file_asset_path": "imgs\\assets\\faces\\psychosis2.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "rush",
+            "file_asset_path": "imgs\\assets\\faces\\rush.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "shuriken",
+            "file_asset_path": "imgs\\assets\\faces\\shuriken.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "solar",
+            "file_asset_path": "imgs\\assets\\faces\\solar.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "superastro",
+            "file_asset_path": "imgs\\assets\\faces\\superastro.svg",
+            "styles": ""
+        }
+    ],
+    "fighter": [
+        {
+            "file_name": "fighter_0",
+            "file_asset_path": "imgs\\assets\\fighter\\fighter_0.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "fighter_1",
+            "file_asset_path": "imgs\\assets\\fighter\\fighter_1.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "fighter_2",
+            "file_asset_path": "imgs\\assets\\fighter\\fighter_2.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "fighter_3",
+            "file_asset_path": "imgs\\assets\\fighter\\fighter_3.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "fighter_4",
+            "file_asset_path": "imgs\\assets\\fighter\\fighter_4.svg",
+            "styles": ""
+        }
+    ],
+    "helpers": [
+        {
+            "file_name": "ultimodragon",
+            "file_asset_path": "imgs\\assets\\helpers\\ultimodragon.svg",
+            "styles": ""
+        }
+    ],
+    "mouths": [
+        {
+            "file_name": "aeroboyclosed",
+            "file_asset_path": "imgs\\assets\\mouths\\aeroboyclosed.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "angel--",
+            "file_asset_path": "imgs\\assets\\mouths\\angel--.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "angel",
+            "file_asset_path": "imgs\\assets\\mouths\\angel.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "catrin",
+            "file_asset_path": "imgs\\assets\\mouths\\catrin.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "flameboy",
+            "file_asset_path": "imgs\\assets\\mouths\\flameboy.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "generic",
+            "file_asset_path": "imgs\\assets\\mouths\\generic.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "generic2",
+            "file_asset_path": "imgs\\assets\\mouths\\generic2.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "generic3",
+            "file_asset_path": "imgs\\assets\\mouths\\generic3.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "lllll",
+            "file_asset_path": "imgs\\assets\\mouths\\lllll.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "luchamask",
+            "file_asset_path": "imgs\\assets\\mouths\\luchamask.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "matematico",
+            "file_asset_path": "imgs\\assets\\mouths\\matematico.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "psychoclown",
+            "file_asset_path": "imgs\\assets\\mouths\\psychoclown.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "shuriken",
+            "file_asset_path": "imgs\\assets\\mouths\\shuriken.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "solar",
+            "file_asset_path": "imgs\\assets\\mouths\\solar.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "superastro",
+            "file_asset_path": "imgs\\assets\\mouths\\superastro.svg",
+            "styles": ""
+        }
+    ],
+    "signatures": [
+        {
+            "file_name": "aeroboy",
+            "file_asset_path": "imgs\\assets\\signatures\\aeroboy.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "baronesa",
+            "file_asset_path": "imgs\\assets\\signatures\\baronesa.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "chicatormenta",
+            "file_asset_path": "imgs\\assets\\signatures\\chicatormenta.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "dragonlee",
+            "file_asset_path": "imgs\\assets\\signatures\\dragonlee.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "felinojr",
+            "file_asset_path": "imgs\\assets\\signatures\\felinojr.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "juventud",
+            "file_asset_path": "imgs\\assets\\signatures\\juventud.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "konnan",
+            "file_asset_path": "imgs\\assets\\signatures\\konnan.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "laredokid",
+            "file_asset_path": "imgs\\assets\\signatures\\laredokid.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "matematico",
+            "file_asset_path": "imgs\\assets\\signatures\\matematico.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "oscar",
+            "file_asset_path": "imgs\\assets\\signatures\\oscar.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "piratamorgan",
+            "file_asset_path": "imgs\\assets\\signatures\\piratamorgan.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "psychoclown",
+            "file_asset_path": "imgs\\assets\\signatures\\psychoclown.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "psychosis",
+            "file_asset_path": "imgs\\assets\\signatures\\psychosis.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "rush",
+            "file_asset_path": "imgs\\assets\\signatures\\rush.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "solar",
+            "file_asset_path": "imgs\\assets\\signatures\\solar.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "superastro",
+            "file_asset_path": "imgs\\assets\\signatures\\superastro.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "taurus",
+            "file_asset_path": "imgs\\assets\\signatures\\taurus.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "ultimodragon",
+            "file_asset_path": "imgs\\assets\\signatures\\ultimodragon.svg",
+            "styles": ""
+        },
+        {
+            "file_name": "unknown",
+            "file_asset_path": "imgs\\assets\\signatures\\unknown.svg",
+            "styles": ""
+        }
+    ]
+}

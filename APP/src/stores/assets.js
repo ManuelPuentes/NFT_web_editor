@@ -1,7 +1,7 @@
-import { readable } from 'svelte/store';
+import { readable, writable } from 'svelte/store';
 import data from "../data/assets_data.json"
 
-export const Assets = readable(null, set => {
+export const Assets = writable(null, set => {
 	set(data);
 	return () => {};
 });

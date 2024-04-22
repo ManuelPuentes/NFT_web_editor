@@ -18,6 +18,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"svelte-moveable": "^0.45.0",
 		"svelte-sortable-list": "^1.1.0"
 	}
 }
