@@ -25,6 +25,9 @@ export const draw_order = writable(Object.keys(data))
 
 export const selected_items = writable({})
 
+/// Last image clicked on
+export const last_selected_item = writable({})
+
 
 
 

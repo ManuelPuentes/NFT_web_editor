@@ -1,7 +1,7 @@
 <script>
   import Moveable from "svelte-moveable";
 
-  import { selected_items, canvas_details } from "../stores/web_app_state";
+  import { selected_items, canvas_details, last_selected_item } from "../stores/web_app_state";
 
   export let src =
     "https://img.freepik.com/vector-gratis/linea-rizada-deja-garabatos_78370-2093.jpg?w=740&t=st=1713278805~exp=1713279405~hmac=b2dc6c847d50ec6cbe2e4ec4b6dbd806eb0e144f15fcaf8549f94d85a761619e";
@@ -27,12 +27,22 @@
   // if mouse is over the image, this variable will be true
   let is_mouse_over = false;
 
+  let selected;
+  last_selected_item.subscribe((v) => {
+		selected = v;
+	});
+
   const handleMouseOver = () => {
     is_mouse_over = true;
   };
 
   const handleMouseOut = () => {
     is_mouse_over = false;
+  };
+
+  const handleClick = () => {
+    console.log("clicked", id);
+      last_selected_item.set(id);
   };
 
   onMount(() => {
@@ -47,12 +57,14 @@
   bind:this={targetRef}
   alt=""
   style={$selected_items[id].styles}
+  on:click={handleClick}
+  on:keypress={handleClick}
   on:mouseover={handleMouseOver}
   on:focus={handleMouseOver}
   on:mouseout={handleMouseOut}
   on:blur={handleMouseOut}
 />
-{#if is_mouse_over || $selected_items[id].selected}  
+{#if is_mouse_over || selected === id} 
 <Moveable
   bind:this={moveableRef}
   target={targetRef}
