@@ -24,6 +24,17 @@
 
   import { onMount } from "svelte";
 
+  // if mouse is over the image, this variable will be true
+  let is_mouse_over = false;
+
+  const handleMouseOver = () => {
+    is_mouse_over = true;
+  };
+
+  const handleMouseOut = () => {
+    is_mouse_over = false;
+  };
+
   onMount(() => {
     const { left, top, right, bottom } = $canvas_details.canvas_bounding_rect;
     bounds = { left, top, right, bottom };
@@ -36,7 +47,12 @@
   bind:this={targetRef}
   alt=""
   style={$selected_items[id].styles}
+  on:mouseover={handleMouseOver}
+  on:focus={handleMouseOver}
+  on:mouseout={handleMouseOut}
+  on:blur={handleMouseOut}
 />
+{#if is_mouse_over || $selected_items[id].selected}  
 <Moveable
   bind:this={moveableRef}
   target={targetRef}
@@ -70,6 +86,7 @@
   }}
   on:bound={({ detail: e }) => {}}
 />
+{/if}
 
 <style>
   img {
