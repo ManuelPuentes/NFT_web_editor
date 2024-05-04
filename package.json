@@ -9,7 +9,8 @@
   ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "co": "sui-mono commit"
+    "co": "sui-mono commit",
+    "dev": "npm run dev --workspaces"
   },
   "keywords": [],
   "author": "",
