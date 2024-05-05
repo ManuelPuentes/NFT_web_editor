@@ -1,0 +1,43 @@
+
+services:
+  backend:
+    container_name: backend_development
+    image: backend_development
+    build:
+      context: ./
+      dockerfile: ./Dockerfile.dev
+    ports:
+      - '3000:3000'
+      # - '9229:9229' ## enable port when running application in debug mode
+    volumes:
+      - ./src:/app/src
+    command: ["npm", "run", "dev"]
+    env_file:
+      - ./.env
+    networks:
+      - web_editor
+  
+  redis:
+    container_name: web_editor_redis_development
+    image: redis:7.2.4-alpine
+    ports:
+      - '6379:6379'
+    volumes:
+      - web_editor_redis_development:/data
+    restart: always
+    healthcheck:
+      test: ['CMD', 'redis-cli', 'ping']
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    networks:
+      - web_editor
+
+volumes:
+  web_editor_redis_development:
+    name: web_editor_redis_development
+
+networks:
+  web_editor:
+    name: web_editor
+    driver: bridge
