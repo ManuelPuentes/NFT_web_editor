@@ -1,5 +1,6 @@
-import { File } from './File.interface';
+import { File } from './file.interface';
 export interface CreateProject {
     name: string;
-    assets: File
+    assets: File;
+    amount:number;
 }

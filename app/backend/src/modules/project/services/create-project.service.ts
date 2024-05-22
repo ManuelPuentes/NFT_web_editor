@@ -7,16 +7,22 @@ import { UnzipperService } from 'src/modules/unzipper/services/unzipper.service'
 import { CreateProject } from '../interfaces/create-project.interface';
 import { AssetDetails } from '../class/asset-details.class';
 import { InvalidProjecAssetsException } from '../exceptions/invalid-project-assets.exeption';
+import { Project } from '../entities/project.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 
 
 @Injectable()
 export class CreateProjectService {
 
     constructor(
+        @InjectRepository(Project)
+        private readonly projectRepository: Repository<Project>,
         private readonly unzipperService: UnzipperService,
+
     ) { }
 
-    async exec({ name, assets }: CreateProject): Promise<any> {
+    async exec({ name, assets, amount }: CreateProject): Promise<any> {
 
         const extractedAssetsDirectoryPath: string = `${assets.destination}/${assets.originalname.split('.zip')[0]}`;
 
@@ -35,6 +41,10 @@ export class CreateProjectService {
             output_path: assets.destination
         })
 
+        await this.projectRepository.save({
+            name,
+            amount
+        })
     }
 
     private createWebAppAssetsStore = (
@@ -44,12 +54,12 @@ export class CreateProjectService {
             project_name,
             output_path
         }:
-        {
-            input_path: string,
-            project_name: string,
-            output_path: string
+            {
+                input_path: string,
+                project_name: string,
+                output_path: string
 
-        }
+            }
     ): void => {
 
         const store: Record<string, Record<string, AssetDetails>> = {};
@@ -67,11 +77,11 @@ export class CreateProjectService {
             store
 
         }:
-        {
-            input_path: string,
-            project_name: string,
-            store: Record<string, Record<string, AssetDetails>>
-        }
+            {
+                input_path: string,
+                project_name: string,
+                store: Record<string, Record<string, AssetDetails>>
+            }
     ) {
 
         if (fs.lstatSync(input_path).isDirectory()) {
@@ -94,7 +104,6 @@ export class CreateProjectService {
             if (Object.keys(traits_list).length > 0) {
                 store[directory] = traits_list;
             }
-
 
 
         } else {

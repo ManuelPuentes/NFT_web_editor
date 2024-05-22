@@ -22,15 +22,11 @@ export class CreateProjectController {
         )
         assets: Express.Multer.File,
 
-        @Query(new ValidationPipe({
-            transform: true,
-            transformOptions: { enableImplicitConversion: true },
-            forbidNonWhitelisted: true
-        })) { name }: CreateProjectDto
+        @Query() { name, amount  }: CreateProjectDto
     ) {
 
 
-        return await this.createProjectService.exec({ name, assets })
+        return await this.createProjectService.exec({ name, amount, assets })
     }
 
 }

@@ -15,8 +15,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@nestjs/typeorm": "^10.0.2",
     "@s-ui/mono": "2.45.0",
     "class-transformer": "^0.5.1",
-    "class-validator": "^0.14.1"
+    "class-validator": "^0.14.1",
+    "typeorm": "^0.3.20"
   }
 }

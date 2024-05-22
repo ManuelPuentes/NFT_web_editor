@@ -17,7 +17,15 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "typeorm": "npx typeorm-ts-node-esm -d \"$(if [ -f src/data-source/data-source.ts ]; then echo 'src/data-source/data-source.ts'; else echo 'dist/data-source/data-source.js'; fi)\"",
+    "typeorm-win": "npx typeorm-ts-node-esm -d src/data-source/data-source.ts",
+    "migration:generate": "npm run typeorm -- migration:generate",
+    "migration:create": "typeorm-ts-node-esm migration:create",
+    "migration:run": "npm run typeorm -- migration:run",
+    "migration:run-win": "npm run typeorm-win -- migration:run",
+    "migration:show": "npm run typeorm -- migration:show",
+    "migration:revert": "npm run typeorm -- migration:revert"
   },
   "dependencies": {
     "@nestjs/bull": "^10.1.1",
@@ -27,6 +35,7 @@
     "@nestjs/mapped-types": "*",
     "@nestjs/platform-express": "^10.0.0",
     "minio": "^8.0.0",
+    "pg": "^8.11.5",
     "reflect-metadata": "^0.2.0",
     "rxjs": "^7.8.1",
     "unzipper": "^0.11.6"

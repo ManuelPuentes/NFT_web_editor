@@ -1,5 +1,5 @@
 import { Transform, TransformFnParams } from 'class-transformer';
-import { IsEmail, IsNotEmpty, IsString, IsUUID } from 'class-validator';
+import { IsEmail, IsNotEmpty, IsNumber, IsPositive, IsString, IsUUID } from 'class-validator';
 
 export class CreateProjectDto {
     @IsNotEmpty({ message: '$property cant be empty or null' })
@@ -11,4 +11,10 @@ export class CreateProjectDto {
         return value.toLowerCase();
     })
     name: string;
+
+
+    @IsNumber()
+    @IsNotEmpty({ message: '$property cant be empty or null' })
+    @IsPositive()
+    amount: number;
 }
