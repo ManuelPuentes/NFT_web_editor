@@ -1,0 +1,1 @@
+export const COLLECTION_QUEUE = 'COLLECTION_QUEUE';

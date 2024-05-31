@@ -1,0 +1,15 @@
+export const CIRCLE = "circle";
+export const CLIP = "clipPath";
+export const DEFS = "defs";
+export const ELLIPSE = "ellipse";
+export const GROUP = "g";
+export const IMAGE = "image";
+export const LINE = "line";
+export const LINEAR_GRADIENT = "linearGradient";
+export const PATH = "path";
+export const POLYGON = "polygon";
+export const POLYLINE = "polyline";
+export const RADIAL_GRADIENT = "radialGradient";
+export const RECT = "rect";
+export const STYLE = "style";
+export const TEXT = "text";

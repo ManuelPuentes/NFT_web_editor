@@ -19,5 +19,8 @@ export default registerAs('config', () => {
         ),
         storageDefaultBucketName:
             process.env.STORAGE_DEFAULT_BUCKET_NAME || '',
+
+        redisHost: process.env.REDIS_HOST || '',
+        redisPort: +(process.env.REDIS_PORT || 6379),
     };
 });
