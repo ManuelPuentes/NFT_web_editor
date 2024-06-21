@@ -1,6 +1,4 @@
 import { writable } from 'svelte/store';
-
-
 import type { MoveableBounds } from '../interfaces/BoundingRect';
 import type { AssetDetails } from "../interfaces/AssetDetails";
 
@@ -14,7 +12,6 @@ export const workspace_details = writable<Record<string, MoveableBounds>>({
 
 export const selected_element_details = writable(null)
 
-
 export const assets_details = writable<Record<string, Record<string, any>>>({});
 
 export const draw_order = writable([''])
@@ -25,10 +22,3 @@ export const last_selected_item = writable({
     id: '',
     context_menu: false,
 })
-
-
-
-
-
-
-

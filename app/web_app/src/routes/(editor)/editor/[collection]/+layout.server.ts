@@ -12,7 +12,6 @@ export async function load({ params }: any) {
         const initialDrawOrder = getInitialDrawOrder(assets_list);
 
         return {
-            assets_list,
             assets_details,
             initialDrawOrder,
         }
