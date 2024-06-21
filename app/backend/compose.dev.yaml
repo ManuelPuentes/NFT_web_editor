@@ -53,32 +53,12 @@ services:
     networks:
       - web_editor
 
-  minio:
-    container_name: web_editor_minio_development
-    image: bitnami/minio:2023
-    ports:
-      - '9000:9000'
-      - '9001:9001'
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
-      interval: 30s
-      timeout: 20s
-      retries: 3
-    volumes:
-      - web_editor_minio_development:/bitnami/minio/data
-    restart: always
-    environment:
-      MINIO_ROOT_USER: user
-      MINIO_ROOT_PASSWORD: password
-    networks:
-      - web_editor 
-
   nginx:
     container_name: web_editor_nginx_development
     image: nginx:1.21-alpine
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf
-      - ./projects:/var/www/files
+      - ./collections:/var/www/files
     restart: always
     ports:
       - 9999:9999
@@ -90,8 +70,6 @@ volumes:
     name: web_editor_postgres_development
   web_editor_redis_development:
     name: web_editor_redis_development
-  web_editor_minio_development:
-    name: web_editor_minio_development
 
 networks:
   web_editor:

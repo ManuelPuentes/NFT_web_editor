@@ -30,17 +30,17 @@ export class CreateCollectionGuard implements CanActivate {
 
         const collection_name: string | undefined = (request.query.name)?.toString();
 
-        // if (collection_name) {
-        //     const collection = await this.collectionsRepository.findOne({
-        //         where: {
-        //             name: collection_name
-        //         }
-        //     })
+        if (collection_name) {
+            const collection = await this.collectionsRepository.findOne({
+                where: {
+                    name: collection_name
+                }
+            })
 
-        //     if (collection) {
-        //         throw new CollectionAlreadyExistsException();
-        //     }
-        // }
+            if (collection) {
+                throw new CollectionAlreadyExistsException();
+            }
+        }
 
         return true;
     }

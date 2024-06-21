@@ -6,6 +6,7 @@ import appConfig from './config/app.config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { defaultDataSource } from './config/data-source.config';
 import { BullModule } from '@nestjs/bull';
+import { HealthModule } from './modules/health/health.module';
 @Module({
   imports: [ConfigModule.forRoot({
     load: [appConfig],
@@ -22,7 +23,8 @@ import { BullModule } from '@nestjs/bull';
       port: 6379,
     },
   }),
-    CollectionModule
+    CollectionModule,
+    HealthModule,
   ],
   controllers: [],
   providers: [],

@@ -6,14 +6,14 @@
     selected_items,
     workspace_details,
     last_selected_item,
-  } from "../stores/web_app_state";
+  } from "../../stores/web_app_state";
 
   import { onMount } from "svelte";
 
   import Image from "./Image.svelte";
 
-  import type { MoveableBounds } from "../interfaces/BoundingRect";
-  import type { AssetDetails } from "../interfaces/AssetDetails";
+  import type { MoveableBounds } from "../../interfaces/BoundingRect";
+  import type { AssetDetails } from "../../interfaces/AssetDetails";
 
   const canvas_id = "canvas";
 
@@ -36,6 +36,8 @@
   };
 
   $: images_data = drawImagesOrder($draw_order, $selected_items);
+
+  
 
   const drawImagesOrder = (
     drawOrder: string[],
@@ -121,8 +123,8 @@
 
 <style>
   .workspace {
-    width: 60%;
-    height: 80%;
+    width: 80%;
+    height: 100%;
     background-color: var(--background_color);
     display: flex;
     justify-content: center;

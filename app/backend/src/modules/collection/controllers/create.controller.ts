@@ -26,7 +26,7 @@ export class CreateController {
 
         @Query() { name, amount }: CreateCollectionDto
     ): Promise<void> {
-        await this.createCollectionService.exec({ name, amount, assets })
+        await this.createCollectionService.exec({ name, amount, assets });
     }
 
 }

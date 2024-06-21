@@ -37,6 +37,8 @@ export class CreateCollectionService {
 
         fs.writeFileSync(`${assets.destination}/assets_list.json`, JSON.stringify(structure));
         fs.writeFileSync(`${assets.destination}/data.json`, JSON.stringify(assets_details));
+
+        await this.collectionsRepository.save({ name, amount });
     }
 
 
@@ -133,7 +135,7 @@ export class CreateCollectionService {
 
         const asset_path = `http://localhost:9999/files/${collection_name}/assets/${dirname}/${filename}`;
 
-        const details = new AssetDetails({ name: filename, directory: dirname, path: asset_path });
+        const details = new AssetDetails({ name: filename.replace('.svg', ''), directory: dirname, path: asset_path });
 
         if (!assets_details[dirname]) {
             assets_details[dirname] = {}

@@ -6,7 +6,7 @@ import { GetAssetDeatilstDto } from '../dto/get-assets-details.dto';
 @Controller('collection')
 export class GetAssetDetailsController {
     constructor(private readonly getAssetsDetailsService: GetAssetsDetailsService) { }
-    @Get('asset-list')
+    @Get('asset-data')
     @UseGuards(CollectionMustExistGuard)
     async execute(@Query() { name }: GetAssetDeatilstDto) {
         return {

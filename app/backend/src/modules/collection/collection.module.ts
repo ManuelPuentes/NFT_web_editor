@@ -17,6 +17,7 @@ import { GetCollectionsService } from './services/get-collections.services';
 import { GetAssetsDetailsService } from './services/get-assets-details.service';
 import { GenerateImagesProcessor } from './queue-processors/generate-images.processor';
 import { COLLECTION_QUEUE } from './queue/collection-queue.const';
+import { ExistController } from './controllers/collection-exist.controller';
 
 
 @Module({
@@ -26,6 +27,7 @@ import { COLLECTION_QUEUE } from './queue/collection-queue.const';
   }),],
   controllers: [
     CreateController,
+    ExistController,
     GetCollectionsController,
     GenerateImagesController,
     GetAssetDetailsController
