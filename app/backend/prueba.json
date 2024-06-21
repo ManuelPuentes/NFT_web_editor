@@ -1,0 +1,21 @@
+{
+    "id": "13",
+    "name": "create",
+    "data": {
+        "collection_name": "luchamask",
+        "assets_path": "collections\\luchamask\\assets"
+    },
+    "opts": {
+        "attempts": 1,
+        "delay": 0,
+        "timestamp": 1719000402783
+    },
+    "progress": 0,
+    "delay": 0,
+    "timestamp": 1719000402783,
+    "attemptsMade": 0,
+    "stacktrace": [],
+    "returnvalue": null,
+    "finishedOn": null,
+    "processedOn": 1719000402787
+}

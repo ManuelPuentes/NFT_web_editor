@@ -18,6 +18,7 @@ import { GetAssetsDetailsService } from './services/get-assets-details.service';
 import { GenerateImagesProcessor } from './queue-processors/generate-images.processor';
 import { COLLECTION_QUEUE } from './queue/collection-queue.const';
 import { ExistController } from './controllers/collection-exist.controller';
+import { CreateCollectionProcessor } from './queue-processors/create-collection.processor';
 
 
 @Module({
@@ -40,6 +41,7 @@ import { ExistController } from './controllers/collection-exist.controller';
     GetCollectionsService,
     CreateCollectionService,
     GenerateImagesProcessor,
+    CreateCollectionProcessor,
     GetAssetsDetailsService,
     GenerateImagesService,
   ],

@@ -8,8 +8,10 @@ import { InvalidAssetsException } from '../exceptions/invalid-assets.exeption';
 import { Collection } from '../entities/collection.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { SvgsonService } from 'src/modules/svgsom/services/svgson.service';
 import { PathDetails } from '../interfaces/path-details.interface';
+import { InjectQueue } from '@nestjs/bull';
+import { COLLECTION_QUEUE } from '../queue/collection-queue.const';
+import { Queue } from 'bull';
 
 
 @Injectable()
@@ -18,33 +20,44 @@ export class CreateCollectionService {
     constructor(
         @InjectRepository(Collection)
         private readonly collectionsRepository: Repository<Collection>,
+        @InjectQueue(COLLECTION_QUEUE) private readonly createCollectionQueue: Queue,
         private readonly unzipperService: UnzipperService,
-        private readonly svgson: SvgsonService,
-
     ) { }
 
-    async exec({ name, assets, amount }: CreateCollection): Promise<void> {
+    async exec({ name, assets }: CreateCollection): Promise<void> {
 
-        const extractedAssetsDirectoryPath: string = `${assets.destination}/${assets.originalname.split('.zip')[0]}`;
+        await this.UnzipAssets({ path: assets.path });
 
-        await this.unzipperService.unzipFile(assets.path);
+        const extractedAssetsDirectoryPath: string = `${assets.path.split('.zip')[0]}`;
 
-        fs.rmSync(assets.path);
+        this.ensureAssets({ assets_path: extractedAssetsDirectoryPath });
 
-        this.ensureAssets({ assets_path: extractedAssetsDirectoryPath, collection_path: assets.destination });
-
-        const { assets_details, structure } = this.processDirectoryTree({ directory_path: extractedAssetsDirectoryPath, collection_name: name });
+        const { assets_details, structure } = this.processDirectoryTree({
+            directory_path: extractedAssetsDirectoryPath,
+            collection_name: name
+        });
 
         fs.writeFileSync(`${assets.destination}/assets_list.json`, JSON.stringify(structure));
         fs.writeFileSync(`${assets.destination}/data.json`, JSON.stringify(assets_details));
 
-        await this.collectionsRepository.save({ name, amount });
+        await this.collectionsRepository.save({ name });
+
+        this.createCollectionQueue.add('create', {
+            collection_name: name,
+            assets_path: extractedAssetsDirectoryPath,
+        });
     }
 
 
-    private ensureAssets({ assets_path, collection_path }: { assets_path: string, collection_path: string }) {
+    private async UnzipAssets({ path }: { path: string }) {
+        await this.unzipperService.unzipFile(path);
+        fs.rmSync(path);
+    }
+
+    private ensureAssets({ assets_path }: { assets_path: string }) {
+
         if (!fs.lstatSync(assets_path).isDirectory()) {
-            fs.rmSync(collection_path, { recursive: true })
+            fs.rmSync(path.resolve(assets_path, ".."), { recursive: true })
             throw new InvalidAssetsException();
         }
 
@@ -71,18 +84,16 @@ export class CreateCollectionService {
                 dirname: path.basename(path.dirname(_path)),
                 filename: (path.basename(_path))
             }
-
     }
 
-    private processDirectoryTree = (
-        { directory_path, collection_name }: { directory_path: string, collection_name: string }
-    ) => {
+    private processDirectoryTree = ({ directory_path, collection_name }: {
+        directory_path: string,
+        collection_name: string
+    }) => {
+
         const tree = fs.readdirSync(directory_path, { recursive: true, encoding: 'utf8' });
-
         const structure: Record<string, string[]> = {};
-
         const assets_details: Record<string, Record<string, AssetDetails>> = {};
-
 
         tree.map(child => {
 
@@ -92,33 +103,16 @@ export class CreateCollectionService {
 
                 structure[dirname] = [];
 
-                this.createAssetJsonFolder({ dirname, collection_name });
 
             } else if (filename) {
 
                 structure[dirname].push(filename.split(".svg")[0])
 
                 this.loadAssetsDetails({ filename, dirname, collection_name, assets_details });
-
-                this.convertSvgAssetToJSon({ filename, dirname, collection_name });
             }
         })
 
         return { structure, assets_details };
-    }
-
-    private convertSvgAssetToJSon = ({ dirname, filename, collection_name }: {
-        dirname: string,
-        filename: string,
-        collection_name: string
-    }): void => {
-
-        const file_path = `collections/${collection_name}/assets/${dirname}/${filename}`;
-        const json_path = `collections/${collection_name}/json/${dirname}/${filename.replace('.svg', '.json')}`;
-
-        const svg_json = this.svgson.parseToJson({ file_path });
-
-        fs.writeFileSync(json_path, JSON.stringify(svg_json))
     }
 
     private loadAssetsDetails = ({
@@ -142,17 +136,5 @@ export class CreateCollectionService {
         }
 
         assets_details[dirname][filename.replace('.svg', '')] = details;
-    }
-
-    private createAssetJsonFolder = ({
-        dirname,
-        collection_name
-
-    }: {
-        dirname: string,
-        collection_name: string
-    }) => {
-
-        fs.mkdirSync(`collections/${collection_name}/json/${dirname}`, { recursive: true });
     }
 }

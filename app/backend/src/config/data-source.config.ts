@@ -12,7 +12,7 @@ export const defaultDataSource: TypeOrmModuleOptions = {
   name: DEFAULT_DATA_SOURCE_NAME,
   url: process.env.DATABASE_URL,
   logging: true,
-  synchronize: false,
+  synchronize: true,
   migrationsRun: true,
   entities: [path.join(__dirname, `/../modules/**/*.entity.{ts,js}`)],
   migrations: [path.join(__dirname, `/../data-source/migrations/*.{ts,js}`)],

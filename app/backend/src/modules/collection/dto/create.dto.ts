@@ -11,10 +11,4 @@ export class CreateCollectionDto {
         return value.toLowerCase();
     })
     name: string;
-
-
-    @IsNumber()
-    @IsNotEmpty({ message: '$property cant be empty or null' })
-    @IsPositive()
-    amount: number;
 }

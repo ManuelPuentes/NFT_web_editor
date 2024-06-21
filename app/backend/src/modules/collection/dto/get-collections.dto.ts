@@ -5,10 +5,9 @@ import { PaginatedRequestDTO } from 'src/modules/common/dto/paginated-request.dt
 interface Collection {
   id: string;
   name: string;
-  amount: number;
 }
 
 export class GetCollectionsDTO extends PaginatedRequestDTO<Collection> {
-  @IsIn(['id', 'name', 'amount'])
+  @IsIn(['id', 'name',])
   orderBy?: keyof Collection | undefined;
 }
