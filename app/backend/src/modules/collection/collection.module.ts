@@ -21,6 +21,10 @@ import { ExistController } from './controllers/collection-exist.controller';
 import { CreateCollectionProcessor } from './queue-processors/create-collection.processor';
 import { SetAssetDetailsController } from './controllers/set-assets-details.controller';
 import { SetAssetsDetailsService } from './services/set-assets-details.service';
+import { SetDrawOrderController } from './controllers/set-draw-order.controller';
+import { GetDrawOrderController } from './controllers/get-draw-order.controller';
+import { SetDrawOrderService } from './services/set-draw-order.service';
+import { GetDrawOrderService } from './services/get-draw-order.service';
 
 @Module({
 
@@ -30,23 +34,27 @@ import { SetAssetsDetailsService } from './services/set-assets-details.service';
   controllers: [
     ExistController,
     CreateController,
+    SetDrawOrderController,
+    GetDrawOrderController,
     GetCollectionsController,
     SetAssetDetailsController,
     GetAssetDetailsController,
     GenerateImagesController,
   ],
   providers: [
+    SvgJsService,
     CryptoService,
     SvgsonService,
-    SvgJsService,
     UnzipperService,
-    GetCollectionsService,
     CreateCollectionService,
+    SetDrawOrderService,
+    GetDrawOrderService,
+    GetCollectionsService,
+    GetAssetsDetailsService,
+    SetAssetsDetailsService,
+    GenerateImagesService,
     GenerateImagesProcessor,
     CreateCollectionProcessor,
-    GetAssetsDetailsService,
-    GenerateImagesService,
-    SetAssetsDetailsService,
   ],
 })
 export class CollectionModule { }
