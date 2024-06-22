@@ -39,7 +39,8 @@
 	overflow-hidden
 	mx-5 my-0
 	p-2
-	hover:bg-[--secondary_hover_color]
+	dark:hover:bg-[--secondary_hover_color]
+	hover:bg-slate-400
 "
 	on:click={handleClick}
 	bind:this={file}

@@ -1,10 +1,7 @@
 <script>
 	// @ts-nocheck
-
 	import Folder from './Folder.svelte';
 	import File from './File.svelte';
-	import { onMount } from 'svelte';
-
 	import { draw_order, assets_details } from '../../stores/web_app_state';
 	import SortableList from 'svelte-sortable-list';
 
