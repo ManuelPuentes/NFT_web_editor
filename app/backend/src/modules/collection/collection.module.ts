@@ -19,6 +19,8 @@ import { GenerateImagesProcessor } from './queue-processors/generate-images.proc
 import { COLLECTION_QUEUE } from './queue/collection-queue.const';
 import { ExistController } from './controllers/collection-exist.controller';
 import { CreateCollectionProcessor } from './queue-processors/create-collection.processor';
+import { SetAssetDetailsController } from './controllers/set-assets-details.controller';
+import { SetAssetsDetailsService } from './services/set-assets-details.service';
 
 
 @Module({
@@ -31,6 +33,7 @@ import { CreateCollectionProcessor } from './queue-processors/create-collection.
     ExistController,
     GetCollectionsController,
     GenerateImagesController,
+    SetAssetDetailsController,
     GetAssetDetailsController
   ],
   providers: [
@@ -44,6 +47,7 @@ import { CreateCollectionProcessor } from './queue-processors/create-collection.
     CreateCollectionProcessor,
     GetAssetsDetailsService,
     GenerateImagesService,
+    SetAssetsDetailsService,
   ],
 })
 export class CollectionModule { }
