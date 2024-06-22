@@ -1,4 +1,5 @@
 import { error } from '@sveltejs/kit';
+import type { AssetDetails } from '../../../../interfaces/AssetDetails';
 
 /** @type {import('./$types').PageLoad} */
 
@@ -8,8 +9,8 @@ export async function load({ params }: any) {
 
     try {
         await ensureCollectionExist({ collectionName });
-        const { assets_list, assets_details } = await getCollectionAssetsData({ collectionName });
-        const initialDrawOrder = getInitialDrawOrder(assets_list);
+        const { assets_details } = await getCollectionAssetsData({ collectionName });
+        const initialDrawOrder = getInitialDrawOrder(assets_details);
 
         return {
             assets_details,
@@ -43,7 +44,7 @@ const getCollectionAssetsData = async ({ collectionName }: { collectionName: str
     })
 
     try {
-        // const result = await (await fetch(`http://localhost:3000/collection/asset-data?` + params)).json();
+        // const result = await (await fetch(`http://localhost:3000/collection/asset-details?` + params)).json();
         const result = myfectch();
         return result.data;
 
@@ -52,7 +53,7 @@ const getCollectionAssetsData = async ({ collectionName }: { collectionName: str
     }
 }
 
-const getInitialDrawOrder = (assetList: Record<string, string[]>) => {
+const getInitialDrawOrder = (assetList: Record<string, Record<string, AssetDetails>> ) => {
     return Object.keys(assetList);
 }
 

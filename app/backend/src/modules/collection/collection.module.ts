@@ -22,19 +22,18 @@ import { CreateCollectionProcessor } from './queue-processors/create-collection.
 import { SetAssetDetailsController } from './controllers/set-assets-details.controller';
 import { SetAssetsDetailsService } from './services/set-assets-details.service';
 
-
 @Module({
 
   imports: [MulterModule.register(), TypeOrmModule.forFeature([Collection]), BullModule.registerQueue({
     name: COLLECTION_QUEUE,
   }),],
   controllers: [
-    CreateController,
     ExistController,
+    CreateController,
     GetCollectionsController,
-    GenerateImagesController,
     SetAssetDetailsController,
-    GetAssetDetailsController
+    GetAssetDetailsController,
+    GenerateImagesController,
   ],
   providers: [
     CryptoService,

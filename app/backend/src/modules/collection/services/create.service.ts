@@ -32,13 +32,12 @@ export class CreateCollectionService {
 
         this.ensureAssets({ assets_path: extractedAssetsDirectoryPath });
 
-        const { assets_details, structure } = this.processDirectoryTree({
+        const { assets_details } = this.processDirectoryTree({
             directory_path: extractedAssetsDirectoryPath,
             collection_name: name
         });
 
-        fs.writeFileSync(`${assets.destination}/assets_list.json`, JSON.stringify(structure));
-        fs.writeFileSync(`${assets.destination}/data.json`, JSON.stringify(assets_details));
+        fs.writeFileSync(`${assets.destination}/assets_details.json`, JSON.stringify(assets_details));
 
         await this.collectionsRepository.save({ name });
 
@@ -92,27 +91,18 @@ export class CreateCollectionService {
     }) => {
 
         const tree = fs.readdirSync(directory_path, { recursive: true, encoding: 'utf8' });
-        const structure: Record<string, string[]> = {};
         const assets_details: Record<string, Record<string, AssetDetails>> = {};
 
         tree.map(child => {
 
             const { isDirectory, dirname, filename } = this.pathDetails(path.join(directory_path, child));
 
-            if (isDirectory) {
-
-                structure[dirname] = [];
-
-
-            } else if (filename) {
-
-                structure[dirname].push(filename.split(".svg")[0])
-
+            if (!isDirectory && filename) {
                 this.loadAssetsDetails({ filename, dirname, collection_name, assets_details });
             }
         })
 
-        return { structure, assets_details };
+        return { assets_details };
     }
 
     private loadAssetsDetails = ({

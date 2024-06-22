@@ -7,6 +7,6 @@ export class SetAssetsDetailsService {
     constructor() { }
 
     async exec({ name, assets_details }: SetAssetsDetails): Promise<void> {
-        fs.writeFileSync(`./collections/${name}/data.json`, JSON.stringify(assets_details));
+        fs.writeFileSync(`./collections/${name}/assets_details.json`, JSON.stringify(assets_details));
     }
 }
