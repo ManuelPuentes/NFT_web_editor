@@ -18,8 +18,10 @@
 <div
 	class="
 	w-[20%]
-	h-[100%]
+	h-[90%]
 	overflow-y-auto
+	overflow-x-hidden
+	border dark:border-[--border_color]
 "
 >
 	<SortableList list={folders} key="" on:sort={sortList} let:item let:index>

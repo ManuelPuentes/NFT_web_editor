@@ -15,6 +15,7 @@ export async function load({ params }: any) {
         return {
             assets_details,
             initialDrawOrder,
+            collectionName,
         }
 
     } catch (e) {

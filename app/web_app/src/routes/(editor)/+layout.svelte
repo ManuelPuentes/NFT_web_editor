@@ -1,5 +1,4 @@
-
-<script>
+<script lang="ts">
 	import '../../app.css';
 	import { Navbar, NavBrand, NavLi, NavUl, NavHamburger } from 'flowbite-svelte';
 	import { DarkMode } from 'flowbite-svelte';
@@ -25,5 +24,4 @@
 	<DarkMode btnClass={darkmodebtn} />
 </Navbar>
 
-<slot class="container" />
-
+<slot  />

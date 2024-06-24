@@ -1,6 +1,5 @@
 <script lang="ts">
 	import Moveable from 'svelte-moveable';
-
 	import {
 		draw_order,
 		selected_items,
@@ -89,20 +88,21 @@
 
 <div
 	class="
-  w-[80%] h-[100%]
-  flex justify-center items-center
-  border dark:border-[--border_color]
-"
+		w-[80%] h-[90%]
+		flex justify-center items-center
+		border dark:border-[--border_color]
+	"
 	bind:this={workspace}
 >
 	<!-- svelte-ignore a11y-no-static-element-interactions -->
+
 	<div
 		class="
-      w-[1280px] h-[720px]
-      dark:bg-[repeating-linear-gradient(0deg,black_0_1px,transparent_1px_20px),repeating-linear-gradient(90deg,black_0_1px,transparent_1px_20px)] dark:bg-slate-700
-	    bg-[repeating-linear-gradient(0deg,black_0_1px,transparent_1px_20px),repeating-linear-gradient(90deg,black_0_1px,transparent_1px_20px)] bg-slate-100
-      !transform-none
-    "
+			w-[1280px] h-[720px]
+			dark:bg-[repeating-linear-gradient(0deg,black_0_1px,transparent_1px_20px),repeating-linear-gradient(90deg,black_0_1px,transparent_1px_20px)] dark:bg-slate-700
+			bg-[repeating-linear-gradient(0deg,black_0_1px,transparent_1px_20px),repeating-linear-gradient(90deg,black_0_1px,transparent_1px_20px)] bg-slate-100
+			!transform-none
+    	"
 		id={canvas_id}
 		bind:this={canvas}
 		on:click={handleClick}

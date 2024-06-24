@@ -22,3 +22,5 @@ export const last_selected_item = writable({
     id: '',
     context_menu: false,
 })
+
+export const changes_indicator = writable(false);

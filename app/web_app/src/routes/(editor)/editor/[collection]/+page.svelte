@@ -1,10 +1,10 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-
 	import { draw_order, assets_details } from '../../../../stores/web_app_state';
 
 	import Workspace from '../../../../components/editor/Workspace.svelte';
 	import Sidebar from '../../../../components/editor/Sidebar.svelte';
+	import ChangesIndicator from '../../../../components/editor/ChangesIndicator.svelte';
 	export let data: any;
 
 	onMount(() => {
@@ -15,11 +15,12 @@
 
 <div
 	class="
-	w-screen
-	h-screen
+	w-[100%]
+	h-[100%]
 	flex
 	justify-center
 	items-center
+	mt-5
 "
 >
 	<div
@@ -30,6 +31,7 @@
 		flex flex-row
 	"
 	>
+		<ChangesIndicator collectionName={data.collectionName} />
 		<Sidebar />
 		<Workspace />
 	</div>

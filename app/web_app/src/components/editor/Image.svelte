@@ -4,7 +4,8 @@
 	import {
 		workspace_details,
 		last_selected_item,
-		assets_details
+		assets_details,
+		changes_indicator
 	} from '../../stores/web_app_state';
 
 	import ImageContextMenu from './ImageContextMenu.svelte';
@@ -118,18 +119,21 @@
 			on:drag={({ detail: e }) => {
 				e.target.style.transform = e.transform;
 				$assets_details[data.directory_name][data.file_name].transform = e.transform;
+				$changes_indicator = true;
 
 				context_menu = false;
 			}}
 			on:scale={({ detail: e }) => {
 				e.target.style.transform = e.drag.transform;
 				$assets_details[data.directory_name][data.file_name].scale = e.drag.transform;
+				$changes_indicator = true;
 
 				context_menu = false;
 			}}
 			on:rotate={({ detail: e }) => {
 				e.target.style.transform = e.afterTransform;
 				$assets_details[data.directory_name][data.file_name].rotate = e.afterTransform;
+				$changes_indicator = true;
 
 				context_menu = false;
 			}}
