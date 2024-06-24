@@ -1,13 +1,15 @@
 <script lang="ts">
 	import Form from '$lib/Form.svelte';
-	import { Input, Dropzone, Button, Spinner } from 'flowbite-svelte';
-	import { superForm } from 'sveltekit-superforms';
+	import { Input, Dropzone, Button, Spinner, Alert } from 'flowbite-svelte';
+	import { InfoCircleSolid } from 'flowbite-svelte-icons';
+	import { superForm } from 'sveltekit-superforms/client';
 
 	export let data;
-
-	let submited = false;
-
-	const { form, errors, constraints } = superForm(data.form);
+	const { form, errors, constraints, submitting } = superForm(data.form, {
+		async onSubmit() {
+			await new Promise((r) => setTimeout(r, delaySubmit));
+		}
+	});
 
 	let value: any = [];
 	const dropHandle = (event: any) => {
@@ -17,7 +19,6 @@
 			[...event.dataTransfer.items].forEach((item, i) => {
 				if (item.kind === 'file') {
 					const file = item.getAsFile();
-					// value.push(file.name);
 					value = file.name;
 				}
 			});
@@ -41,40 +42,33 @@
 	invalidateAll={false}
 	action="?/createCollection"
 	class="
-	max-w-[700px] w-[80vw]  
-	flex flex-col items-center 
-	py-5 px-10 
-	my-5
+	flex flex-col items-center gap-5
+	w-[60%] max-w-[700px] h-[45%]
+	p-4 m-4
+	text-gray-900 bg-white dark:text-white dark:bg-slate-800
 	"
 	let:message
 	let:superform
 >
 	<caption
-		class="p-5 text-lg font-semibold text-left w-[100%]
-		text-gray-900 bg-white
-		dark:text-white dark:bg-gray-800
-		"
+		class="
+		text-lg font-semibold text-left
+		w-[100%]
+		text-gray-900 dark:text-white
+	"
 	>
 		Create Collection
 		<p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">
 			Create a new collection project, set all rules to draw and start generating batches.
 		</p>
 	</caption>
-
 	<Input
-		placeholder="Large input"
-		class="w-[60%] my-2"
+		placeholder="Collection Name"
 		size="lg"
 		bind:value={$form.collectionName}
 		name="collectionName"
 		{...$constraints.collectionName}
 	/>
-
-	{#if $errors.collectionName}
-		<small>
-			{$errors.collectionName}
-		</small>
-	{/if}
 
 	<Dropzone
 		id="dropzone"
@@ -85,10 +79,10 @@
 		on:change={handleChange}
 		bind:value={$form.collectionAssets}
 		name="collectionAssets"
-		accept="zip,application/octet-stream,application/zip,application/x-zip,application/x-zip-compressed"
-		class="w-[60%] my-2"
+		class="w-[60%] "
 		enctype="multipart/form-data"
-
+		accept="zip,application/octet-stream,application/zip,application/x-zip,application/x-zip-compressed"
+		{...$constraints.collectionAssets}
 	>
 		<svg
 			aria-hidden="true"
@@ -114,12 +108,21 @@
 		{/if}
 	</Dropzone>
 
-	{#if $errors.collectionAssets}
-		<small>
-			{$errors.collectionAssets}
-		</small>
+	{#if $errors._errors}
+		<Alert border color="dark">
+			<InfoCircleSolid slot="icon" class="w-5 h-5" />
+			<span class="font-medium">Alert!</span>
+			{$errors._errors}
+		</Alert>
 	{/if}
 
-	<Button type="submit" color="light" class="my-2 dark:color-primary max-w-[30%]">send</Button>
-</Form>
+	{#if $errors.collectionAssets}
+		<Alert border color="dark">
+			<InfoCircleSolid slot="icon" class="w-5 h-5" />
+			<span class="font-medium">Alert!</span>
+			{$errors.collectionAssets}
+		</Alert>
+	{/if}
 
+	<Button type="submit" color="light" class=" dark:color-primary max-w-[30%] mt-auto">send</Button>
+</Form>

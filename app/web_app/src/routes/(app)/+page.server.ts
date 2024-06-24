@@ -1,17 +1,17 @@
-import { redirect, type RequestEvent } from "@sveltejs/kit";
+import { redirect } from "@sveltejs/kit";
+import type { RequestEvent } from "@sveltejs/kit"; 1
 import type { Actions } from "./$types";
 
 import { z } from 'zod';
-import { message, superValidate, fail } from "sveltekit-superforms";
 import { zod } from 'sveltekit-superforms/adapters';
-// import { fail } from '@sveltejs/kit';
+import { superValidate, fail, setError } from "sveltekit-superforms";
 
 
 
 const creatCollectionSchema = z.object({
 	collectionName: z.string().min(5),
 	collectionAssets:
-		z.instanceof(File, { message: 'Please upload a file.' }).refine((f) => f.type === 'application/zip')
+		z.instanceof(File, { message: 'Please upload a file.' }).refine((f) => f.type === 'application/zip', "provided file is invalid")
 });
 
 
@@ -25,43 +25,42 @@ export const actions: Actions = {
 
 		const form = await superValidate(event, zod(creatCollectionSchema));
 
+		if (!form.valid) {
+			return fail(400, { form });
+		}
 
-		// if (!form.valid) {
-		// 	return fail(400, { form });
+		const { collectionAssets, collectionName } = form.data;
 
-		// }
+		const formdata = new FormData();
 
-		// const { collectionAssets, collectionName } = form.data;
+		formdata.append(
+			"assets",
+			collectionAssets,
+		);
 
+		const requestOptions = {
+			method: "POST",
+			body: formdata,
+		};
 
-		// const formdata = new FormData();
-
-		// formdata.append(
-		// 	"assets",
-		// 	collectionAssets,
-		// );
-
-		// const requestOptions = {
-		// 	method: "POST",
-		// 	body: formdata,
-		// };
-
-		// const params = new URLSearchParams({
-		// 	"name": collectionName,
-		// 	"amount": "100",
-		// })
+		const params = new URLSearchParams({
+			"name": collectionName,
+		})
 
 
-		// try {
-		// 	const response = await fetch(`http://localhost:3000/collection/create?` + params, requestOptions);
-		// 	const result = await response.text();
-		// 	throw redirect(300, `/editor`);
-		// } catch (error) {
-		// 	console.error(error);
-		// };
+		try {
+			let response: any = await fetch(`http://localhost:3000/collection/create?` + params, requestOptions);
 
-		throw redirect(300, `/editor`);
+			if (!response.ok) {
+				response = await response.json();
+				return setError(form, response.message);
+			}
 
+		} catch (e:any) {
+			return setError(form, "fetch failed");
+		};
+
+		throw redirect(300, `/editor/${collectionName}`);
 
 	}
 } satisfies Actions;

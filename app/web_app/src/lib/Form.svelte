@@ -1,6 +1,8 @@
 <script lang="ts">
-	import { superForm } from 'sveltekit-superforms';
+	import { superForm } from 'sveltekit-superforms/client';
 	import type { SuperValidated } from 'sveltekit-superforms';
+	import { Spinner } from 'flowbite-svelte';
+
 	type T = Record<string, unknown>;
 	export let data: SuperValidated<T>;
 	export let dataType: 'form' | 'json' = 'form';
@@ -11,13 +13,12 @@
 		invalidateAll,
 		onUpdated({ form }) {
 			if (form.valid) {
-				// Successful post! Do some more client-side stuff.
 			}
 		},
-		taintedMessage: "are you sure you want to leave"
+		taintedMessage: 'are you sure you want to leave'
 	});
 
-	const { form, message, delayed, errors, allErrors, enhance, constraints } = superform;
+	const { form, message, delayed, errors, allErrors, enhance, constraints, submitting } = superform;
 </script>
 
 <form method="POST" use:enhance {...$$restProps}>
@@ -30,6 +31,8 @@
 		delayed={$delayed}
 		constraints={$constraints}
 	/>
+
+	{#if $submitting }
+		<Spinner size="6"/>
+	{/if}
 </form>
-
-

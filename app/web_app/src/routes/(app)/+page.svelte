@@ -1,6 +1,7 @@
 <script>
-	import CreateCollectionForm from '../../components/CreateCollectionForm.svelte';
-	import ListCollections from '../../components/ListCollections.svelte';
+	import CreateCollectionForm from '$components/home/CreateCollectionForm.svelte';
+	import ListCollections from '$components/home/ListCollections.svelte';
+
 
 	export let data;
 </script>
