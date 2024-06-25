@@ -1,116 +1,61 @@
 <script lang="ts">
-	import Form from '$lib/Form.svelte';
-	import { Input, Dropzone, Button, Spinner, Alert } from 'flowbite-svelte';
-	import { InfoCircleSolid } from 'flowbite-svelte-icons';
 	import { superForm } from 'sveltekit-superforms/client';
 
-	export let data;
-	const { form, errors, constraints, submitting } = superForm(data.form, {
-		async onSubmit() {
-			await new Promise((r) => setTimeout(r, delaySubmit));
-		}
-	});
+	import { Input, Button, Spinner, Alert, Label } from 'flowbite-svelte';
+	import { InfoCircleSolid } from 'flowbite-svelte-icons';
 
-	let value: any = [];
-	const dropHandle = (event: any) => {
-		value = [];
-		event.preventDefault();
-		if (event.dataTransfer.items) {
-			[...event.dataTransfer.items].forEach((item, i) => {
-				if (item.kind === 'file') {
-					const file = item.getAsFile();
-					value = file.name;
-				}
-			});
-		} else {
-			[...event.dataTransfer.files].forEach((file, i) => {
-				value = file.name;
-			});
-		}
-	};
+	import FileInput from './FileInput.svelte';
 
-	const handleChange = (event: any) => {
-		const files = event.target.files;
-		if (files.length > 0) {
-			value = files[0].name;
-		}
-	};
+	export let data: any;
+
+	const { form, errors, enhance, constraints, submitting } = superForm(data);
 </script>
 
-<Form
-	data={data.form}
-	invalidateAll={false}
+<form
+	method="POST"
+	use:enhance
 	action="?/createCollection"
 	class="
 	flex flex-col items-center gap-5
-	w-[60%] max-w-[700px] h-[45%]
+	w-[60%] max-w-[600px] h-[50%]
 	p-4 m-4
 	text-gray-900 bg-white dark:text-white dark:bg-slate-800
-	"
-	let:message
-	let:superform
+"
 >
 	<caption
-		class="
-		text-lg font-semibold text-left
-		w-[100%]
-		text-gray-900 dark:text-white
-	"
+		class="p-5 text-lg font-semibold text-left w-[100%]
+		text-gray-900
+		dark:text-white
+		"
 	>
 		Create Collection
-		<p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400">
+		<p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400 text-balance">
 			Create a new collection project, set all rules to draw and start generating batches.
 		</p>
 	</caption>
+	<Label for="collection_name" class=" self-start">Collection Name</Label>
 	<Input
-		placeholder="Collection Name"
+		id="collection_name"
+		placeholder="Awesome Name"
 		size="lg"
 		bind:value={$form.collectionName}
-		name="collectionName"
 		{...$constraints.collectionName}
+		name="collectionName"
 	/>
 
-	<Dropzone
-		id="dropzone"
-		on:drop={dropHandle}
-		on:dragover={(event) => {
-			event.preventDefault();
-		}}
-		on:change={handleChange}
+	<Label for="collection_name" class=" self-start">Collection assets</Label>
+	<FileInput
 		bind:value={$form.collectionAssets}
+		{...$constraints.collectionAssets}
+		text_content="Click to upload or drag and drop your zip file with the collection assets here!"
 		name="collectionAssets"
-		class="w-[60%] "
 		enctype="multipart/form-data"
 		accept="zip,application/octet-stream,application/zip,application/x-zip,application/x-zip-compressed"
-		{...$constraints.collectionAssets}
-	>
-		<svg
-			aria-hidden="true"
-			class="mb-3 w-10 h-10 text-gray-400"
-			fill="none"
-			stroke="currentColor"
-			viewBox="0 0 24 24"
-			xmlns="http://www.w3.org/2000/svg"
-			><path
-				stroke-linecap="round"
-				stroke-linejoin="round"
-				stroke-width="2"
-				d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
-			/></svg
-		>
-		{#if value.length === 0}
-			<p class="mb-2 text-sm text-gray-500 dark:text-gray-400">
-				<span class="font-semibold">Click to upload</span> or drag and drop
-			</p>
-			<p class="text-xs text-gray-500 dark:text-gray-400">ZIP</p>
-		{:else}
-			<p>{value}</p>
-		{/if}
-	</Dropzone>
+	/>
 
 	{#if $errors._errors}
 		<Alert border color="dark">
-			<InfoCircleSolid slot="icon" class="w-5 h-5" />
+			<InfoCircleSolid slot="icon" class="size-5" />
 			<span class="font-medium">Alert!</span>
 			{$errors._errors}
 		</Alert>
@@ -118,11 +63,24 @@
 
 	{#if $errors.collectionAssets}
 		<Alert border color="dark">
-			<InfoCircleSolid slot="icon" class="w-5 h-5" />
+			<InfoCircleSolid slot="icon" class="size-5" />
 			<span class="font-medium">Alert!</span>
 			{$errors.collectionAssets}
 		</Alert>
 	{/if}
 
-	<Button type="submit" color="light" class=" dark:color-primary max-w-[30%] mt-auto">send</Button>
-</Form>
+	{#if $errors.collectionName}
+		<Alert border color="dark">
+			<InfoCircleSolid slot="icon" class="size-5" />
+			<span class="font-medium">Alert!</span>
+			{$errors.collectionName}
+		</Alert>
+	{/if}
+
+	{#if $submitting}
+		<Spinner size="6" class="mt-auto" />
+	{:else}
+		<Button type="submit" color="light" class=" dark:color-primary max-w-[30%] mt-auto">send</Button
+		>
+	{/if}
+</form>

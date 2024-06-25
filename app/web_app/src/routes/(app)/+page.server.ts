@@ -1,23 +1,22 @@
-import { redirect } from "@sveltejs/kit";
-import type { RequestEvent } from "@sveltejs/kit"; 1
+import { redirect, type RequestEvent } from "@sveltejs/kit";
 import type { Actions } from "./$types";
 
 import { z } from 'zod';
+import { message, superValidate, fail, setError } from "sveltekit-superforms";
 import { zod } from 'sveltekit-superforms/adapters';
-import { superValidate, fail, setError } from "sveltekit-superforms";
 
 
 
 const creatCollectionSchema = z.object({
 	collectionName: z.string().min(5),
 	collectionAssets:
-		z.instanceof(File, { message: 'Please upload a file.' }).refine((f) => f.type === 'application/zip', "provided file is invalid")
+		z.instanceof(File, { message: 'Please upload a file.' }).refine((f) => f.type === 'application/zip')
 });
 
 
 export const load = async () => {
-	const form = await superValidate(zod(creatCollectionSchema));
-	return { form };
+	const createCollectionForm = await superValidate(zod(creatCollectionSchema));
+	return { createCollectionForm };
 }
 
 export const actions: Actions = {
@@ -27,9 +26,11 @@ export const actions: Actions = {
 
 		if (!form.valid) {
 			return fail(400, { form });
+
 		}
 
 		const { collectionAssets, collectionName } = form.data;
+
 
 		const formdata = new FormData();
 
@@ -45,6 +46,7 @@ export const actions: Actions = {
 
 		const params = new URLSearchParams({
 			"name": collectionName,
+			"amount": "100",
 		})
 
 
@@ -56,11 +58,10 @@ export const actions: Actions = {
 				return setError(form, response.message);
 			}
 
-		} catch (e:any) {
+		} catch (e: any) {
 			return setError(form, "fetch failed");
 		};
 
 		throw redirect(300, `/editor/${collectionName}`);
-
 	}
 } satisfies Actions;

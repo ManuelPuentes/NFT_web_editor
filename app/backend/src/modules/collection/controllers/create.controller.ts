@@ -11,7 +11,7 @@ export class CreateController {
     constructor(private readonly createCollectionService: CreateCollectionService) { }
 
     @Post('create')
-    // @UseGuards(CreateCollectionGuard)
+    @UseGuards(CreateCollectionGuard)
     @UseInterceptors(FileInterceptor('assets', { storage }))
     async execute(
         @UploadedFile(
