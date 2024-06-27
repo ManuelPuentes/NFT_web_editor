@@ -4,37 +4,51 @@
 		draw_order,
 		selected_items,
 		workspace_details,
-		last_selected_item
-	} from '../../stores/web_app_state';
+		last_selected_item,
+		canvas_size
+	} from '$stores/web_app_state';
 
 	import { onMount } from 'svelte';
-
 	import Image from './Image.svelte';
 
 	import type { MoveableBounds } from '../../interfaces/BoundingRect';
 	import type { AssetDetails } from '../../interfaces/AssetDetails';
+	import { DimensionViewable } from '$lib/moveable-able';
+
+	import { setCanvasSize, getCanvasSize } from '$lib/api/canvas-size';
+
+	export let collection_name = '';
 
 	const canvas_id = 'canvas';
 
-	let workspace: HTMLElement;
 	let canvas: HTMLElement;
+	let workspace: HTMLElement;
 	let bounds: MoveableBounds = { left: 0, top: 0, right: 0, bottom: 0 };
 
 	let images_data = [];
 
-	onMount(() => {
-		const workspace_rect: DOMRect = workspace.getBoundingClientRect();
-
-		$workspace_details['workspace_bounding_rect'] = workspace_rect;
-
-		const { left, top, right, bottom } = workspace_rect;
+	onMount(async () => {
+		const { left, top, right, bottom } = workspace.getBoundingClientRect();
 		bounds = { left, top, right, bottom };
+		$workspace_details = bounds;
+
+		await loadCanvasSize({ collection_name });
+		canvas.style.height = `${$canvas_size.height}px`;
+		canvas.style.width = `${$canvas_size.width}px`;
 	});
-	const handleClick = () => {
-		last_selected_item.set({ id: canvas_id, context_menu: false });
+
+	const loadCanvasSize = async ({ collection_name }: { collection_name: string }) => {
+		const result = (await getCanvasSize({ collection_name })).data;
+
+		if (result) {
+			$canvas_size = result;
+		}
+		return $canvas_size;
 	};
 
-	$: images_data = drawImagesOrder($draw_order, $selected_items);
+	const handleCanvasClick = () => {
+		last_selected_item.set({ id: canvas_id, context_menu: false });
+	};
 
 	const drawImagesOrder = (drawOrder: string[], selectedItems: Record<string, AssetDetails>) => {
 		let order: Array<AssetDetails> = [];
@@ -48,82 +62,69 @@
 		return order;
 	};
 
-	const DimensionViewable = {
-		name: 'dimensionViewable',
-		props: [],
-		events: [],
-		render(moveable: any, React: any) {
-			const rect = moveable.getRect();
-			return React.createElement(
-				'div',
-				{
-					key: 'dimension-viewer',
-					className: 'moveable-dimension',
-					style: {
-						position: 'absolute',
-						left: `${rect.width / 2}px`,
-						top: `${rect.height + 20}px`,
-						background: '#4af',
-						borderRadius: '2px',
-						padding: '2px 4px',
-						color: 'white',
-						fontSize: '13px',
-						whiteSpace: 'nowrap',
-						fontWeight: 'bold',
-						willChange: 'transform',
-						transform: `translate(-50%, 0px)`
-					}
-				},
-				[
-					'\n            ',
-					Math.round(rect.offsetWidth),
-					' x ',
-					Math.round(rect.offsetHeight),
-					'\n        '
-				]
-			);
-		}
-	};
+	$: selected = $last_selected_item.id;
+	$: images_data = drawImagesOrder($draw_order, $selected_items);
+
+	const throttleDragRotate = 0;
+	const scalable = true;
+	const throttleScale = 0;
+	const snappable = true;
 </script>
 
 <div
 	class="
-		w-[80%] h-[90%]
+		w-[80%]
 		flex justify-center items-center
-		border dark:border-[--border_color]
 	"
 	bind:this={workspace}
+	id="workspace"
 >
 	<!-- svelte-ignore a11y-no-static-element-interactions -->
-
 	<div
+		id={canvas_id}
 		class="
-			w-[1280px] h-[720px]
 			dark:bg-[repeating-linear-gradient(0deg,black_0_1px,transparent_1px_20px),repeating-linear-gradient(90deg,black_0_1px,transparent_1px_20px)] dark:bg-slate-700
 			bg-[repeating-linear-gradient(0deg,black_0_1px,transparent_1px_20px),repeating-linear-gradient(90deg,black_0_1px,transparent_1px_20px)] bg-slate-100
 			!transform-none
     	"
-		id={canvas_id}
 		bind:this={canvas}
-		on:click={handleClick}
-		on:keypress={handleClick}
+		on:click={handleCanvasClick}
+		on:keypress={handleCanvasClick}
 	>
 		{#each images_data as data (data.file_asset_path)}
 			<Image {data} />
 		{/each}
 	</div>
+
+	{#if selected === canvas_id}
+		<Moveable
+			target={canvas}
+			origin={false}
+			resizable={true}
+			ables={[DimensionViewable]}
+			props={{ dimensionViewable: true }}
+			{throttleDragRotate}
+			{scalable}
+			{throttleScale}
+			{snappable}
+			{bounds}
+			on:render={({ detail: e }) => {
+				e.target.style.cssText += e.cssText;
+			}}
+			on:resizeEnd={({ detail: e }) => {
+				console.log(e.lastEvent);
+
+				if (e.lastEvent) {
+					setCanvasSize({
+						collection_name,
+						size: {
+							height: e.lastEvent.height,
+							width: e.lastEvent.width
+						}
+					});
+				}
+			}}
+			on:bound={({ detail: e }) => {}}
+		/>
+	{/if}
 </div>
-<Moveable
-	target={canvas}
-	ables={[DimensionViewable]}
-	resizable={true}
-	origin={false}
-	{bounds}
-	props={{ dimensionViewable: true }}
-	on:resize={({ detail: e }) => {
-		e.target.style.width = `${e.width}px`;
-		e.target.style.height = `${e.height}px`;
-		e.target.style.transform = e.drag.transform;
-	}}
-	on:bound={({ detail: e }) => {}}
-/>

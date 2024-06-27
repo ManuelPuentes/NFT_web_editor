@@ -22,6 +22,8 @@
 		rotate: ''
 	};
 
+	import { DimensionViewable } from '$lib/moveable-able';
+
 	const draggable = true;
 	const throttleDrag = 1;
 	const edgeDraggable = false;
@@ -70,13 +72,11 @@
 	};
 
 	onMount(() => {
-		const { left, top, right, bottom } = $workspace_details.workspace_bounding_rect;
-		bounds = { left, top, right, bottom };
+		bounds = $workspace_details;
 
 		id = `${data.directory_name}_${data.file_name}`;
 
 		last_selected_item.set({ id, context_menu: false });
-
 	});
 </script>
 
@@ -112,6 +112,8 @@
 			{throttleScale}
 			{snappable}
 			{bounds}
+			ables={[DimensionViewable]}
+			props={{ dimensionViewable: true }}
 			on:render={({ detail: e }) => {
 				e.target.style.cssText += e.cssText;
 				$assets_details[data.directory_name][data.file_name].styles = e.cssText;
@@ -142,7 +144,11 @@
 	{/if}
 
 	{#if context_menu}
-		<ImageContextMenu {pos} directory={data.directory_name} file={data.file_name.split('.svg')[0]} />
+		<ImageContextMenu
+			{pos}
+			directory={data.directory_name}
+			file={data.file_name.split('.svg')[0]}
+		/>
 	{/if}
 </div>
 

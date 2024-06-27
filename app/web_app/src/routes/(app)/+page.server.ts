@@ -2,7 +2,7 @@ import { redirect, type RequestEvent } from "@sveltejs/kit";
 import type { Actions } from "./$types";
 
 import { z } from 'zod';
-import { message, superValidate, fail, setError } from "sveltekit-superforms";
+import { superValidate, fail, setError } from "sveltekit-superforms";
 import { zod } from 'sveltekit-superforms/adapters';
 
 

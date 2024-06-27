@@ -1,7 +1,7 @@
 <script lang="ts">
     import { onMount } from "svelte";
 
-    import { assets_details } from "../../stores/web_app_state";
+    import { assets_details } from "$stores/web_app_state";
     export let pos = { x: 0, y: 0 };
     export let directory = "";
     export let file = "";

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Indicator, Spinner } from 'flowbite-svelte';
-	import { changes_indicator, assets_details } from '../../stores/web_app_state';
+	import { changes_indicator, assets_details } from '$stores/web_app_state';
 
 	function handleKeydown(event: KeyboardEvent) {
 		const { ctrlKey, key } = event;

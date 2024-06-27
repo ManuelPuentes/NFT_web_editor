@@ -23,13 +23,13 @@
 "
 >
 	<caption
-		class="p-5 text-lg font-semibold text-left w-[100%]
+		class="p-5 text-lg font-semibold text-left w-[100%] text-pretty
 		text-gray-900
 		dark:text-white
 		"
 	>
 		Create Collection
-		<p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400 text-balance">
+		<p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400 text-pretty">
 			Create a new collection project, set all rules to draw and start generating batches.
 		</p>
 	</caption>

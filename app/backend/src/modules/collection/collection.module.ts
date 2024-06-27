@@ -25,6 +25,10 @@ import { SetDrawOrderController } from './controllers/set-draw-order.controller'
 import { GetDrawOrderController } from './controllers/get-draw-order.controller';
 import { SetDrawOrderService } from './services/set-draw-order.service';
 import { GetDrawOrderService } from './services/get-draw-order.service';
+import { GetCanvasSizeController } from './controllers/get-canvas-size.controllers';
+import { GetCanvasSizeService } from './services/get-canvas-size.service';
+import { SetCanvasSizeController } from './controllers/set-canvas-size.controllers';
+import { SetCanvasSizeService } from './services/set-canvas-size.service';
 
 @Module({
 
@@ -35,7 +39,9 @@ import { GetDrawOrderService } from './services/get-draw-order.service';
     ExistController,
     CreateController,
     SetDrawOrderController,
+    SetCanvasSizeController,
     GetDrawOrderController,
+    GetCanvasSizeController,
     GetCollectionsController,
     SetAssetDetailsController,
     GetAssetDetailsController,
@@ -48,7 +54,9 @@ import { GetDrawOrderService } from './services/get-draw-order.service';
     UnzipperService,
     CreateCollectionService,
     SetDrawOrderService,
+    SetCanvasSizeService,
     GetDrawOrderService,
+    GetCanvasSizeService,
     GetCollectionsService,
     GetAssetsDetailsService,
     SetAssetsDetailsService,

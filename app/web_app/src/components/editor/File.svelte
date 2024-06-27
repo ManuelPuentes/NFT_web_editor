@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { AssetDetails } from '../../interfaces/AssetDetails';
-	import { selected_items } from '../../stores/web_app_state';
+	import { selected_items } from '$stores/web_app_state';
 
 	let file = null;
 	let active_item = false;

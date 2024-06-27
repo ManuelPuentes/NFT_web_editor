@@ -2,93 +2,34 @@ import { error } from '@sveltejs/kit';
 
 /** @type {import('./$types').PageLoad} */
 
+
+import { ensureCollectionExist } from '$lib/api/collection-exist';
+import { getCollectionAssetsData } from '$lib/api/assets-details';
+import { getDrawOrder } from '$lib/api/draw-order';
+
 export async function load({ params }: any) {
 
-    const collectionName = params.collection;
-
+    const collection_name = params.collection;
     try {
-        await ensureCollectionExist({ collectionName });
-        const assets_details = await getCollectionAssetsData({ collectionName });
-        const initialDrawOrder = await getInitialDrawOrder({ collectionName });
+
+        const [
+            exist,
+            assets_details,
+            draw_order
+        ] =
+            await Promise.all([
+                ensureCollectionExist({ collection_name }),
+                getCollectionAssetsData({ collection_name }),
+                getDrawOrder({ collection_name })
+            ]);
 
         return {
+            collection_name,
             assets_details,
-            initialDrawOrder,
-            collectionName,
+            draw_order,
         }
 
-    } catch (e) {
-        throw error(400, "internal error")
-    }
-}
-
-
-const ensureCollectionExist = async ({ collectionName }: { collectionName: string }) => {
-
-    const params = new URLSearchParams({
-        "name": collectionName,
-    });
-
-    const requestOptions = {
-        method: "GET",
-    };
-
-    try {
-        const exist = (await fetch(
-            `http://localhost:3000/collection/exist?` + params,
-            requestOptions
-        )).ok;
-
-        if (!exist) {
-            throw error(400, "collection not found ");
-        }
-
-    } catch (e) {
-        throw error(400, "internal error");
-    }
-}
-
-
-const getCollectionAssetsData = async ({ collectionName }: { collectionName: string }) => {
-
-    const params = new URLSearchParams({
-        "name": collectionName,
-    });
-
-    const requestOptions = {
-        method: "GET",
-    };
-
-    try {
-        const result = await (await fetch(
-            `http://localhost:3000/collection/asset-details?` + params,
-            requestOptions
-        )).json();
-
-        return result.data;
-
-    } catch (e) {
-        throw error(400, "asset list not found ")
-    }
-}
-
-const getInitialDrawOrder = async ({ collectionName }: { collectionName: string }) => {
-    const params = new URLSearchParams({
-        "name": collectionName,
-    });
-    const requestOptions = {
-        method: "GET",
-    };
-
-    try {
-        const result = await (await fetch(
-            `http://localhost:3000/collection/draw-order?` + params,
-            requestOptions
-        )).json();
-
-        return result.data;
-
-    } catch (e) {
-        throw error(400, "asset list not found ")
+    } catch (error: any) {
+        throw error(400, error.message);
     }
 }

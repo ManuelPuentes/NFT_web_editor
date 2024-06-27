@@ -1,6 +1,5 @@
 <script>
 	import {
-		Button,
 		Table,
 		TableBody,
 		TableBodyCell,
