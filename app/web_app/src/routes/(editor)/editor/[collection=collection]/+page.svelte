@@ -5,6 +5,7 @@
 	import Workspace from '$components/editor/Workspace.svelte';
 	import Sidebar from '$components/editor/Sidebar.svelte';
 	import ChangesIndicator from '$components/editor/ChangesIndicator.svelte';
+	import ImageContextMenu from '$components/editor/ImageContextMenu.svelte';
 	export let data: any;
 
 	onMount(() => {
@@ -22,7 +23,7 @@
 	m-auto
 	"
 >
-	<ChangesIndicator collectionName={data.collection_name} />
 	<Sidebar />
 	<Workspace collection_name={data.collection_name} />
+	<ImageContextMenu />
 </div>

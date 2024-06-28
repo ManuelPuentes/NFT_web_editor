@@ -10,13 +10,13 @@
 
 	import { onMount } from 'svelte';
 	import Image from './Image.svelte';
-	import ImageContextMenu from './ImageContextMenu.svelte';
 
 	import type { MoveableBounds } from '../../interfaces/BoundingRect';
 	import type { AssetDetails } from '../../interfaces/AssetDetails';
 	import { DimensionViewable } from '$lib/moveable-able';
 
 	import { setCanvasSize, getCanvasSize } from '$lib/api/canvas-size';
+	import ChangesIndicator from './ChangesIndicator.svelte';
 
 	export let collection_name = '';
 
@@ -80,6 +80,7 @@
 	id="workspace"
 >
 	<!-- svelte-ignore a11y-no-static-element-interactions -->
+
 	<div
 		id={canvas_id}
 		class="
@@ -97,7 +98,7 @@
 		{/each}
 	</div>
 
-	<ImageContextMenu />
+	<ChangesIndicator />
 
 	{#if $last_selected_item_id === canvas_id}
 		<Moveable
@@ -115,7 +116,6 @@
 				e.target.style.cssText += e.cssText;
 			}}
 			on:resizeEnd={({ detail: e }) => {
-
 				if (e.lastEvent) {
 					setCanvasSize({
 						collection_name,
