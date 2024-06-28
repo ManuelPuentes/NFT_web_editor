@@ -2,14 +2,15 @@
 	import Moveable from 'svelte-moveable';
 	import {
 		draw_order,
+		canvas_size,
 		selected_items,
 		workspace_details,
-		last_selected_item,
-		canvas_size
+		last_selected_item_id
 	} from '$stores/web_app_state';
 
 	import { onMount } from 'svelte';
 	import Image from './Image.svelte';
+	import ImageContextMenu from './ImageContextMenu.svelte';
 
 	import type { MoveableBounds } from '../../interfaces/BoundingRect';
 	import type { AssetDetails } from '../../interfaces/AssetDetails';
@@ -47,7 +48,7 @@
 	};
 
 	const handleCanvasClick = () => {
-		last_selected_item.set({ id: canvas_id, context_menu: false });
+		$last_selected_item_id = canvas_id;
 	};
 
 	const drawImagesOrder = (drawOrder: string[], selectedItems: Record<string, AssetDetails>) => {
@@ -62,7 +63,6 @@
 		return order;
 	};
 
-	$: selected = $last_selected_item.id;
 	$: images_data = drawImagesOrder($draw_order, $selected_items);
 
 	const throttleDragRotate = 0;
@@ -97,7 +97,9 @@
 		{/each}
 	</div>
 
-	{#if selected === canvas_id}
+	<ImageContextMenu />
+
+	{#if $last_selected_item_id === canvas_id}
 		<Moveable
 			target={canvas}
 			origin={false}
@@ -113,7 +115,6 @@
 				e.target.style.cssText += e.cssText;
 			}}
 			on:resizeEnd={({ detail: e }) => {
-				console.log(e.lastEvent);
 
 				if (e.lastEvent) {
 					setCanvasSize({

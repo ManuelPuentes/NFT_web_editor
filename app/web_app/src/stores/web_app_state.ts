@@ -14,16 +14,19 @@ export const canvas_size = writable(
 
 export const assets_details = writable<Record<string, Record<string, any>>>({});
 
-
 export const draw_order = writable(['']);
+
+export const changes_indicator = writable(false);
+
+export const last_selected_item_id = writable('');
+
+export const context_menu = writable({
+    status: false,
+    pos: { x: 0, y: 0 }
+});
 
 export const selected_items = writable<Record<string, AssetDetails>>({});
 
 export const selected_element_details = writable(null);
 
-export const last_selected_item = writable({
-    id: '',
-    context_menu: false,
-});
 
-export const changes_indicator = writable(false);

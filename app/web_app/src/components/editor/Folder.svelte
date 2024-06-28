@@ -13,6 +13,7 @@
 	let animation_options = { duration: 200, easing: linear };
 
 	$: folder_expanded = flag;
+
 </script>
 
 <div
@@ -26,9 +27,7 @@
 >
 	<!-- svelte-ignore a11y-no-static-element-interactions -->
 	<div
-		class="
-    truncate
-  "
+		class="truncate"
 		on:click={handleClick}
 		on:keyup={handleClick}
 	>

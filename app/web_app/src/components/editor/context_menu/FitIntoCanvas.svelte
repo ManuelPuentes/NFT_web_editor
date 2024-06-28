@@ -1,26 +1,33 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { Button } from 'flowbite-svelte';
-	import { last_selected_item, assets_details, changes_indicator } from '$stores/web_app_state';
+	import {
+		last_selected_item_id,
+		assets_details,
+		changes_indicator,
+		context_menu,
+		selected_items
+	} from '$stores/web_app_state';
 
 	let directory: string = '';
 	let file: string = '';
 
 	onMount(() => {
-		[directory, file] = $last_selected_item.id.split('_');
+		[directory, file] = $last_selected_item_id.split('_');
 	});
 
 	export const fit_into_canvas = () => {
 		reset_styles();
+
 		const canvas = window.document.getElementById('canvas')?.getBoundingClientRect();
-		const element = window.document.getElementById($last_selected_item.id)?.getBoundingClientRect();
+		const element = window.document.getElementById($last_selected_item_id)?.getBoundingClientRect();
 
 		if (!canvas || !element) return;
 
 		const { width: canvas_width, height: canvas_height } = canvas;
 		const { width: element_width, height: element_height } = element;
 
-		if (canvas_width >= element_width && canvas_height >= element_height) return;
+		// if (canvas_width >= element_width && canvas_height >= element_height) return;
 
 		const resize_axis = canvas_width > canvas_height ? 'height' : 'width';
 
@@ -39,6 +46,8 @@
 		update_styles({
 			new_scale: scale
 		});
+
+		update_stores();
 	};
 
 	const reset_styles = () => {
@@ -63,9 +72,12 @@
 			styles,
 			scale
 		};
+	};
 
+	const update_stores = () => {
 		$changes_indicator = true;
-
+		$context_menu.status = false;
+		$selected_items[directory] = $assets_details[directory][file];
 	};
 </script>
 

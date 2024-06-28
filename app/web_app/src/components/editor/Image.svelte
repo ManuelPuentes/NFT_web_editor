@@ -2,13 +2,12 @@
 	import { onMount } from 'svelte';
 	import Moveable from 'svelte-moveable';
 	import {
-		workspace_details,
-		last_selected_item,
+		context_menu,
 		assets_details,
-		changes_indicator
+		workspace_details,
+		changes_indicator,
+		last_selected_item_id
 	} from '$stores/web_app_state';
-
-	import ImageContextMenu from './ImageContextMenu.svelte';
 
 	import type { MoveableBounds } from '../../interfaces/BoundingRect';
 
@@ -22,33 +21,22 @@
 		rotate: ''
 	};
 
-	import { DimensionViewable } from '$lib/moveable-able';
-
-	const draggable = true;
-	const throttleDrag = 1;
-	const edgeDraggable = false;
-	const startDragRotate = 0;
-	const throttleDragRotate = 0;
+	let targetRef = null;
+	let moveableRef = null;
 	const scalable = true;
-	const keepRatio = false;
-	const throttleScale = 0;
+	const draggable = true;
 	const snappable = true;
 	const rotatable = true;
-	let bounds: MoveableBounds = { left: 0, top: 0, right: 0, bottom: 0 };
-	let moveableRef = null;
-	let targetRef = null;
+	const keepRatio = false;
+	const edgeDraggable = false;
+	const throttleDrag = 1;
+	const throttleScale = 0;
+	const startDragRotate = 0;
+	const throttleDragRotate = 0;
 
 	let id = 'id';
-	let pos: {
-		x: number;
-		y: number;
-	};
-	let selected = '';
-	let context_menu = false;
 	let is_mouse_over = false;
-
-	$: selected = $last_selected_item.id;
-	$: context_menu = $last_selected_item.context_menu;
+	let bounds: MoveableBounds = { left: 0, top: 0, right: 0, bottom: 0 };
 
 	const handleMouseOver = () => {
 		is_mouse_over = true;
@@ -60,94 +48,83 @@
 
 	const handleClick = (e: MouseEvent) => {
 		e.stopPropagation();
-		$last_selected_item = { id, context_menu: false };
+		$context_menu.status = false;
+		$last_selected_item_id = id;
 	};
 
 	const rightClickContextMenu = (e: MouseEvent) => {
-		$last_selected_item = { id, context_menu: true };
-		pos = {
-			x: e.clientX,
-			y: e.clientY
-		};
+		$last_selected_item_id = id;
+
+		context_menu.set({
+			status: true,
+			pos: {
+				x: e.clientX,
+				y: e.clientY
+			}
+		});
 	};
 
 	onMount(() => {
 		bounds = $workspace_details;
-
 		id = `${data.directory_name}_${data.file_name}`;
-
-		last_selected_item.set({ id, context_menu: false });
 	});
 </script>
 
-<!-- <div class="img_container"> -->
-	<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
-	<!-- svelte-ignore a11y-click-events-have-key-events -->
-	<img
-		class="img_container"
-		alt={id}
-		{id}
-		bind:this={targetRef}
-		src={data.file_asset_path}
-		style={$assets_details[data.directory_name][data.file_name].styles}
-		on:click|preventDefault={handleClick}
-		on:contextmenu|preventDefault={rightClickContextMenu}
-		on:mouseover={handleMouseOver}
-		on:focus={handleMouseOver}
-		on:mouseout={handleMouseOut}
-		on:blur={handleMouseOut}
+<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
+<!-- svelte-ignore a11y-click-events-have-key-events -->
+<img
+	alt={id}
+	{id}
+	bind:this={targetRef}
+	src={data.file_asset_path}
+	style={$assets_details[data.directory_name][data.file_name].styles}
+	on:click|preventDefault={handleClick}
+	on:contextmenu|preventDefault={rightClickContextMenu}
+	on:mouseover={handleMouseOver}
+	on:focus={handleMouseOver}
+	on:mouseout={handleMouseOut}
+	on:blur={handleMouseOut}
+/>
+
+{#if is_mouse_over || $last_selected_item_id === id}
+	<Moveable
+		bind:this={moveableRef}
+		target={targetRef}
+		origin={false}
+		{draggable}
+		{rotatable}
+		{throttleDrag}
+		{edgeDraggable}
+		{startDragRotate}
+		{throttleDragRotate}
+		{scalable}
+		{keepRatio}
+		{throttleScale}
+		{snappable}
+		{bounds}
+		props={{ dimensionViewable: true }}
+		on:render={({ detail: e }) => {
+			e.target.style.cssText += e.cssText;
+			$assets_details[data.directory_name][data.file_name].styles = e.cssText;
+		}}
+		on:drag={({ detail: e }) => {
+			e.target.style.transform = e.transform;
+			$assets_details[data.directory_name][data.file_name].transform = e.transform;
+			$changes_indicator = true;
+		}}
+		on:scale={({ detail: e }) => {
+			e.target.style.transform = e.drag.transform;
+			$assets_details[data.directory_name][data.file_name].scale = e.drag.transform;
+			$changes_indicator = true;
+		}}
+		on:rotate={({ detail: e }) => {
+			e.target.style.transform = e.afterTransform;
+			$assets_details[data.directory_name][data.file_name].rotate = e.afterTransform;
+			$changes_indicator = true;
+		}}
+		on:bound={({ detail: e }) => {}}
 	/>
-
-	{#if is_mouse_over || selected === id}
-		<Moveable
-			bind:this={moveableRef}
-			target={targetRef}
-			origin={false}
-			{draggable}
-			{rotatable}
-			{throttleDrag}
-			{edgeDraggable}
-			{startDragRotate}
-			{throttleDragRotate}
-			{scalable}
-			{keepRatio}
-			{throttleScale}
-			{snappable}
-			{bounds}
-			props={{ dimensionViewable: true }}
-			on:render={({ detail: e }) => {
-				e.target.style.cssText += e.cssText;
-				// $assets_details[data.directory_name][data.file_name].styles = e.cssText;
-			}}
-			on:drag={({ detail: e }) => {
-				// e.target.style.transform = e.transform;
-				// $assets_details[data.directory_name][data.file_name].transform = e.transform;
-				// $changes_indicator = true;
-				// context_menu = false;
-
-			}}
-			on:scale={({ detail: e }) => {
-				e.target.style.transform = e.drag.transform;
-				$assets_details[data.directory_name][data.file_name].scale = e.drag.transform;
-				$changes_indicator = true;
-
-				context_menu = false;
-			}}
-			on:rotate={({ detail: e }) => {
-				e.target.style.transform = e.afterTransform;
-				$assets_details[data.directory_name][data.file_name].rotate = e.afterTransform;
-				$changes_indicator = true;
-
-				context_menu = false;
-			}}
-			on:bound={({ detail: e }) => {}}
-		/>
-	{/if}
-
-	{#if context_menu}
-		<ImageContextMenu {pos} />
-	{/if}
-<!-- </div> -->
+{/if}
 
 <style>
 	img {

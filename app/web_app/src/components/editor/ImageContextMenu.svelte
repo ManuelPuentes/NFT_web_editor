@@ -1,27 +1,14 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
-	import { Button } from 'flowbite-svelte';
-
+	import { onMount, onDestroy } from 'svelte';
 	import ResetStyles from './context_menu/ResetStyles.svelte';
 	import FitIntoCanvas from './context_menu/FitIntoCanvas.svelte';
 
-	import { last_selected_item } from '$stores/web_app_state';
+	import { context_menu, last_selected_item_id } from '$stores/web_app_state';
 
-	export let pos = { x: 0, y: 0 };
+	let pos: { x: number; y: number } = { x: 0, y: 0 };
+	let menu: { h: number; w: number } = { h: 0, w: 0 };
 
-	let menu: { h: number; w: number };
-	let browser: { h: number; w: number };
-	let id: string;
-
-	onMount(() => {
-		browser = {
-			w: window.innerWidth,
-			h: window.innerHeight
-		};
-
-		if (browser.h - pos.y < menu.h) pos.y = pos.y - menu.h;
-		if (browser.w - pos.x < menu.w) pos.x = pos.x - menu.w;
-	});
+	$: pos = $context_menu.pos;
 
 	const getContextMenuDimension = (node: any) => {
 		let height = node.offsetHeight;
@@ -30,24 +17,31 @@
 			h: height,
 			w: width
 		};
-		id = $last_selected_item.id.replace("_",": ");
 	};
+
+	function onPageClick(e: any) {
+		$context_menu.status = false;
+	}
 </script>
 
-<nav
-	use:getContextMenuDimension
-	style="top:{pos.y}px; left:{pos.x}px"
-	class="absolute z-[5000] dark:bg-[--background_color] rounded-lg border dark:border-[--border_color]"
->
-	<div class="p-1 mt-2 mb-2 text-base text-center" id="navbar">
-		{id}
-		<ul>
-			<li class="text-base p-1">
-				<FitIntoCanvas />
-			</li>
-			<li class="text-base p-1">
-				<ResetStyles />
-			</li>
-		</ul>
-	</div>
-</nav>
+{#if $context_menu.status}
+	<nav
+		use:getContextMenuDimension
+		style="top:{pos.y}px; left:{pos.x}px"
+		class="absolute z-[5000] dark:bg-[--background_color] rounded-lg border dark:border-[--border_color]"
+	>
+		<div class="p-1 mt-2 mb-2 text-base text-center" id="navbar">
+			{$last_selected_item_id}
+			<ul>
+				<li class="text-base p-1">
+					<FitIntoCanvas />
+				</li>
+				<li class="text-base p-1">
+					<ResetStyles />
+				</li>
+			</ul>
+		</div>
+	</nav>
+{/if}
+
+<svelte:window on:click={onPageClick} />
