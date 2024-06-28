@@ -6,7 +6,7 @@
 		last_selected_item,
 		assets_details,
 		changes_indicator
-	} from '../../stores/web_app_state';
+	} from '$stores/web_app_state';
 
 	import ImageContextMenu from './ImageContextMenu.svelte';
 
@@ -80,11 +80,13 @@
 	});
 </script>
 
-<div class="img_container" {id}>
+<!-- <div class="img_container"> -->
 	<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
 	<!-- svelte-ignore a11y-click-events-have-key-events -->
 	<img
+		class="img_container"
 		alt={id}
+		{id}
 		bind:this={targetRef}
 		src={data.file_asset_path}
 		style={$assets_details[data.directory_name][data.file_name].styles}
@@ -112,18 +114,17 @@
 			{throttleScale}
 			{snappable}
 			{bounds}
-			ables={[DimensionViewable]}
 			props={{ dimensionViewable: true }}
 			on:render={({ detail: e }) => {
 				e.target.style.cssText += e.cssText;
-				$assets_details[data.directory_name][data.file_name].styles = e.cssText;
+				// $assets_details[data.directory_name][data.file_name].styles = e.cssText;
 			}}
 			on:drag={({ detail: e }) => {
-				e.target.style.transform = e.transform;
-				$assets_details[data.directory_name][data.file_name].transform = e.transform;
-				$changes_indicator = true;
+				// e.target.style.transform = e.transform;
+				// $assets_details[data.directory_name][data.file_name].transform = e.transform;
+				// $changes_indicator = true;
+				// context_menu = false;
 
-				context_menu = false;
 			}}
 			on:scale={({ detail: e }) => {
 				e.target.style.transform = e.drag.transform;
@@ -144,17 +145,12 @@
 	{/if}
 
 	{#if context_menu}
-		<ImageContextMenu
-			{pos}
-			directory={data.directory_name}
-			file={data.file_name.split('.svg')[0]}
-		/>
+		<ImageContextMenu {pos} />
 	{/if}
-</div>
+<!-- </div> -->
 
 <style>
 	img {
 		position: absolute;
-		align-items: center;
 	}
 </style>

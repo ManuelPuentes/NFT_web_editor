@@ -86,6 +86,7 @@
 			dark:bg-[repeating-linear-gradient(0deg,black_0_1px,transparent_1px_20px),repeating-linear-gradient(90deg,black_0_1px,transparent_1px_20px)] dark:bg-slate-700
 			bg-[repeating-linear-gradient(0deg,black_0_1px,transparent_1px_20px),repeating-linear-gradient(90deg,black_0_1px,transparent_1px_20px)] bg-slate-100
 			!transform-none
+			flex items-center justify-center
     	"
 		bind:this={canvas}
 		on:click={handleCanvasClick}
