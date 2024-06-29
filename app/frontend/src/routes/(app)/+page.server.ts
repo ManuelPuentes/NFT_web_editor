@@ -31,6 +31,9 @@ export const actions: Actions = {
 
 		const { collectionAssets, collectionName } = form.data;
 
+		console.log("hola");
+		
+
 
 		const formdata = new FormData();
 

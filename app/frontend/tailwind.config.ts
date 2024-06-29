@@ -1,7 +1,10 @@
-const config = {
-	content: [
+import type { Config } from "tailwindcss";
+
+export default {
+
+    content: [
 		'./src/**/*.{html,js,svelte,ts}',
-		'./node_modules/flowbite-svelte/**/*.{html,js,svelte,ts}'
+		'../../node_modules/flowbite-svelte/**/*.{html,js,svelte,ts}'
 	],
 
 	theme: {
@@ -24,8 +27,7 @@ const config = {
 		  },
 	},
 
-	plugins: [require('flowbite/plugin')],
+    plugins: [require("@tailwindcss/typography")],
+	
 	darkMode: 'class'
-};
-
-module.exports = config;
+} as Config;

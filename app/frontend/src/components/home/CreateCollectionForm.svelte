@@ -15,6 +15,7 @@
 	method="POST"
 	use:enhance
 	action="?/createCollection"
+	enctype="multipart/form-data"
 	class="
 	flex flex-col items-center gap-5
 	w-[60%] max-w-[600px] h-[50%]
@@ -49,7 +50,6 @@
 		{...$constraints.collectionAssets}
 		text_content="Click to upload or drag and drop your zip file with the collection assets here!"
 		name="collectionAssets"
-		enctype="multipart/form-data"
 		accept="zip,application/octet-stream,application/zip,application/x-zip,application/x-zip-compressed"
 	/>
 

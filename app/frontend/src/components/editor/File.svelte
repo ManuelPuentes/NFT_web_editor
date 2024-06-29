@@ -1,7 +1,6 @@
 <script lang="ts">
 	import type { AssetDetails } from '../../interfaces/AssetDetails';
 	import { selected_items, context_menu } from '$stores/web_app_state';
-	import { loop_guard } from 'svelte/internal';
 
 	let file = null;
 	let active_item = false;
