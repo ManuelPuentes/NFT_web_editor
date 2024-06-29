@@ -16,9 +16,6 @@ export class HealthController {
   @Version(VERSION_NEUTRAL)
   async execute(): Promise<HealthCheckResponse & HealthCheckResult> {
     const result = await this.health.check([]);
-
-    console.log('health form nestjs');
-    
     return {
       'node-version': process.version,
       cpu: process.cpuUsage(),

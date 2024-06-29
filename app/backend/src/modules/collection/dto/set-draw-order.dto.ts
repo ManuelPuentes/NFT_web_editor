@@ -1,4 +1,4 @@
-import { IsArray, IsNotEmpty, IsObject } from 'class-validator';
+import { IsArray, IsNotEmpty } from 'class-validator';
 
 export class SetDrawOrderDto {
     @IsNotEmpty({ message: '$property cant be empty or null' })
