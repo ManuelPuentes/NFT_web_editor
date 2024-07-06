@@ -1,18 +1,17 @@
-
 import { filterElementAttributes } from '../utils/svg-attributes';
 
 export const polylineElement = (
-    svg_data: any,
-    parent_element: any,
-    element_id: string
+  svg_data: any,
+  parent_element: any,
+  element_id: string,
 ) => {
-    let { attributes } = svg_data;
+  const { attributes } = svg_data;
 
-    const polyline = parent_element.polyline();
+  const polyline = parent_element.polyline();
 
-    filterElementAttributes(attributes, element_id);
+  filterElementAttributes(attributes, element_id);
 
-    polyline.attr(attributes);
+  polyline.attr(attributes);
 
-    return polyline;
-}
+  return polyline;
+};

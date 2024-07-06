@@ -8,7 +8,7 @@ import { GetCollectionsController } from './controllers/get-collections.controll
 import { GenerateImagesController } from './controllers/generate-images.controller';
 import { GetAssetDetailsController } from './controllers/get-assets-details.controller';
 import { SvgJsService } from '../svglib/services/svgjs.service';
-import { SvgsonService} from '../svgsom/services/svgson.service';
+import { SvgsonService } from '../svgsom/services/svgson.service';
 import { CryptoService } from '../crypto/services/crypto.service';
 import { CreateCollectionService } from './services/create.service';
 import { UnzipperService } from '../unzipper/services/unzipper.service';
@@ -31,10 +31,13 @@ import { SetCanvasSizeController } from './controllers/set-canvas-size.controlle
 import { SetCanvasSizeService } from './services/set-canvas-size.service';
 
 @Module({
-
-  imports: [MulterModule.register(), TypeOrmModule.forFeature([Collection]), BullModule.registerQueue({
-    name: COLLECTION_QUEUE,
-  }),],
+  imports: [
+    MulterModule.register(),
+    TypeOrmModule.forFeature([Collection]),
+    BullModule.registerQueue({
+      name: COLLECTION_QUEUE,
+    }),
+  ],
   controllers: [
     ExistController,
     CreateController,
@@ -65,4 +68,4 @@ import { SetCanvasSizeService } from './services/set-canvas-size.service';
     CreateCollectionProcessor,
   ],
 })
-export class CollectionModule { }
+export class CollectionModule {}

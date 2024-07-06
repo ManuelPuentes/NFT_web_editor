@@ -1,21 +1,15 @@
-import { InjectQueue } from '@nestjs/bull';
-import { Body, Controller, Post, Query, UseGuards } from '@nestjs/common';
-import { COLLECTION_QUEUE } from '../queue/collection-queue.const';
-
-import { Queue } from 'bull';
+import { Body, Controller, Post, UseGuards } from '@nestjs/common';
 import { CollectionMustExistGuard } from '../guards/collection-must-exist.guard';
 import { GenerateImagesService } from '../services/generate-images.service';
+import { GenerateImagesDto } from '../dto/generate-images.dto';
 
 @Controller('collection')
 export class GenerateImagesController {
-    // @InjectQueue(COLLECTION_QUEUE) private readonly metadataQueue: Queue
-    constructor(private readonly generateImagesService: GenerateImagesService) { }
+  constructor(private readonly generateImagesService: GenerateImagesService) {}
 
-    @Post('generate-images')
-    @UseGuards(CollectionMustExistGuard)
-    async execute(
-        @Query() { collection_name }: { collection_name: string }
-    ) {
-        await this.generateImagesService.exec({ collection_name })
-    }
+  @Post('generate-images')
+  @UseGuards(CollectionMustExistGuard)
+  async execute(@Body() { collection_name, amount }: GenerateImagesDto) {
+    await this.generateImagesService.exec({ collection_name, amount });
+  }
 }

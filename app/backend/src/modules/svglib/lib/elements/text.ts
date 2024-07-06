@@ -1,20 +1,17 @@
-
 import { filterElementAttributes } from '../utils/svg-attributes';
 
 export const textElement = (
-    svg_data: any,
-    parent_element: any,
-    element_id: string
+  svg_data: any,
+  parent_element: any,
+  element_id: string,
 ) => {
-    let { attributes } = svg_data;
+  const { attributes } = svg_data;
 
-    const text = parent_element.text(
-        svg_data.children[0].value
-    );
+  const text = parent_element.text(svg_data.children[0].value);
 
-    filterElementAttributes(attributes, element_id);
+  filterElementAttributes(attributes, element_id);
 
-    text.attr(attributes);
+  text.attr(attributes);
 
-    return text;
-}
+  return text;
+};

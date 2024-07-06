@@ -1,21 +1,17 @@
-
 import { filterElementAttributes } from '../utils/svg-attributes';
 
 export const rectElement = (
-    svg_data: any,
-    parent_element: any,
-    element_id: string
+  svg_data: any,
+  parent_element: any,
+  element_id: string,
 ) => {
-    let { attributes } = svg_data;
+  const { attributes } = svg_data;
 
-    const rect = parent_element.rect(
-        attributes["width"],
-        attributes["height"],
-    );
+  const rect = parent_element.rect(attributes['width'], attributes['height']);
 
-    filterElementAttributes(attributes, element_id);
+  filterElementAttributes(attributes, element_id);
 
-    rect.attr(attributes);
+  rect.attr(attributes);
 
-    return rect;
-}
+  return rect;
+};

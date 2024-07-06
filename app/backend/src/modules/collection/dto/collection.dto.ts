@@ -1,7 +1,7 @@
 import { Transform, TransformFnParams } from 'class-transformer';
 import { IsNotEmpty, IsString } from 'class-validator';
 
-export class CreateCollectionDto {
+export class CollectionDto {
   @IsNotEmpty({ message: '$property cant be empty or null' })
   @IsString({ message: '$property must be a string' })
   @Transform(({ value }: TransformFnParams) => {
@@ -10,5 +10,5 @@ export class CreateCollectionDto {
     }
     return value.toLowerCase();
   })
-  name: string;
+  collection_name: string;
 }

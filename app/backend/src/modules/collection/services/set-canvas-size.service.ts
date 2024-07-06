@@ -4,9 +4,12 @@ import { SetCanvasSize } from '../interfaces/set-canvas-size.interface';
 
 @Injectable()
 export class SetCanvasSizeService {
-    constructor() { }
+  constructor() {}
 
-    async exec({ name, size }: SetCanvasSize ): Promise<void> {
-        fs.writeFileSync(`./collections/${name}/canvas_size.json`, JSON.stringify(size));
-    }
+  async exec({ collection_name, size }: SetCanvasSize): Promise<void> {
+    fs.writeFileSync(
+      `./collections/${collection_name}/canvas_size.json`,
+      JSON.stringify(size),
+    );
+  }
 }

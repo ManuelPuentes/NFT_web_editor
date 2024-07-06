@@ -1,5 +1,5 @@
 export interface PathDetails {
-    isDirectory: boolean,
-    dirname: string,
-    filename?: string
+  isDirectory: boolean;
+  dirname: string;
+  filename?: string;
 }

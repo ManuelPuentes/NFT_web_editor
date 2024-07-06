@@ -1,19 +1,17 @@
-
 import { filterElementAttributes } from '../utils/svg-attributes';
 
 export const polygonElement = (
-    svg_data: any,
-    parent_element: any,
-    element_id: string
+  svg_data: any,
+  parent_element: any,
+  element_id: string,
 ) => {
+  const { attributes } = svg_data;
 
-    let { attributes } = svg_data;
+  const polygon = parent_element.polygon();
 
-    const polygon = parent_element.polygon();
+  filterElementAttributes(attributes, element_id);
 
-    filterElementAttributes(attributes, element_id)
+  polygon.attr(attributes);
 
-    polygon.attr(attributes);
-
-    return polygon;
-}
+  return polygon;
+};

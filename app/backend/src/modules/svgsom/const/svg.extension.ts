@@ -1,1 +1,1 @@
-export const SVG = '.svg'
+export const SVG = '.svg';

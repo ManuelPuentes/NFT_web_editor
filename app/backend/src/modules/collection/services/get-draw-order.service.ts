@@ -4,46 +4,62 @@ import { CollectionAssetsDetailsNotFoundException } from '../exceptions/collecti
 
 @Injectable()
 export class GetDrawOrderService {
-    constructor() { }
-    async exec({ collection_name }: { collection_name: string }): Promise<Array<string>> {
+  constructor() {}
+  async exec({
+    collection_name,
+  }: {
+    collection_name: string;
+  }): Promise<Array<string>> {
+    this.ensureAssetsDetailsFileExist({ collection_name });
 
-        this.ensureAssetsDetailsFileExist({ collection_name });
+    const draw_order: Array<string> = this.collectionDrawOrderFileExist({
+      collection_name,
+    })
+      ? this.readDrawOrderFile({ collection_name })
+      : this.generateDrawOrderFile({ collection_name });
 
-        const draw_order: Array<string> = (this.collectionDrawOrderFileExist({ collection_name })) ?
-            this.readDrawOrderFile({ collection_name }) :
-            this.generateDrawOrderFile({ collection_name }
-            );
-            
-        return draw_order;
+    return draw_order;
+  }
+
+  private collectionDrawOrderFileExist({
+    collection_name,
+  }: {
+    collection_name: string;
+  }) {
+    const path = `./collections/${collection_name}/draw-order.json`;
+    return fs.existsSync(path);
+  }
+
+  private ensureAssetsDetailsFileExist({
+    collection_name,
+  }: {
+    collection_name: string;
+  }) {
+    const path = `./collections/${collection_name}/assets_details.json`;
+    if (!fs.existsSync(path)) {
+      throw new CollectionAssetsDetailsNotFoundException();
     }
+  }
 
-    private collectionDrawOrderFileExist({ collection_name }: { collection_name: string }) {
-        const path = `./collections/${collection_name}/draw-order.json`;
-        return fs.existsSync(path);
-    }
+  private readDrawOrderFile({ collection_name }: { collection_name: string }) {
+    const path = `./collections/${collection_name}/draw-order.json`;
+    return JSON.parse(fs.readFileSync(path).toString());
+  }
 
-    private ensureAssetsDetailsFileExist({ collection_name }: { collection_name: string }) {
-        const path = `./collections/${collection_name}/assets_details.json`;
-        if (!fs.existsSync(path)) {
-            throw new CollectionAssetsDetailsNotFoundException();
-        }
-    }
+  private generateDrawOrderFile({
+    collection_name,
+  }: {
+    collection_name: string;
+  }) {
+    const assets_details_path = `./collections/${collection_name}/assets_details.json`;
+    const draw_order_path = `./collections/${collection_name}/draw_order.json`;
 
-    private readDrawOrderFile({ collection_name }: { collection_name: string }) {
-        const path = `./collections/${collection_name}/draw-order.json`;
-        return JSON.parse(fs.readFileSync(path).toString());
-    }
+    const draw_order: Array<string> = Object.keys(
+      JSON.parse(fs.readFileSync(assets_details_path).toString()),
+    );
 
-    private generateDrawOrderFile({ collection_name }: { collection_name: string }) {
-        const assets_details_path = `./collections/${collection_name}/assets_details.json`;
-        const draw_order_path = `./collections/${collection_name}/draw_order.json`;
+    fs.writeFileSync(draw_order_path, JSON.stringify(draw_order));
 
-        const draw_order: Array<string> = Object
-            .keys(JSON.parse(fs.readFileSync(assets_details_path)
-                .toString()));
-
-        fs.writeFileSync(draw_order_path, JSON.stringify(draw_order));
-
-        return draw_order;
-    }
+    return draw_order;
+  }
 }

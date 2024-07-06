@@ -1,18 +1,17 @@
-
 import { filterElementAttributes } from '../utils/svg-attributes';
 
 export const lineElement = (
-    svg_data: any,
-    parent_element: any,
-    element_id: string
+  svg_data: any,
+  parent_element: any,
+  element_id: string,
 ) => {
-    let { attributes } = svg_data;
+  const { attributes } = svg_data;
 
-    const line = parent_element.line();
+  const line = parent_element.line();
 
-    filterElementAttributes(attributes, element_id);
+  filterElementAttributes(attributes, element_id);
 
-    line.attr(attributes);
+  line.attr(attributes);
 
-    return line;
-}
+  return line;
+};

@@ -3,7 +3,7 @@ import { ConfigService } from '@nestjs/config';
 import { SvgsonService } from './services/svgson.service';
 
 @Module({
-    providers: [ConfigService, SvgsonService],
-    exports: [SvgsonService],
+  providers: [ConfigService, SvgsonService],
+  exports: [SvgsonService],
 })
-export class SvgsonModule { }
+export class SvgsonModule {}

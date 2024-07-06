@@ -2,28 +2,21 @@ import { svgElement } from '../svgjs';
 import { filterElementAttributes } from '../utils/svg-attributes';
 
 export const groupElement = (
-    svg_data: any,
-    parent_element: any,
-    element_id: string
+  svg_data: any,
+  parent_element: any,
+  element_id: string,
 ) => {
+  const { attributes } = svg_data;
 
-    let { attributes } = svg_data;
+  const group = parent_element.group();
 
-    const group = parent_element.group();
+  filterElementAttributes(attributes, element_id);
 
-    filterElementAttributes(attributes, element_id);
+  group.attr(attributes);
 
-    group.attr(attributes);
+  svg_data.children.map((element: any) => {
+    svgElement(element, group, element_id);
+  });
 
-    svg_data.children.map((element: any) => {
-
-        svgElement(
-            element,
-            group,
-            element_id
-        );
-
-    });
-
-    return group;
-}
+  return group;
+};

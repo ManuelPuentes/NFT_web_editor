@@ -3,12 +3,11 @@ import { Hash, createHash } from 'node:crypto';
 
 @Injectable()
 export class CryptoService {
+  private hash: Hash;
 
-    private hash: Hash;
-
-    getHash(data: Buffer): string {
-        this.hash = createHash('sha256')
-        this.hash.update(data);
-        return this.hash.digest('hex')
-    }
+  getHash(data: Buffer): string {
+    this.hash = createHash('sha256');
+    this.hash.update(data);
+    return this.hash.digest('hex');
+  }
 }

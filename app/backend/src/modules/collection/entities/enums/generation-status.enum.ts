@@ -1,4 +1,4 @@
 export enum GenerationStatus {
-    ACTIVE = 'active',
-    INACTIVE = 'inactive',
+  ACTIVE = 'active',
+  INACTIVE = 'inactive',
 }
