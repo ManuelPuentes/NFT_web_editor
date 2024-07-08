@@ -26,12 +26,12 @@ export class CreateCollectionService {
   async exec({ collection_name, assets }: CreateCollection): Promise<void> {
     await this.UnzipAssets({ path: assets.path });
 
-    const extractedAssetsDirectoryPath: string = `${assets.path.split('.zip')[0]}`;
+    this.ensureAssets({ assets_path: `${assets.path.replace('.zip', '')}` });
 
-    this.ensureAssets({ assets_path: extractedAssetsDirectoryPath });
+    const collection_assets_folder_path = `${assets.destination}/assets`;
 
     const { assets_details } = this.processDirectoryTree({
-      directory_path: extractedAssetsDirectoryPath,
+      directory_path: collection_assets_folder_path,
       collection_name,
     });
 
@@ -44,7 +44,7 @@ export class CreateCollectionService {
 
     this.createCollectionQueue.add('create', {
       collection_name,
-      assets_path: extractedAssetsDirectoryPath,
+      assets_path: collection_assets_folder_path,
     });
   }
 
