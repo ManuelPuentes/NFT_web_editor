@@ -1,13 +1,13 @@
-import { Controller, Get, Query, UseGuards } from '@nestjs/common';
+import { Controller, Get, Param, UseGuards } from '@nestjs/common';
 import { CollectionMustExistGuard } from '../guards/collection-must-exist.guard';
 import { GetDrawOrderService } from '../services/get-draw-order.service';
-import { GetDrawOrdertDto } from '../dto/get-draw-order.dto';
+import { CollectionDto } from '../dto/collection.dto';
 @Controller('collection')
 export class GetDrawOrderController {
   constructor(private readonly getDrawOrderService: GetDrawOrderService) {}
-  @Get('draw-order')
+  @Get('draw-order/:collection_name')
   @UseGuards(CollectionMustExistGuard)
-  async execute(@Query() { collection_name }: GetDrawOrdertDto) {
+  async execute(@Param() { collection_name }: CollectionDto) {
     return {
       data: await this.getDrawOrderService.exec({ collection_name }),
     };

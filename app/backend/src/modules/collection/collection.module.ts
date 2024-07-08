@@ -29,11 +29,12 @@ import { GetCanvasSizeController } from './controllers/get-canvas-size.controlle
 import { GetCanvasSizeService } from './services/get-canvas-size.service';
 import { SetCanvasSizeController } from './controllers/set-canvas-size.controllers';
 import { SetCanvasSizeService } from './services/set-canvas-size.service';
+import { Image } from './entities/image.entity';
 
 @Module({
   imports: [
     MulterModule.register(),
-    TypeOrmModule.forFeature([Collection]),
+    TypeOrmModule.forFeature([Collection, Image]),
     BullModule.registerQueue({
       name: COLLECTION_QUEUE,
     }),

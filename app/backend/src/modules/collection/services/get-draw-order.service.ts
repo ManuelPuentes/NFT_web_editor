@@ -26,7 +26,7 @@ export class GetDrawOrderService {
   }: {
     collection_name: string;
   }) {
-    const path = `./collections/${collection_name}/draw-order.json`;
+    const path = `./collections/${collection_name}/draw_order.json`;
     return fs.existsSync(path);
   }
 
@@ -42,7 +42,7 @@ export class GetDrawOrderService {
   }
 
   private readDrawOrderFile({ collection_name }: { collection_name: string }) {
-    const path = `./collections/${collection_name}/draw-order.json`;
+    const path = `./collections/${collection_name}/draw_order.json`;
     return JSON.parse(fs.readFileSync(path).toString());
   }
 

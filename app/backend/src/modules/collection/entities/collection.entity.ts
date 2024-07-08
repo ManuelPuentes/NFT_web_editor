@@ -1,6 +1,5 @@
 import { Column, Entity, OneToMany, PrimaryColumn } from 'typeorm';
 import { GenerationStatus } from './enums/generation-status.enum';
-
 import { Image } from './image.entity';
 
 @Entity('collection')

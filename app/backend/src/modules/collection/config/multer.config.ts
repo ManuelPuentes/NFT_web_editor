@@ -3,7 +3,7 @@ import * as fs from 'fs';
 
 export const storage: StorageEngine = diskStorage({
   destination: function (req, file, cb) {
-    const path = `./collections/${req.query?.name}`;
+    const path = `./collections/${req.params?.collection_name}`;
     fs.mkdirSync(path, { recursive: true });
     cb(null, path);
   },

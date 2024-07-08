@@ -8,9 +8,9 @@
 
 <div
 	class="
-	w-screen
+	flex
 	h-screen
-	flex flex-col
+	w-screen flex-col
 "
 >
 	<Navbar>

@@ -1,7 +1,6 @@
 import { IsNotEmpty, IsNumber, IsPositive } from 'class-validator';
-import { CollectionDto } from './collection.dto';
 
-export class GenerateImagesDto extends CollectionDto {
+export class GenerateImagesDto {
   @IsNotEmpty({ message: '$property cant be empty or null' })
   @IsNumber(
     { allowNaN: false, allowInfinity: false },

@@ -23,7 +23,7 @@ export class CreateCollectionService {
     private readonly unzipperService: UnzipperService,
   ) {}
 
-  async exec({ name, assets }: CreateCollection): Promise<void> {
+  async exec({ collection_name, assets }: CreateCollection): Promise<void> {
     await this.UnzipAssets({ path: assets.path });
 
     const extractedAssetsDirectoryPath: string = `${assets.path.split('.zip')[0]}`;
@@ -32,7 +32,7 @@ export class CreateCollectionService {
 
     const { assets_details } = this.processDirectoryTree({
       directory_path: extractedAssetsDirectoryPath,
-      collection_name: name,
+      collection_name,
     });
 
     fs.writeFileSync(
@@ -40,10 +40,10 @@ export class CreateCollectionService {
       JSON.stringify(assets_details),
     );
 
-    await this.collectionsRepository.save({ name });
+    await this.collectionsRepository.save({ name: collection_name });
 
     this.createCollectionQueue.add('create', {
-      collection_name: name,
+      collection_name,
       assets_path: extractedAssetsDirectoryPath,
     });
   }

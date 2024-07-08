@@ -10,17 +10,17 @@
 </script>
 
 <div
-	class="	w-[60%] max-w-[600px]
-	flex flex-col items-center
-	text-gray-900 bg-white dark:text-white dark:bg-gray-800
-	p-4 m-4
-	gap-2
+	class="	m-4 flex
+	w-[60%] max-w-[600px] flex-col
+	items-center gap-2 bg-white p-4
+	text-gray-900 dark:bg-gray-800
+	dark:text-white
 	"
 >
 	<caption
 		class="
-		text-lg font-semibold text-left
-		w-[100%]
+		w-[100%] text-left text-lg
+		font-semibold
 		text-gray-900 dark:text-white
 		"
 	>

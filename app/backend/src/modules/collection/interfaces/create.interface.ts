@@ -1,5 +1,5 @@
 import { File } from './file.interface';
 export interface CreateCollection {
-  name: string;
+  collection_name: string;
   assets: File;
 }

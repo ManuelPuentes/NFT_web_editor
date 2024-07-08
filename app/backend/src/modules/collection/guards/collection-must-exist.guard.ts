@@ -12,8 +12,6 @@ import { Repository } from 'typeorm';
 
 import { Collection } from '../entities/collection.entity';
 import { CollectionDoesNotExistException } from '../exceptions/collection-does-not-exists.collection';
-import { getRequestData } from './guards.utils';
-import { log } from 'console';
 
 @Injectable()
 export class CollectionMustExistGuard implements CanActivate {
@@ -30,10 +28,7 @@ export class CollectionMustExistGuard implements CanActivate {
   }
 
   async validateRequest(request: Request): Promise<boolean> {
-    const req_data: Record<string, any> = getRequestData(request);
-
-    const collection_name: string | undefined =
-      req_data.collection_name?.toString();
+    const { collection_name } = request.params;
 
     if (!collection_name)
       throw new HttpException('invalid request', HttpStatus.BAD_REQUEST);

@@ -3,10 +3,10 @@ import {
   Post,
   UseInterceptors,
   UploadedFile,
-  Query,
   ParseFilePipe,
   FileTypeValidator,
   UseGuards,
+  Param,
 } from '@nestjs/common';
 import { CreateCollectionService } from '../services/create.service';
 import { CreateCollectionDto } from '../dto/create.dto';
@@ -20,7 +20,7 @@ export class CreateController {
     private readonly createCollectionService: CreateCollectionService,
   ) {}
 
-  @Post('create')
+  @Post('create/:collection_name')
   @UseGuards(CreateCollectionGuard)
   @UseInterceptors(FileInterceptor('assets', { storage }))
   async execute(
@@ -30,8 +30,8 @@ export class CreateController {
       }),
     )
     assets: Express.Multer.File,
-    @Query() { name }: CreateCollectionDto,
+    @Param() { collection_name }: CreateCollectionDto,
   ): Promise<void> {
-    await this.createCollectionService.exec({ name, assets });
+    await this.createCollectionService.exec({ collection_name, assets });
   }
 }

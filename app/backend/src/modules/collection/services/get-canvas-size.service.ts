@@ -17,7 +17,13 @@ export class GetCanvasSizeService {
   }): BoundingRect | void {
     const canvas_size_path = `./collections/${collection_name}/canvas_size.json`;
 
-    if (!fs.existsSync(canvas_size_path)) return;
+    if (!fs.existsSync(canvas_size_path)) {
+      const default_canvas_size = { width: 800, height: 800 };
+
+      fs.writeFileSync(canvas_size_path, JSON.stringify(default_canvas_size));
+
+      return default_canvas_size;
+    }
 
     return JSON.parse(fs.readFileSync(canvas_size_path).toString());
   }

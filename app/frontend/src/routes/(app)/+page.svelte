@@ -7,9 +7,9 @@
 </script>
 
 <div
-	class="flex flex-col items-center h-[100dvh]
-dark:bg-[repeating-linear-gradient(0deg,black_0_1px,transparent_1px_20px),repeating-linear-gradient(90deg,black_0_1px,transparent_1px_20px)] dark:bg-slate-700
-bg-[repeating-linear-gradient(0deg,black_0_1px,transparent_1px_20px),repeating-linear-gradient(90deg,black_0_1px,transparent_1px_20px)] bg-slate-100
+	class="flex h-[100dvh] flex-col items-center
+bg-slate-100 bg-[repeating-linear-gradient(0deg,black_0_1px,transparent_1px_20px),repeating-linear-gradient(90deg,black_0_1px,transparent_1px_20px)]
+dark:bg-slate-700 dark:bg-[repeating-linear-gradient(0deg,black_0_1px,transparent_1px_20px),repeating-linear-gradient(90deg,black_0_1px,transparent_1px_20px)]
 "
 >
 	<CreateCollectionForm data={data.createCollectionForm} />

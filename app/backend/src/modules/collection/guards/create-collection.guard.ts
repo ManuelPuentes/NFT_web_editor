@@ -22,7 +22,8 @@ export class CreateCollectionGuard implements CanActivate {
   }
 
   async validateRequest(request: Request): Promise<boolean> {
-    const collection_name: string | undefined = request.query.name?.toString();
+    const collection_name: string | undefined =
+      request.params.collection_name?.toString();
 
     if (!collection_name) return false;
 

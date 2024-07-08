@@ -36,12 +36,12 @@
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <div
 	class="
-	truncate whitespace-nowrap
-	overflow-hidden
 	mx-5 my-0
+	overflow-hidden
+	truncate whitespace-nowrap
 	p-2
-	dark:hover:bg-[--secondary_hover_color]
 	hover:bg-slate-400
+	dark:hover:bg-[--secondary_hover_color]
 "
 	on:click={handleClick}
 	bind:this={file}

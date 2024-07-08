@@ -10,12 +10,11 @@
 		$draw_order = e.detail;
 		await setDrawOrder({ collection_name: $collection_name, draw_order: $draw_order });
 	};
-
 </script>
 
 <div
 	class="
-	w-[20%] h-[100%]
+	h-[100%] w-[20%]
 	overflow-y-auto
 	overflow-x-hidden
 	border-r dark:border-[--border_color]

@@ -10,5 +10,5 @@ export class CreateCollectionDto {
     }
     return value.toLowerCase();
   })
-  name: string;
+  collection_name: string;
 }

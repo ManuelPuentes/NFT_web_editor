@@ -28,15 +28,15 @@
 	<nav
 		use:getContextMenuDimension
 		style="top:{pos.y}px; left:{pos.x}px"
-		class="absolute z-[5000] dark:bg-[--background_color] rounded-lg border dark:border-[--border_color]"
+		class="absolute z-[5000] rounded-lg border dark:border-[--border_color] dark:bg-[--background_color]"
 	>
-		<div class="p-1 mt-2 mb-2 text-base text-center" id="navbar">
+		<div class="mb-2 mt-2 p-1 text-center text-base" id="navbar">
 			{$last_selected_item_id}
 			<ul>
-				<li class="text-base p-1">
+				<li class="p-1 text-base">
 					<FitIntoCanvas />
 				</li>
-				<li class="text-base p-1">
+				<li class="p-1 text-base">
 					<ResetStyles />
 				</li>
 			</ul>

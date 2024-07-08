@@ -1,50 +1,48 @@
-import type { AssetDetails } from "../../interfaces/AssetDetails";
+import { PUBLIC_BACKEND_URL } from '$env/static/public';
+import type { AssetDetails } from '../../interfaces/AssetDetails';
 
-export async function setAssetsDetails({ assets_details, collection_name }: {
-    collection_name: string;
-    assets_details: Record<string, Record<string, AssetDetails>>,
+export async function setAssetsDetails({ assets_details, collection_name }: SetAssetsDetails) {
+	const myHeaders = new Headers();
+	myHeaders.append('Content-Type', 'application/json');
+	const raw = JSON.stringify({ assets_details });
+	const requestOptions = {
+		method: 'PUT',
+		headers: myHeaders,
+		body: raw
+	};
 
-}) {
-    const myHeaders = new Headers();
-    myHeaders.append('Content-Type', 'application/json');
-    const raw = JSON.stringify({ assets_details });
+	const url = `${PUBLIC_BACKEND_URL}/collection/asset-datails/${collection_name}`;
 
-    const requestOptions = {
-        method: 'PUT',
-        headers: myHeaders,
-        body: raw
-    };
+	try {
+		let response: any = await fetch(url, requestOptions);
 
-    const response = await fetch(
-        `http://localhost:3000/collection/asset-datails?name=${collection_name}`,
-        requestOptions
-    );
-
-    if (response.ok) {
-        return await response.text();
-    } else {
-        throw new Error('Request failed');
-    }
+		if (!response.ok) {
+			response = await response.json();
+			throw new Error(response.message);
+		}
+	} catch (error: any) {
+		throw new Error(error.message);
+	}
 }
-export async function getCollectionAssetsData({ collection_name }: { collection_name: string }) {
+export async function getCollectionAssetsDetails({ collection_name }: Collection) {
+	const requestOptions = {
+		method: 'GET'
+	};
 
-    const params = new URLSearchParams({
-        "name": collection_name,
-    });
+	const url = `${PUBLIC_BACKEND_URL}/collection/asset-details/${collection_name}`;
+	try {
+		const result = await (await fetch(url, requestOptions)).json();
+		return result.data;
+	} catch (error: any) {
+		throw new Error(error.message);
+	}
+}
 
-    const requestOptions = {
-        method: "GET",
-    };
+interface Collection {
+	collection_name: string;
+}
 
-    try {
-        const result = await (await fetch(
-            `http://localhost:3000/collection/asset-details?` + params,
-            requestOptions
-        )).json();
-
-        return result.data;
-
-    } catch (e: any) {
-        throw new Error(e.message);
-    }
+interface SetAssetsDetails {
+	collection_name: string;
+	assets_details: Record<string, Record<string, AssetDetails>>;
 }

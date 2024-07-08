@@ -24,19 +24,19 @@
 <svelte:window on:keydown={handleKeydown} />
 
 {#await save_changes_promise}
-	<span class="text-sm self-start p-1 absolute flex flex-wrap items-center">
+	<span class="absolute flex flex-wrap items-center self-start p-1 text-sm">
 		<Spinner size="3" class="mr-1" />
 		saving
 	</span>
 {:then response}
 	{#if $changes_indicator}
-		<span class="text-sm self-start p-1 absolute flex flex-wrap items-center">
+		<span class="absolute flex flex-wrap items-center self-start p-1 text-sm">
 			<Indicator size="sm" class="mr-1" />
 			unsaved
 		</span>
 	{/if}
 {:catch error}
-	<span class="text-sm self-start p-1 absolute flex flex-wrap items-center">
+	<span class="absolute flex flex-wrap items-center self-start p-1 text-sm">
 		<Indicator size="sm" class="mr-1 bg-red-500" />
 		&nbsp {error}
 	</span>

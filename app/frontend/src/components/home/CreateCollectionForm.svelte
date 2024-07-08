@@ -17,20 +17,20 @@
 	action="?/createCollection"
 	enctype="multipart/form-data"
 	class="
-	flex flex-col items-center gap-5
-	w-[60%] max-w-[600px] h-[50%]
-	p-4 m-4
-	text-gray-900 bg-white dark:text-white dark:bg-slate-800
+	m-4 flex h-[50%] w-[60%]
+	max-w-[600px] flex-col items-center
+	gap-5 bg-white
+	p-4 text-gray-900 dark:bg-slate-800 dark:text-white
 "
 >
 	<caption
-		class="p-5 text-lg font-semibold text-left w-[100%] text-pretty
+		class="w-[100%] text-pretty p-5 text-left text-lg font-semibold
 		text-gray-900
 		dark:text-white
 		"
 	>
 		Create Collection
-		<p class="mt-1 text-sm font-normal text-gray-500 dark:text-gray-400 text-pretty">
+		<p class="mt-1 text-pretty text-sm font-normal text-gray-500 dark:text-gray-400">
 			Create a new collection project, set all rules to draw and start generating batches.
 		</p>
 	</caption>
@@ -80,7 +80,7 @@
 	{#if $submitting}
 		<Spinner size="6" class="mt-auto" />
 	{:else}
-		<Button type="submit" color="light" class=" dark:color-primary max-w-[30%] mt-auto">send</Button
+		<Button type="submit" color="light" class=" dark:color-primary mt-auto max-w-[30%]">send</Button
 		>
 	{/if}
 </form>

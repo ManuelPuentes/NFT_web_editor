@@ -13,24 +13,19 @@
 	let animation_options = { duration: 200, easing: linear };
 
 	$: folder_expanded = flag;
-
 </script>
 
 <div
 	class="
-  w-[90%]
   m-1
+  w-[90%]
   p-4
   hover:bg-slate-200
   dark:hover:bg-[--primary_hover_color]
 "
 >
 	<!-- svelte-ignore a11y-no-static-element-interactions -->
-	<div
-		class="truncate"
-		on:click={handleClick}
-		on:keyup={handleClick}
-	>
+	<div class="truncate" on:click={handleClick} on:keyup={handleClick}>
 		{#if folder_expanded}
 			<span class="fa fa-chevron-down" />
 			&nbsp

@@ -39,8 +39,7 @@
 	});
 
 	const loadCanvasSize = async ({ collection_name }: { collection_name: string }) => {
-		const result = (await getCanvasSize({ collection_name })).data;
-
+		const result = await getCanvasSize({ collection_name });
 		if (result) {
 			$canvas_size = result;
 		}
@@ -73,8 +72,8 @@
 
 <div
 	class="
-		w-[80%]
-		flex justify-center items-center
+		flex
+		w-[80%] items-center justify-center
 	"
 	bind:this={workspace}
 	id="workspace"
@@ -84,10 +83,10 @@
 	<div
 		id={canvas_id}
 		class="
-			dark:bg-[repeating-linear-gradient(0deg,black_0_1px,transparent_1px_20px),repeating-linear-gradient(90deg,black_0_1px,transparent_1px_20px)] dark:bg-slate-700
-			bg-[repeating-linear-gradient(0deg,black_0_1px,transparent_1px_20px),repeating-linear-gradient(90deg,black_0_1px,transparent_1px_20px)] bg-slate-100
-			!transform-none
-			flex items-center justify-center
+			flex !transform-none
+			items-center justify-center
+			bg-slate-100
+			bg-[repeating-linear-gradient(0deg,black_0_1px,transparent_1px_20px),repeating-linear-gradient(90deg,black_0_1px,transparent_1px_20px)] dark:bg-slate-700 dark:bg-[repeating-linear-gradient(0deg,black_0_1px,transparent_1px_20px),repeating-linear-gradient(90deg,black_0_1px,transparent_1px_20px)]
     	"
 		bind:this={canvas}
 		on:click={handleCanvasClick}

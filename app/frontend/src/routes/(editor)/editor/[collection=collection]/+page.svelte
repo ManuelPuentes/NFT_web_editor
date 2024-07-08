@@ -4,7 +4,6 @@
 
 	import Workspace from '$components/editor/Workspace.svelte';
 	import Sidebar from '$components/editor/Sidebar.svelte';
-	import ChangesIndicator from '$components/editor/ChangesIndicator.svelte';
 	import ImageContextMenu from '$components/editor/ImageContextMenu.svelte';
 	export let data: any;
 
@@ -17,10 +16,10 @@
 
 <div
 	class=" 
-	w-[90%] h-[60%] aspect-video
-	flex flex-row
-	border dark:border-[--border_color]
-	m-auto
+	m-auto flex aspect-video
+	h-[60%] w-[90%]
+	flex-row border
+	dark:border-[--border_color]
 	"
 >
 	<Sidebar />

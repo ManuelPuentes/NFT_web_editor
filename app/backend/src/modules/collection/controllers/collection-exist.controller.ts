@@ -1,11 +1,11 @@
-import { Controller, Get, UseGuards, Query } from '@nestjs/common';
+import { Controller, Get, UseGuards, Param } from '@nestjs/common';
 
 import { CollectionMustExistGuard } from '../guards/collection-must-exist.guard';
 import { CollectionDto } from '../dto/collection.dto';
 @Controller('collection')
 export class ExistController {
   constructor() {}
-  @Get('exist')
+  @Get('exist/:collection_name')
   @UseGuards(CollectionMustExistGuard)
-  async execute(@Query() _dto: CollectionDto) {}
+  async execute(@Param() __: CollectionDto) {}
 }

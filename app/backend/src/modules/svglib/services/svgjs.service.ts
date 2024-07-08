@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { SVG, registerWindow } from '@svgdotjs/svg.js';
 import * as fs from 'fs';
 import { svgElement } from '../lib/svgjs';
+import { AssetDetails } from 'src/modules/collection/class/asset-details.class';
 
 @Injectable()
 export class SvgJsService {
@@ -9,18 +10,20 @@ export class SvgJsService {
 
   async generateSvg({
     assets_data,
+    assets_details,
     metadata,
     draw_order,
     canvas_size,
   }: GenerateSVG) {
     const canvas = await this.createCanvas(canvas_size);
-
-    fs.writeFileSync(`./collections/luchamask/output/test.svg`, canvas.svg());
-
     const collection_assets_data = new CollectionAssetsData(assets_data);
 
     draw_order.map((layer) => {
-      console.log(metadata[layer]);
+      const {
+        transform: translate,
+        scale,
+        rotate,
+      } = assets_details[layer][metadata[layer]];
 
       this.drawLayer({
         layer_name: layer,
@@ -29,10 +32,11 @@ export class SvgJsService {
           element_name: metadata[layer],
         }),
         parent_element: canvas,
+        layer_data: { translate, scale, rotate },
       });
     });
 
-    fs.writeFileSync('./collections/luchamask/output/test.svg', canvas.svg());
+    return canvas.svg();
   }
 
   private async createCanvas({
@@ -56,7 +60,12 @@ export class SvgJsService {
     return canvas;
   }
 
-  drawLayer({ layer_name, trait_data, parent_element }: DrawLayerData) {
+  drawLayer({
+    layer_name,
+    trait_data,
+    parent_element,
+    layer_data,
+  }: DrawLayerData) {
     try {
       const layerID = `${layer_name}`;
 
@@ -65,6 +74,8 @@ export class SvgJsService {
       trait_data.children.map((element_data: any) => {
         svgElement(element_data, group, layerID);
       });
+
+      // here we should add the layer tranforms (scale, translate, rotate)
     } catch (error) {}
   }
 }
@@ -73,6 +84,11 @@ interface DrawLayerData {
   layer_name: string;
   trait_data: any;
   parent_element: any;
+  layer_data: {
+    translate: string;
+    scale: string;
+    rotate: string;
+  };
 }
 
 interface GenerateSVG {
@@ -80,6 +96,7 @@ interface GenerateSVG {
   draw_order: string[];
   metadata: Record<string, string>;
   assets_data: Record<string, Record<string, any>>;
+  assets_details: Record<string, Record<string, AssetDetails>>;
 }
 
 class CollectionAssetsData {

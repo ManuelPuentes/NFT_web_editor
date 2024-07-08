@@ -85,7 +85,7 @@
 	on:click={fit_into_canvas}
 	color="dark"
 	outline
-	class="dark:hover:bg-[--primary_hover_color] dark:text-white w-[100%]"
+	class="w-[100%] dark:text-white dark:hover:bg-[--primary_hover_color]"
 >
 	<span class="fa-solid fa-down-left-and-up-right-to-center mr-2" />
 	Fit into canvas

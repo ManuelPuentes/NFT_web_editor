@@ -1,32 +1,33 @@
-export async function createCollection({ collection_name, collection_assets }: { collection_name: string, collection_assets: File }) {
+import { PUBLIC_BACKEND_URL } from '$env/static/public';
 
-    const formdata = new FormData();
+export async function createCollectionRequest({
+	collection_name,
+	collection_assets
+}: createCollection) {
+	const formdata = new FormData();
 
-    formdata.append(
-        "assets",
-        collection_assets,
-    );
+	formdata.append('assets', collection_assets);
 
-    const requestOptions = {
-        method: "POST",
-        body: formdata,
-    };
+	const requestOptions = {
+		method: 'POST',
+		body: formdata
+	};
 
-    const params = new URLSearchParams({
-        "name": collection_name,
-        "amount": "100",
-    })
+	const url = `${PUBLIC_BACKEND_URL}/collection/create/${collection_name}`;
 
+	try {
+		let response: any = await fetch(url, requestOptions);
 
-    try {
-        let response: any = await fetch(`http://localhost:3000/collection/create?` + params, requestOptions);
+		if (!response.ok) {
+			response = await response.json();
+			throw new Error(response.message);
+		}
+	} catch (e: any) {
+		throw new Error(e.message);
+	}
+}
 
-        if (!response.ok) {
-            response = await response.json();
-            throw new Error(response.message);
-        }
-
-    } catch (e: any) {
-        throw new Error('Request failed');
-    };
+interface createCollection {
+	collection_name: string;
+	collection_assets: File;
 }
