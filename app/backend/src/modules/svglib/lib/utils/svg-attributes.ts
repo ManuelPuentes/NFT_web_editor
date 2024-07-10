@@ -7,7 +7,7 @@ export const filterElementAttributes = (
       switch (true) {
         case isClass(attr_key, attributes, element_id):
         case isID(attr_key, attributes, element_id):
-        case isXlinkHref(attr_key, attributes):
+        case isXlinkHref(attr_key, attributes, element_id):
         case isURL(attr_key, attributes, element_id):
         case isURL(attr_key, attributes, element_id):
         case isInskcape(attr_key, attributes):
@@ -48,10 +48,10 @@ const isID = (
 const isXlinkHref = (
   attr_key: string,
   attributes: Record<string, string>,
-  // id: string,
+  id: string,
 ) => {
   if (attr_key == 'xlink:href') {
-    attributes[attr_key] = `${attributes[attr_key]}`;
+    attributes[attr_key] = `${attributes[attr_key]}-${id}`;
     return true;
   }
   return false;

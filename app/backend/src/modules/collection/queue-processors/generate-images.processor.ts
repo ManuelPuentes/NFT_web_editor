@@ -28,7 +28,7 @@ export class GenerateImagesProcessor {
     private readonly getDrawOrderService: GetDrawOrderService,
     private readonly getCanvasSizeService: GetCanvasSizeService,
     private readonly getAssetsDetailsService: GetAssetsDetailsService,
-  ) {}
+  ) { }
 
   @Process('generate')
   async handleJob(
@@ -58,6 +58,7 @@ export class GenerateImagesProcessor {
       const hash = this.cryptoService.getHash(
         Buffer.from(JSON.stringify(metadata)),
       );
+
       const output_path = `./collections/${collection_name}/output/${hash}.svg`;
 
       const svg = await this.svgJsService.generateSvg({
@@ -67,13 +68,13 @@ export class GenerateImagesProcessor {
         assets_data,
         assets_details,
       });
+      // console.log(output_path);
+
 
       fs.writeFileSync(output_path, svg);
-
     });
 
     this.logger.debug('Transcoding completed');
-
 
     // we should update the collection status to inactive and save all the images generate on the DDBB
 
@@ -164,14 +165,14 @@ export class GenerateImagesProcessor {
 
     return isDirectory
       ? {
-          isDirectory,
-          dirname: path.basename(_path),
-        }
+        isDirectory,
+        dirname: path.basename(_path),
+      }
       : {
-          isDirectory: false,
-          dirname: path.basename(path.dirname(_path)),
-          filename: path.basename(_path),
-        };
+        isDirectory: false,
+        dirname: path.basename(path.dirname(_path)),
+        filename: path.basename(_path),
+      };
   };
 
   private generateMetadata({
@@ -184,21 +185,9 @@ export class GenerateImagesProcessor {
     Object.keys(assets_list).map((key) => {
       metadata[key] =
         assets_list[key][
-          Math.floor(Math.random() * (assets_list[key].length - 1))
+        Math.floor(Math.random() * (assets_list[key].length - 1))
         ];
     });
-
-    metadata = {
-      aditionals: 'angel',
-      backgrounds: 'background-0',
-      basemasks: 'aeroboy',
-      eyes: 'aeroboy',
-      faces: 'aeroboy',
-      fighter: 'fighter_0',
-      helpers: 'ultimodragon',
-      mouths: 'aeroboyclosed',
-      signatures: 'aeroboy',
-    };
 
     return metadata;
   }

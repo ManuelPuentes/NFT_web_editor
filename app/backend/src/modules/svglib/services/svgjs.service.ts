@@ -1,12 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { SVG, registerWindow } from '@svgdotjs/svg.js';
-import * as fs from 'fs';
 import { svgElement } from '../lib/svgjs';
 import { AssetDetails } from 'src/modules/collection/class/asset-details.class';
 
 @Injectable()
 export class SvgJsService {
-  constructor() {}
+  constructor() { }
 
   async generateSvg({
     assets_data,
@@ -15,7 +14,9 @@ export class SvgJsService {
     draw_order,
     canvas_size,
   }: GenerateSVG) {
+
     const canvas = await this.createCanvas(canvas_size);
+
     const collection_assets_data = new CollectionAssetsData(assets_data);
 
     draw_order.map((layer) => {
@@ -57,10 +58,12 @@ export class SvgJsService {
 
     canvas.size(width, height);
 
+    canvas.attr('viewBox', `0 0 2000 2000`);
+
     return canvas;
   }
 
-  drawLayer({
+  private drawLayer({
     layer_name,
     trait_data,
     parent_element,
@@ -70,13 +73,29 @@ export class SvgJsService {
       const layerID = `${layer_name}`;
 
       const group = parent_element.group().attr('id', layerID);
-
       trait_data.children.map((element_data: any) => {
         svgElement(element_data, group, layerID);
       });
 
       // here we should add the layer tranforms (scale, translate, rotate)
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  private getScale(scale: string): number | undefined {
+    const value = scale.match(/\(([^)]+)\)/)?.[1];
+    return value ? parseFloat(value) : undefined;
+  }
+
+  private getTranslate(translate: string): number | undefined {
+    const value = translate.match(/\(([^)]+)\)/)?.[1];
+    return value ? parseFloat(value) : undefined;
+  }
+
+  private getRotate(rotate: string): number | undefined {
+    const value = rotate.match(/\(([^)]+)\)/)?.[1];
+    return value ? parseFloat(value) : undefined;
   }
 }
 
