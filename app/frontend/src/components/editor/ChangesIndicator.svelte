@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { Indicator, Spinner } from 'flowbite-svelte';
 	import { changes_indicator, assets_details, collection_name } from '$stores/web_app_state';
-
 	import { setAssetsDetails } from '$lib/api/assets-details';
 
 	function handleKeydown(event: KeyboardEvent) {

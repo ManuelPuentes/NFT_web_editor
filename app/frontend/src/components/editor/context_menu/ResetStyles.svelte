@@ -21,10 +21,10 @@
 
 		$assets_details[directory][file] = {
 			...value,
-			scale: '',
-			rotate: '',
 			styles: '',
-			transform: ''
+			scale: null,
+			rotate: null,
+			translate: null
 		};
 
 		update_stores();

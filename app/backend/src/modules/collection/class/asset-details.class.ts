@@ -3,9 +3,9 @@ export class AssetDetails {
   directory_name: string;
   file_asset_path: string;
   styles: string;
-  transform: string;
-  scale: string;
-  rotate: string;
+  rotate: number;
+  scale: { x: number, y: number }
+  translate: { x: number, y: number }
 
   constructor({
     name,
@@ -20,8 +20,8 @@ export class AssetDetails {
     this.directory_name = directory;
     this.file_asset_path = path;
     this.styles = '';
-    this.transform = '';
-    this.scale = '';
-    this.rotate = '';
+    this.rotate = 0;
+    this.scale = { x: 0, y: 0 };
+    this.translate = { x: 0, y: 0 };
   }
 }

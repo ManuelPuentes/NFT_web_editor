@@ -21,7 +21,7 @@ export class SvgJsService {
 
     draw_order.map((layer) => {
       const {
-        transform: translate,
+        translate,
         scale,
         rotate,
       } = assets_details[layer][metadata[layer]];
@@ -104,9 +104,9 @@ interface DrawLayerData {
   trait_data: any;
   parent_element: any;
   layer_data: {
-    translate: string;
-    scale: string;
-    rotate: string;
+    translate: { x: number, y: number }
+    scale: { x: number, y: number }
+    rotate: number;
   };
 }
 

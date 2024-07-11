@@ -6,7 +6,8 @@
 		assets_details,
 		changes_indicator,
 		context_menu,
-		selected_items
+		selected_items,
+		moveablea_ref
 	} from '$stores/web_app_state';
 
 	let directory: string = '';
@@ -19,33 +20,30 @@
 	export const fit_into_canvas = () => {
 		reset_styles();
 
-		const canvas = window.document.getElementById('canvas')?.getBoundingClientRect();
-		const element = window.document.getElementById($last_selected_item_id)?.getBoundingClientRect();
+		const canvas = window.document.getElementById('canvas');
+		const element = window.document.getElementById($last_selected_item_id);
 
 		if (!canvas || !element) return;
 
-		const { width: canvas_width, height: canvas_height } = canvas;
-		const { width: element_width, height: element_height } = element;
+		const { width: canvas_width, height: canvas_height } = canvas.getBoundingClientRect();
+
+		const { width: element_width, height: element_height } = element.getBoundingClientRect();
 
 		// if (canvas_width >= element_width && canvas_height >= element_height) return;
 
-		const resize_axis = canvas_width > canvas_height ? 'height' : 'width';
-
-		let scale = 1;
+		const resize_axis = canvas_width > canvas_height ? 'width' : 'height';
 
 		switch (resize_axis) {
 			case 'height':
-				scale = canvas_height / element_height;
+				const deltaHeight = canvas_height - element_height;
+				$moveablea_ref.request('scalable', { deltaWidth: 0, deltaHeight }, true);
 				break;
 
 			case 'width':
-				scale = canvas_width / element_width;
+				const deltaWidth = canvas_width - element_width;
+				$moveablea_ref.request('scalable', { deltaWidth, deltaHeight: 0 }, true);
 				break;
 		}
-
-		update_styles({
-			new_scale: scale
-		});
 
 		update_stores();
 	};
@@ -55,29 +53,16 @@
 
 		$assets_details[directory][file] = {
 			...value,
-			scale: '',
-			rotate: '',
 			styles: '',
-			transform: ''
-		};
-	};
-
-	const update_styles = ({ new_scale }: { new_scale: number }) => {
-		let value = $assets_details[directory][file];
-
-		const scale = `scale(${new_scale.toFixed(2)})`;
-		const styles = `transform: ${scale}`;
-		$assets_details[directory][file] = {
-			...value,
-			styles,
-			scale
+			scale: null,
+			rotate: null,
+			translate: null
 		};
 	};
 
 	const update_stores = () => {
 		$changes_indicator = true;
 		$context_menu.status = false;
-		$selected_items[directory] = $assets_details[directory][file];
 	};
 </script>
 

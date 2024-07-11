@@ -3,31 +3,27 @@
 	import Moveable from 'svelte-moveable';
 	import {
 		context_menu,
+		moveablea_ref,
 		assets_details,
 		workspace_details,
 		changes_indicator,
-		last_selected_item_id
+		last_selected_item_id,
+		canvas_ref
 	} from '$stores/web_app_state';
 
 	import type { MoveableBounds } from '../../interfaces/BoundingRect';
+	import type { AssetDetails } from '../../interfaces/AssetDetails';
+	import type MoveableComponent from 'svelte-moveable';
 
-	export let data = {
-		file_name: 'name',
-		file_asset_path: 'path',
-		directory_name: 'directory',
-		styles: '',
-		transform: '',
-		scale: '',
-		rotate: ''
-	};
+	export let data: AssetDetails;
 
-	let targetRef = null;
-	let moveableRef = null;
+	let targetRef: HTMLElement;
+	let moveableRef: MoveableComponent;
 	const scalable = true;
 	const draggable = true;
 	const snappable = true;
 	const rotatable = true;
-	const keepRatio = false;
+	const keepRatio = true;
 	const edgeDraggable = false;
 	const throttleDrag = 1;
 	const throttleScale = 0;
@@ -62,6 +58,8 @@
 				y: e.clientY
 			}
 		});
+
+		moveablea_ref.set(moveableRef);
 	};
 
 	onMount(() => {
@@ -89,6 +87,7 @@
 {#if is_mouse_over || $last_selected_item_id === id}
 	<Moveable
 		bind:this={moveableRef}
+		{id}
 		target={targetRef}
 		origin={false}
 		{draggable}
@@ -107,19 +106,37 @@
 			e.target.style.cssText += e.cssText;
 			$assets_details[data.directory_name][data.file_name].styles = e.cssText;
 		}}
-		on:drag={({ detail: e }) => {
-			e.target.style.transform = e.transform;
-			$assets_details[data.directory_name][data.file_name].transform = e.transform;
+		on:dragEnd={({ detail: { target, isDrag } }) => {
+			if (isDrag) {
+				const { x: canvas_x, y: canvas_y } = $canvas_ref.getBoundingClientRect();
+				const { x: img_x, y: img_y } = target.getBoundingClientRect();
+				const offset = { x: Math.round(img_x - canvas_x), y: Math.round(img_y - canvas_y) };
+				$assets_details[data.directory_name][data.file_name].translate = {
+					x: offset.x,
+					y: offset.y
+				};
+				$changes_indicator = true;
+			}
+		}}
+		on:scaleEnd={({ detail: { lastEvent } }) => {
+			const regex = /scale\(([\d.]+), ([\d.]+)\)/;
+			const match = lastEvent.transform.match(regex);
+
+			if (match) {
+				const scaleX = parseFloat(parseFloat(match[1]).toFixed(2));
+				const scaleY = parseFloat(parseFloat(match[2]).toFixed(2));
+				$assets_details[data.directory_name][data.file_name].scale = { x: scaleX, y: scaleY };
+			}
 			$changes_indicator = true;
 		}}
-		on:scale={({ detail: e }) => {
-			e.target.style.transform = e.drag.transform;
-			$assets_details[data.directory_name][data.file_name].scale = e.drag.transform;
-			$changes_indicator = true;
-		}}
-		on:rotate={({ detail: e }) => {
-			e.target.style.transform = e.afterTransform;
-			$assets_details[data.directory_name][data.file_name].rotate = e.afterTransform;
+		on:rotateEnd={({ detail: { lastEvent } }) => {
+			const regex = /rotate\(([\d.]+)deg\)/;
+			const match = lastEvent.transform.match(regex);
+
+			if (match) {
+				const rotationValue = parseFloat(parseFloat(match[1]).toFixed(2));
+				$assets_details[data.directory_name][data.file_name].rotate = rotationValue;
+			}
 			$changes_indicator = true;
 		}}
 		on:bound={({ detail: e }) => {}}

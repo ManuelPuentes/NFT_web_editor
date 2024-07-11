@@ -5,7 +5,8 @@
 		canvas_size,
 		selected_items,
 		workspace_details,
-		last_selected_item_id
+		last_selected_item_id,
+		canvas_ref
 	} from '$stores/web_app_state';
 
 	import { onMount } from 'svelte';
@@ -36,6 +37,8 @@
 		await loadCanvasSize({ collection_name });
 		canvas.style.height = `${$canvas_size.height}px`;
 		canvas.style.width = `${$canvas_size.width}px`;
+
+		$canvas_ref = canvas;
 	});
 
 	const loadCanvasSize = async ({ collection_name }: { collection_name: string }) => {
@@ -73,19 +76,17 @@
 <div
 	class="
 		flex
-		w-[80%] items-center justify-center
+		w-[80%]
+		items-center justify-center
 	"
 	bind:this={workspace}
 	id="workspace"
 >
 	<!-- svelte-ignore a11y-no-static-element-interactions -->
-
 	<div
 		id={canvas_id}
 		class="
 			flex !transform-none
-			items-center justify-center
-			bg-slate-100
 			bg-[repeating-linear-gradient(0deg,black_0_1px,transparent_1px_20px),repeating-linear-gradient(90deg,black_0_1px,transparent_1px_20px)] dark:bg-slate-700 dark:bg-[repeating-linear-gradient(0deg,black_0_1px,transparent_1px_20px),repeating-linear-gradient(90deg,black_0_1px,transparent_1px_20px)]
     	"
 		bind:this={canvas}
