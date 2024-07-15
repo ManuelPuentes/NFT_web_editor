@@ -1,30 +1,31 @@
-import { Injectable } from '@nestjs/common';
-import { SVG, registerWindow } from '@svgdotjs/svg.js';
+import { Injectable, Scope } from '@nestjs/common';
+import {
+  SVG,
+  SVGTypeMapping,
+  getWindow,
+  registerWindow,
+} from '@svgdotjs/svg.js';
 import { svgElement } from '../lib/svgjs';
 import { AssetDetails } from 'src/modules/collection/class/asset-details.class';
+import { filterElementAttributes } from '../lib/utils/svg-attributes';
 
 @Injectable()
 export class SvgJsService {
-  constructor() { }
+  constructor() {}
 
   async generateSvg({
+    canvas_size: { height, width },
     assets_data,
     assets_details,
     metadata,
     draw_order,
-    canvas_size,
   }: GenerateSVG) {
-
-    const canvas = await this.createCanvas(canvas_size);
-
+    const canvas = await this.createCanvas({ width, height });
     const collection_assets_data = new CollectionAssetsData(assets_data);
 
     draw_order.map((layer) => {
-      const {
-        translate,
-        scale,
-        rotate,
-      } = assets_details[layer][metadata[layer]];
+      const { translate, scale, rotate, size } =
+        assets_details[layer][metadata[layer]];
 
       this.drawLayer({
         layer_name: layer,
@@ -33,20 +34,14 @@ export class SvgJsService {
           element_name: metadata[layer],
         }),
         parent_element: canvas,
-        layer_data: { translate, scale, rotate },
+        layer_data: { translate, scale, rotate, size },
       });
     });
 
     return canvas.svg();
   }
 
-  private async createCanvas({
-    width,
-    height,
-  }: {
-    width: number;
-    height: number;
-  }) {
+  async createCanvas({ width, height }: { width: number; height: number }) {
     const { createSVGWindow } = await import('svgdom');
     const window = createSVGWindow();
 
@@ -55,10 +50,7 @@ export class SvgJsService {
     registerWindow(window, document);
 
     const canvas = SVG<Element>(document.documentElement);
-
     canvas.size(width, height);
-
-    canvas.attr('viewBox', `0 0 2000 2000`);
 
     return canvas;
   }
@@ -69,33 +61,14 @@ export class SvgJsService {
     parent_element,
     layer_data,
   }: DrawLayerData) {
-    try {
-      const layerID = `${layer_name}`;
+    const layerID = `${layer_name}`;
 
-      const group = parent_element.group().attr('id', layerID);
-      trait_data.children.map((element_data: any) => {
-        svgElement(element_data, group, layerID);
-      });
+    const { translate, rotate, size } = layer_data;
+    const nested = svgElement(trait_data, parent_element, layerID);
 
-      // here we should add the layer tranforms (scale, translate, rotate)
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  private getScale(scale: string): number | undefined {
-    const value = scale.match(/\(([^)]+)\)/)?.[1];
-    return value ? parseFloat(value) : undefined;
-  }
-
-  private getTranslate(translate: string): number | undefined {
-    const value = translate.match(/\(([^)]+)\)/)?.[1];
-    return value ? parseFloat(value) : undefined;
-  }
-
-  private getRotate(rotate: string): number | undefined {
-    const value = rotate.match(/\(([^)]+)\)/)?.[1];
-    return value ? parseFloat(value) : undefined;
+    if (size) nested.size(size.width, size.height);
+    if (translate) nested.move(translate.x, translate.y);
+    // if (rotate) nested.transform(rotate);
   }
 }
 
@@ -104,9 +77,10 @@ interface DrawLayerData {
   trait_data: any;
   parent_element: any;
   layer_data: {
-    translate: { x: number, y: number }
-    scale: { x: number, y: number }
-    rotate: number;
+    translate: { x: number; y: number } | undefined;
+    scale: { x: number; y: number } | undefined;
+    rotate: number | undefined;
+    size: { width: number; height: number } | undefined;
   };
 }
 

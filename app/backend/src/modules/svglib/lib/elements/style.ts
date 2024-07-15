@@ -14,7 +14,7 @@ export const styleElement = (
 
   filterElementAttributes(attributes, element_id);
 
-  style.attr(attributes);
+  // style.attr(attributes);
 
   svg_data.children.map((element: any) => {
     const values = element.value

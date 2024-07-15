@@ -14,6 +14,7 @@
 	import type { MoveableBounds } from '../../interfaces/BoundingRect';
 	import type { AssetDetails } from '../../interfaces/AssetDetails';
 	import type MoveableComponent from 'svelte-moveable';
+	import { DimensionViewable } from '$lib/moveable-able';
 
 	export let data: AssetDetails;
 
@@ -65,6 +66,7 @@
 	onMount(() => {
 		bounds = $workspace_details;
 		id = `${data.directory_name}_${data.file_name}`;
+		// $assets_details[data.directory_name][data.file_name].styles
 	});
 </script>
 
@@ -87,7 +89,6 @@
 {#if is_mouse_over || $last_selected_item_id === id}
 	<Moveable
 		bind:this={moveableRef}
-		{id}
 		target={targetRef}
 		origin={false}
 		{draggable}
@@ -101,6 +102,7 @@
 		{throttleScale}
 		{snappable}
 		{bounds}
+		ables={[DimensionViewable]}
 		props={{ dimensionViewable: true }}
 		on:render={({ detail: e }) => {
 			e.target.style.cssText += e.cssText;
@@ -125,7 +127,9 @@
 			if (match) {
 				const scaleX = parseFloat(parseFloat(match[1]).toFixed(2));
 				const scaleY = parseFloat(parseFloat(match[2]).toFixed(2));
+				const { height, width } = targetRef.getBoundingClientRect();
 				$assets_details[data.directory_name][data.file_name].scale = { x: scaleX, y: scaleY };
+				$assets_details[data.directory_name][data.file_name].size = { height, width };
 			}
 			$changes_indicator = true;
 		}}

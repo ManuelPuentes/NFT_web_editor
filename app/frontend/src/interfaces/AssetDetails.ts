@@ -6,4 +6,5 @@ export interface AssetDetails {
 	rotate: number | null;
 	scale: { x: number; y: number } | null;
 	translate: { x: number; y: number } | null;
+	size: { width: number; height: number } | null;
 }

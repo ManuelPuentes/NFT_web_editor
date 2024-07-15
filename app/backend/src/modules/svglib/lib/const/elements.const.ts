@@ -13,3 +13,4 @@ export const RADIAL_GRADIENT = 'radialGradient';
 export const RECT = 'rect';
 export const STYLE = 'style';
 export const TEXT = 'text';
+export const SVG = 'svg';

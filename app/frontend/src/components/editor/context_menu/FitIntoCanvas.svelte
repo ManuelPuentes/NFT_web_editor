@@ -62,6 +62,7 @@
 
 	const update_stores = () => {
 		$changes_indicator = true;
+		$selected_items[directory] = $assets_details[directory][file];
 		$context_menu.status = false;
 	};
 </script>

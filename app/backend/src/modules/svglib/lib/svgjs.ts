@@ -13,6 +13,7 @@ import { radialGradientElement } from './elements/radial-grandient';
 import { rectElement } from './elements/rect';
 import { styleElement } from './elements/style';
 import { textElement } from './elements/text';
+import { SVGElement } from './elements/svg';
 
 import * as ElementType from './const/elements.const';
 
@@ -83,6 +84,10 @@ export const svgElement = (
 
     case ElementType.TEXT:
       element = textElement(svg_data, parent_element, element_id);
+      break;
+
+    case ElementType.SVG:
+      element = SVGElement(svg_data, parent_element, element_id);
       break;
 
     default:

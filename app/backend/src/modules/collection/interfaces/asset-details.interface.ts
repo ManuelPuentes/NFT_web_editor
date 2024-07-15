@@ -4,6 +4,7 @@ export interface AssetDetails {
   file_asset_path: string;
   styles: string;
   rotate: number;
-  scale: { x: number, y: number };
-  translate: { x: number, y: number };
+  scale: { x: number; y: number };
+  translate: { x: number; y: number };
+  size: { width: number; height: number };
 }
