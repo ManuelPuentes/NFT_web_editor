@@ -1,47 +1,49 @@
-import { Injectable, Scope } from '@nestjs/common';
-import {
-  SVG,
-  SVGTypeMapping,
-  getWindow,
-  registerWindow,
-} from '@svgdotjs/svg.js';
+import { Injectable } from '@nestjs/common';
+import { SVG, registerWindow } from '@svgdotjs/svg.js';
 import { svgElement } from '../lib/svgjs';
-import { AssetDetails } from 'src/modules/collection/class/asset-details.class';
-import { filterElementAttributes } from '../lib/utils/svg-attributes';
+import { GenerateSVG } from 'src/modules/collection/interfaces/generate-svg.interface';
+import { BoundingRect } from 'src/modules/collection/interfaces/bounding-rect.interface';
 
 @Injectable()
 export class SvgJsService {
   constructor() {}
 
   async generateSvg({
-    canvas_size: { height, width },
-    assets_data,
-    assets_details,
     metadata,
-    draw_order,
+    collection_draw_order,
+    collection_canvas_size,
+    collection_assets_details,
+    collection_assets_json_data,
   }: GenerateSVG) {
-    const canvas = await this.createCanvas({ width, height });
-    const collection_assets_data = new CollectionAssetsData(assets_data);
+    try {
+      const canvas = await this.createCanvas(collection_canvas_size);
 
-    draw_order.map((layer) => {
-      const { translate, scale, rotate, size } =
-        assets_details[layer][metadata[layer]];
+      collection_draw_order.map((layer_name) => {
+        const element = {
+          trait_name: layer_name,
+          element_name: metadata[layer_name],
+        };
 
-      this.drawLayer({
-        layer_name: layer,
-        trait_data: collection_assets_data.get({
-          trait_name: layer,
-          element_name: metadata[layer],
-        }),
-        parent_element: canvas,
-        layer_data: { translate, scale, rotate, size },
+        const trait_data = collection_assets_json_data.get(element);
+
+        const { translate, rotate, size } =
+          collection_assets_details.get(element);
+
+        this.drawLayer({
+          layer_name,
+          trait_data,
+          parent_element: canvas,
+          layer_data: { translate, rotate, size },
+        });
       });
-    });
 
-    return canvas.svg();
+      return canvas.svg();
+    } catch (error) {
+      console.log(error);
+    }
   }
 
-  async createCanvas({ width, height }: { width: number; height: number }) {
+  async createCanvas({ width, height }: BoundingRect) {
     const { createSVGWindow } = await import('svgdom');
     const window = createSVGWindow();
 
@@ -78,34 +80,7 @@ interface DrawLayerData {
   parent_element: any;
   layer_data: {
     translate: { x: number; y: number } | undefined;
-    scale: { x: number; y: number } | undefined;
     rotate: number | undefined;
     size: { width: number; height: number } | undefined;
   };
-}
-
-interface GenerateSVG {
-  canvas_size: { width: number; height: number };
-  draw_order: string[];
-  metadata: Record<string, string>;
-  assets_data: Record<string, Record<string, any>>;
-  assets_details: Record<string, Record<string, AssetDetails>>;
-}
-
-class CollectionAssetsData {
-  data: Record<string, Record<string, any>>;
-
-  constructor(data: Record<string, Record<string, any>>) {
-    this.data = data;
-  }
-
-  get({
-    trait_name,
-    element_name,
-  }: {
-    trait_name: string;
-    element_name: string;
-  }): any {
-    return this.data[trait_name][element_name];
-  }
 }

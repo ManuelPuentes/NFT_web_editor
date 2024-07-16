@@ -1,29 +1,37 @@
-import { Process, Processor } from '@nestjs/bull';
-import { COLLECTION_QUEUE } from '../queue/collection-queue.const';
-import { Job } from 'bull';
+import {
+  Processor,
+  WorkerHost,
+  OnWorkerEvent,
+  InjectQueue,
+} from '@nestjs/bullmq';
+import { Job } from 'bullmq';
 import { Logger } from '@nestjs/common';
 
 import * as fs from 'fs';
 import * as path from 'path';
 import { SvgsonService } from 'src/modules/svgsom/services/svgson.service';
-import { PathDetails } from '../interfaces/path-details.interface';
+import { PathDetails } from 'src/modules/collection/interfaces/path-details.interface';
 
-@Processor(COLLECTION_QUEUE)
-export class CreateCollectionProcessor {
-  private readonly logger = new Logger(CreateCollectionProcessor.name);
+export const CREATE_COLLECTION = 'CREATE_COLLECTION';
 
-  constructor(private readonly svgson: SvgsonService) {}
+export const InjectCreateCollectionQueue = (): ParameterDecorator =>
+  InjectQueue(CREATE_COLLECTION);
 
-  @Process('create')
-  handleJob(job: Job<{ collection_name: string; assets_path: string }>) {
+@Processor(CREATE_COLLECTION)
+export class createCollectionProcessor extends WorkerHost {
+  private readonly logger = new Logger(createCollectionProcessor.name);
+
+  constructor(private readonly svgsonService: SvgsonService) {
+    super();
+  }
+
+  async process(job: Job<{ collection_name: string; assets_path: string }>) {
     const { assets_path, collection_name } = job.data;
 
     this.processDirectoryTree({
       collection_name,
       directory_path: assets_path,
     });
-
-    job.moveToCompleted();
   }
 
   private processDirectoryTree = ({
@@ -62,7 +70,7 @@ export class CreateCollectionProcessor {
     const file_path = `collections/${collection_name}/assets/${dirname}/${filename}`;
     const json_path = `collections/${collection_name}/json/${dirname}/${filename.replace('.svg', '.json')}`;
 
-    const svg_json = this.svgson.parseToJson({ file_path });
+    const svg_json = this.svgsonService.parseToJson({ file_path });
 
     fs.writeFileSync(json_path, JSON.stringify(svg_json));
   };
@@ -93,4 +101,19 @@ export class CreateCollectionProcessor {
           filename: path.basename(_path),
         };
   };
+
+  @OnWorkerEvent('active')
+  onActive(job: Job) {
+    this.logger.log(`Active ${job.id}`);
+  }
+
+  @OnWorkerEvent('completed')
+  onCompleted(job: Job) {
+    this.logger.log(`Completed ${job.id}`);
+  }
+
+  @OnWorkerEvent('failed')
+  onFailed(job: Job) {
+    this.logger.log(`Failed ${job.id}`);
+  }
 }

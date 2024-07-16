@@ -9,17 +9,15 @@ import { Collection } from '../entities/collection.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { PathDetails } from '../interfaces/path-details.interface';
-import { InjectQueue } from '@nestjs/bull';
-import { COLLECTION_QUEUE } from '../queue/collection-queue.const';
 import { Queue } from 'bull';
+import { InjectCreateCollectionQueue } from 'src/modules/queues/processors/create-project.processor';
 
 @Injectable()
 export class CreateCollectionService {
   constructor(
     @InjectRepository(Collection)
     private readonly collectionsRepository: Repository<Collection>,
-    @InjectQueue(COLLECTION_QUEUE)
-    private readonly createCollectionQueue: Queue,
+    @InjectCreateCollectionQueue() private createCollectionQueue: Queue,
     private readonly unzipperService: UnzipperService,
   ) {}
 
