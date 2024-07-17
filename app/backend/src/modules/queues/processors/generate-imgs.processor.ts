@@ -55,7 +55,7 @@ export class generateImagesProcessor extends WorkerHost {
         children: imgs_metadata.map((metadata: any) => ({
           name: 'process3',
           queueName: GENERATE_SVG_IMGS,
-          data: { metadata, collection_name, ...collection_data },
+          data: { metadata, ...collection_data },
         })),
       });
     } catch (err) {

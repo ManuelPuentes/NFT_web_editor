@@ -21,6 +21,6 @@ export class Collection {
   })
   status: string;
 
-  @OneToMany(() => Image, (image) => image.collection)
-  images: Image[];
+  // @OneToMany(() => Image, (image) => image.collection)
+  // images: Image[];
 }

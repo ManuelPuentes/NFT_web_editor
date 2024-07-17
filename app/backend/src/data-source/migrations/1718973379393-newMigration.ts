@@ -28,7 +28,7 @@ export class NewMigration1718973379393 implements MigrationInterface {
     await queryRunner.query(
       `CREATE TABLE IF NOT EXISTS image (
                 id UUID NOT NULL DEFAULT uuid_generate_v4(),
-                collectionId UUID NOT NULL,
+                collection_id UUID NOT NULL,
                 hash CHARACTER VARYING(255) NOT NULL,
                 metadata JSON NOT NULL,
                 url CHARACTER VARYING(255) NOT NULL,
@@ -98,7 +98,7 @@ export class NewMigration1718973379393 implements MigrationInterface {
                   AND table_name = 'image'
                   AND constraint_type = 'FOREIGN KEY'
               ) THEN
-                ALTER TABLE ONLY image ADD CONSTRAINT collection_fk FOREIGN KEY (collectionId) REFERENCES collection(id);
+                ALTER TABLE ONLY image ADD CONSTRAINT collection_fk FOREIGN KEY (collection_id) REFERENCES collection(id);
               END IF;
             END $$;`,
     );

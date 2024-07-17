@@ -11,6 +11,7 @@ import * as fs from 'fs';
 import { Repository } from 'typeorm';
 
 import { Collection } from 'src/modules/collection/entities/collection.entity';
+import { Image } from 'src/modules/collection/entities/image.entity';
 import { GenerationStatus } from 'src/modules/collection/entities/enums/generation-status.enum';
 
 export const SAVE_DATA = 'SAVE_DATA';
@@ -25,26 +26,31 @@ export class SaveDataProcessor extends WorkerHost {
   constructor(
     @InjectRepository(Collection)
     private readonly collectionRepository: Repository<Collection>,
+    @InjectRepository(Image)
+    private readonly imagesRepository: Repository<Image>,
   ) {
     super();
   }
 
   async process(job: Job) {
     const collection_name = job.data.collection_name;
+    const { id: collection_id } =
+      await this.collectionRepository.findOneByOrFail({
+        name: collection_name,
+      });
 
     const generated_svgs = Object.values(
       await job.getChildrenValues<{
-        output_path: string;
+        hash: string;
         svg: string;
       }>(),
     );
 
-    generated_svgs.map(({ output_path, svg }) => {
-      if (!fs.existsSync(output_path)) {
-        fs.writeFileSync(output_path, svg);
-      } else {
-        console.log('repetido');
-      }
+    generated_svgs.map(async ({ hash, svg }) => {
+      const output_path = `./collections/${collection_name}/output/${hash}.svg`;
+      const url = `http://localhost:9999/files/${collection_name}/output/${hash}.svg`;
+      await this.imagesRepository.update({ collection_id, hash }, { url });
+      fs.writeFileSync(output_path, svg);
     });
 
     await this.updateCollectionStatus({ collection_name });

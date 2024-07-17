@@ -28,7 +28,6 @@ export class generatSvgImagesProcessor extends WorkerHost {
   }
   async process(job: Job) {
     const {
-      collection_name,
       metadata,
       collection_draw_order,
       collection_canvas_size,
@@ -39,7 +38,6 @@ export class generatSvgImagesProcessor extends WorkerHost {
     const hash = this.cryptoService.getHash(
       Buffer.from(JSON.stringify(metadata)),
     );
-    const output_path = `./collections/${collection_name}/output/${hash}.svg`;
 
     const svg = await this.svgJsService.generateSvg({
       metadata,
@@ -54,8 +52,8 @@ export class generatSvgImagesProcessor extends WorkerHost {
     });
 
     return {
-      output_path,
       svg,
+      hash,
     };
   }
 
