@@ -1,5 +1,18 @@
 import type { Config } from 'tailwindcss';
 
+import plugin from 'tailwindcss/plugin';
+
+const backfaceVisibility = plugin(function ({ addUtilities }) {
+	addUtilities({
+		'.backface-visible': {
+			'backface-visibility': 'visible'
+		},
+		'.backface-hidden': {
+			'backface-visibility': 'hidden'
+		}
+	});
+});
+
 export default {
 	content: [
 		'./src/**/*.{html,js,svelte,ts}',
@@ -26,7 +39,7 @@ export default {
 		}
 	},
 
-	plugins: [require('@tailwindcss/typography')],
+	plugins: [require('@tailwindcss/typography'), backfaceVisibility],
 
 	darkMode: 'class'
 } as Config;
