@@ -12,17 +12,16 @@
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <!-- svelte-ignore a11y-no-static-element-interactions -->
-<div class=" card flex h-fit flex-row hover:scale-[1.1]" on:click={flip} class:flip={flipped}>
-	<img src={item.url} alt={item.hash} class="aspect-auto backface-hidden" />
+<div class=" card flex h-fit flex-row" on:click={flip} class:flip={flipped}>
+	<img src={item.url} alt={item.hash} class="backface-hidden aspect-auto" />
 
 	<Button
-		class="absolute bottom-1 right-1 self-end !p-1 backface-hidden"
+		class="backface-hidden absolute bottom-2 right-2 self-end !p-1"
 		size="lg"
 		color="dark"
 		href={item.url}
 		on:click={(e) => {
 			e.stopPropagation();
-			console.log('click');
 		}}
 	>
 		<DownloadSolid class=" h-4 w-4" />
@@ -31,7 +30,7 @@
 	>
 
 	<div
-		class="back absolute flex h-[100%] w-[100%] overflow-y-auto overflow-x-hidden text-base backface-hidden dark:bg-[#282A36]"
+		class="back backface-hidden absolute flex h-[100%] w-[100%] overflow-y-auto overflow-x-hidden text-base dark:bg-[#282A36]"
 	>
 		<ul class="m-auto p-3">
 			{#each Object.keys(item.metadata) as key, i}

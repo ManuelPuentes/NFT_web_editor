@@ -6,7 +6,7 @@ export async function getCollectionImagesPaginated({
 	skip = 0,
 	orderBy = 'id',
 	orderType = 'ASC'
-}: createCollection) {
+}: getImagesCollection) {
 	const requestOptions = {
 		method: 'GET'
 	};
@@ -25,7 +25,7 @@ export async function getCollectionImagesPaginated({
 	}
 }
 
-interface createCollection {
+interface getImagesCollection {
 	collection_name: string;
 	limit?: number;
 	skip?: number;
