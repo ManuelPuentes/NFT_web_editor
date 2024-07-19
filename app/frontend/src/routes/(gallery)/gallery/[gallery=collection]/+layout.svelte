@@ -2,18 +2,12 @@
 	import '../../../../app.css';
 	import { DarkMode } from 'flowbite-svelte';
 	import { Navbar, NavBrand, NavLi, NavUl, NavHamburger } from 'flowbite-svelte';
-	import { collection_name } from '$stores/web_app_state';
 
 	let darkmodebtn =
 		'text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg text-lg p-2.5  right-4 top-2 z-50';
 	import Avatar from 'svelte-boring-avatars';
-	import { onMount } from 'svelte';
 
 	export let data: any;
-
-	onMount(() => {
-		$collection_name = data.collection_name;
-	});
 </script>
 
 <div
@@ -25,7 +19,7 @@
 "
 >
 	<Navbar>
-		<NavBrand href="/">
+		<NavBrand>
 			<div class="mr-3">
 				<Avatar
 					size={40}
@@ -42,6 +36,9 @@
 		<NavHamburger />
 		<NavUl>
 			<NavLi href="/">Home</NavLi>
+			<NavLi href={`/editor/${data.collection_name}`}>Editor</NavLi>
+			<NavLi href={`/generate/${data.collection_name}`}>Generate</NavLi>
+			<NavLi href="/docs">Docs</NavLi>
 		</NavUl>
 		<DarkMode btnClass={darkmodebtn} />
 	</Navbar>

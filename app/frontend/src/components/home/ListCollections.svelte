@@ -38,7 +38,7 @@
 				<TableBodyCell>Apple MacBook Pro 17"</TableBodyCell>
 				<TableBodyCell>
 					<a
-						href="/tables"
+						href="/editor/luchamask"
 						class="font-medium text-primary-600 hover:underline dark:text-primary-500">Load</a
 					>
 				</TableBodyCell>
@@ -47,7 +47,7 @@
 				<TableBodyCell>Microsoft Surface Pro</TableBodyCell>
 				<TableBodyCell>
 					<a
-						href="/tables"
+						href="/gallery/luchamask"
 						class="font-medium text-primary-600 hover:underline dark:text-primary-500">Load</a
 					>
 				</TableBodyCell>

@@ -1,8 +1,9 @@
 import { redirect, type RequestEvent } from '@sveltejs/kit';
-import type { Actions } from './$types';
+import type { Actions, PageServerLoad } from './$types';
 
 import { z } from 'zod';
-import { superValidate, fail, setError } from 'sveltekit-superforms';
+import { superValidate, setError } from 'sveltekit-superforms/server';
+import { fail } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
 
 import { createCollectionRequest } from '$lib/api/create-collection';
@@ -14,12 +15,13 @@ const creatCollectionSchema = z.object({
 		.refine((f) => f.type === 'application/zip')
 });
 
-export const load = async () => {
+export const load = (async () => {
 	const createCollectionForm = await superValidate(zod(creatCollectionSchema));
 	return { createCollectionForm };
-};
+}) satisfies PageServerLoad;
 
 export const actions: Actions = {
+
 	createCollection: async (event: RequestEvent) => {
 		const form = await superValidate(event, zod(creatCollectionSchema));
 
@@ -39,5 +41,6 @@ export const actions: Actions = {
 		}
 
 		throw redirect(300, `/editor/${collection_name}`);
+
 	}
 } satisfies Actions;
