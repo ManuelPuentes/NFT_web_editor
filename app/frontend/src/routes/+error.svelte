@@ -71,8 +71,7 @@
 			<div class="error__nav e-nav">
 				<!-- svelte-ignore a11y-missing-content -->
 				<a
-					href="http://www.thedresscounter.com"
-					target="_blanck"
+					href="/"
 					class="e-nav__link bg-gray-400 text-gray-500 dark:text-gray-400"
 				></a>
 			</div>
