@@ -21,7 +21,6 @@ export const load = (async () => {
 }) satisfies PageServerLoad;
 
 export const actions: Actions = {
-
 	createCollection: async (event: RequestEvent) => {
 		const form = await superValidate(event, zod(creatCollectionSchema));
 
@@ -41,6 +40,5 @@ export const actions: Actions = {
 		}
 
 		throw redirect(300, `/editor/${collection_name}`);
-
 	}
 } satisfies Actions;

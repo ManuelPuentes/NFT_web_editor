@@ -13,10 +13,10 @@
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <div class=" card flex h-fit flex-row" on:click={flip} class:flip={flipped}>
-	<img src={item.url} alt={item.hash} class="backface-hidden aspect-auto" />
+	<img src={item.url} alt={item.hash} class="aspect-auto backface-hidden" />
 
 	<Button
-		class="backface-hidden absolute bottom-2 right-2 self-end !p-1"
+		class="absolute bottom-2 right-2 self-end !p-1 backface-hidden"
 		size="lg"
 		color="dark"
 		href={item.url}
@@ -30,7 +30,7 @@
 	>
 
 	<div
-		class="back backface-hidden absolute flex h-[100%] w-[100%] overflow-y-auto overflow-x-hidden text-base dark:bg-[#282A36]"
+		class="back absolute flex h-[100%] w-[100%] overflow-y-auto overflow-x-hidden text-base backface-hidden dark:bg-[#282A36]"
 	>
 		<ul class="m-auto p-3">
 			{#each Object.keys(item.metadata) as key, i}
