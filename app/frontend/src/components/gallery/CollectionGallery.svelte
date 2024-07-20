@@ -50,7 +50,7 @@
 		nextItem: number;
 	}>;
 
-	let collection_name: string = $page.params.gallery;
+	let collection_name: string = $page.params.collection;
 	let page_number: number = 0;
 	const page_size = 20;
 
@@ -87,9 +87,7 @@
 <div
 	class="gallery space-between flex h-[100%] w-[100%] select-none flex-col items-center self-center"
 >
-	<CollectionProfile />
-
-	<div class=" grid w-[70%] grid-cols-1 gap-5">
+	<div class=" grid aspect-square w-[70%] grid-cols-1 gap-5 border">
 		{#await images}
 			<span class=" ">
 				<Spinner size="3" class="mr-1" />

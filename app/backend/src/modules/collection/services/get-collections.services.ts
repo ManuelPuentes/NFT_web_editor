@@ -1,4 +1,4 @@
-// 
+//
 import { Injectable } from '@nestjs/common';
 import { Collection } from '../entities/collection.entity';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -12,16 +12,16 @@ export class GetCollectionsService {
   constructor(
     @InjectRepository(Collection)
     private readonly collectionsRepository: Repository<Collection>,
-  ) { }
+  ) {}
 
   async exec({
     limit,
     skip = 0,
     orderBy = 'id',
     orderType,
-  }: PaginatedRequest<Collection>): Promise<PaginatedResponse<{ name: string }>> {
-
-
+  }: PaginatedRequest<Collection>): Promise<
+    PaginatedResponse<{ name: string }>
+  > {
     const [collectionsEntities, count] = await this.collectionsRepository
       .createQueryBuilder('collection')
       .skip(skip)
@@ -29,8 +29,9 @@ export class GetCollectionsService {
       .orderBy(orderBy, orderType)
       .getManyAndCount();
 
-
-    const collections = collectionsEntities.map(({ name }) => { return { name } });
+    const collections = collectionsEntities.map(({ name }) => {
+      return { name };
+    });
 
     return {
       totalItems: count,

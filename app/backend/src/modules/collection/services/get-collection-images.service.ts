@@ -17,7 +17,7 @@ export class GetCollectionImagesService {
 
     @InjectRepository(Image)
     private readonly imagesRepository: Repository<Image>,
-  ) { }
+  ) {}
 
   async exec({
     limit = 5,
@@ -26,7 +26,7 @@ export class GetCollectionImagesService {
     orderType,
     collection_name,
   }: GetCollectionsImages): Promise<
-    PaginatedResponse<{ url: string; metadata: any, hash: string }>
+    PaginatedResponse<{ url: string; metadata: any; hash: string }>
   > {
     const { id: collection_id } =
       await this.collectionsRepository.findOneByOrFail({
@@ -43,7 +43,7 @@ export class GetCollectionImagesService {
       return {
         url,
         metadata: JSON.parse(metadata),
-        hash
+        hash,
       };
     });
     return {

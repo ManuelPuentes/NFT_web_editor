@@ -112,7 +112,7 @@
 						<TableBodyCell>
 							<a
 								href={`/editor/${collection.name}`}
-								class="text-primary-600 font-medium hover:underline dark:text-white">Load</a
+								class="font-medium text-primary-600 hover:underline dark:text-white">Load</a
 							>
 						</TableBodyCell>
 					</TableBodyRow>

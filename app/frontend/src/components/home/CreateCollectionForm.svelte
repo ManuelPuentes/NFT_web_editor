@@ -19,9 +19,9 @@
 	class="
 	m-4 flex h-[50%] w-[60%]
 	max-w-[600px] flex-col items-center
-	gap-5 bg-white
-	p-4 text-gray-900 dark:bg-slate-800 dark:text-white
-	overflow-y-auto
+	gap-5 overflow-y-auto
+	bg-white p-4 text-gray-900 dark:bg-slate-800
+	dark:text-white
 "
 >
 	<caption

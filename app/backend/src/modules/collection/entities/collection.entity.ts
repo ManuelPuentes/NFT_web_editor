@@ -19,7 +19,7 @@ export class Collection {
     enum: GenerationStatus,
     default: GenerationStatus.INACTIVE,
   })
-  status: string;
+  status: GenerationStatus;
 
   // @OneToMany(() => Image, (image) => image.collection)
   // images: Image[];
