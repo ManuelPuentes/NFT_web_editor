@@ -1,6 +1,5 @@
 <script lang="ts">
 	import '../app.css';
-	import '../app.css';
 
 	import { DarkMode } from 'flowbite-svelte';
 	import { Navbar, NavBrand, NavLi, NavUl, NavHamburger } from 'flowbite-svelte';
