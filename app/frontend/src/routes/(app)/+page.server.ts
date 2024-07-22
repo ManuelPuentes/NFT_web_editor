@@ -1,12 +1,15 @@
-import { redirect, type RequestEvent } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
+import { redirect, type RequestEvent } from '@sveltejs/kit';
 
 import { z } from 'zod';
-import { superValidate, setError } from 'sveltekit-superforms/server';
-import { fail } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
+import { fail } from 'sveltekit-superforms';
+import { superValidate, setError } from 'sveltekit-superforms/server';
 
 import { createCollectionRequest } from '$lib/api/create-collection';
+import { getCollectionImagesPaginated } from '$lib/api/get-collections';
+
+import { PUBLIC_GET_COLLECTIONS_PAGE_SIZE } from '$env/static/public';
 
 const creatCollectionSchema = z.object({
 	collectionName: z.string().min(5),
@@ -17,7 +20,11 @@ const creatCollectionSchema = z.object({
 
 export const load = (async () => {
 	const createCollectionForm = await superValidate(zod(creatCollectionSchema));
-	return { createCollectionForm };
+	const collections = getCollectionImagesPaginated({
+		limit: Number(PUBLIC_GET_COLLECTIONS_PAGE_SIZE)
+	});
+
+	return { createCollectionForm, collections };
 }) satisfies PageServerLoad;
 
 export const actions: Actions = {

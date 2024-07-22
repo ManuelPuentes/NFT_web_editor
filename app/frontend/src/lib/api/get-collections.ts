@@ -1,12 +1,12 @@
 import { PUBLIC_BACKEND_URL } from '$env/static/public';
+import type { PaginatedResponse } from '$lib/interfaces/pagintated-response.interface';
 
 export async function getCollectionImagesPaginated({
-	collection_name,
 	limit = 5,
 	skip = 0,
 	orderBy = 'id',
 	orderType = 'ASC'
-}: getImagesCollection) {
+}: getCollections): Promise<PaginatedResponse<Collection>> {
 	const requestOptions = {
 		method: 'GET'
 	};
@@ -15,7 +15,7 @@ export async function getCollectionImagesPaginated({
 	queryParams.append('skip', `${skip}`);
 	queryParams.append('limit', `${limit}`);
 
-	const url = `${PUBLIC_BACKEND_URL}/collection/images/${collection_name}?`;
+	const url = `${PUBLIC_BACKEND_URL}/collection?`;
 
 	try {
 		const response = await (await fetch(url + queryParams, requestOptions)).json();
@@ -25,10 +25,13 @@ export async function getCollectionImagesPaginated({
 	}
 }
 
-interface getImagesCollection {
-	collection_name: string;
+interface getCollections {
 	limit?: number;
 	skip?: number;
 	orderBy?: string;
 	orderType?: string;
+}
+
+interface Collection {
+	name: string;
 }

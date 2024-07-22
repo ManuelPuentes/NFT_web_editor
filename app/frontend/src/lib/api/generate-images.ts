@@ -1,25 +1,3 @@
-// const myHeaders = new Headers();
-// myHeaders.append("Content-Type", "application/json");
-
-// const raw = JSON.stringify({
-//     "amount": 30
-// });
-
-// const requestOptions = {
-//     method: "POST",
-//     headers: myHeaders,
-//     body: raw,
-//     redirect: "follow"
-// };
-
-// try {
-//     const response = await fetch("http://localhost:3000/collection/generate-images/luchamask2", requestOptions);
-//     const result = await response.text();
-//     console.log(result)
-// } catch (error) {
-//     console.error(error);
-// };
-
 import { PUBLIC_BACKEND_URL } from '$env/static/public';
 
 export async function generateImages({ collection_name, amount }: generateImages) {
@@ -45,10 +23,6 @@ export async function generateImages({ collection_name, amount }: generateImages
 	} catch (error: any) {
 		throw new Error(error.message);
 	}
-
-
-
-
 }
 
 interface generateImages {

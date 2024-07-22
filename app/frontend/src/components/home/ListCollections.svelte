@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { PUBLIC_BACKEND_URL } from '$env/static/public';
+	import { onMount } from 'svelte';
 	import {
 		PaginationItem,
 		Spinner,
@@ -11,47 +11,26 @@
 		TableHeadCell
 	} from 'flowbite-svelte';
 	import { ArrowLeftOutline, ArrowRightOutline } from 'flowbite-svelte-icons';
+	import { PUBLIC_GET_COLLECTIONS_PAGE_SIZE } from '$env/static/public';
+	import { getCollectionImagesPaginated } from '$lib/api/get-collections';
+	import type { PaginatedResponse } from '$lib/interfaces/pagintated-response.interface';
 
 	let page_number: number = 0;
-	const page_size: number = 5;
+	const page_size: number = Number(PUBLIC_GET_COLLECTIONS_PAGE_SIZE);
 	let total: number = 0;
-	let collections: Promise<{
-		totalItems: number;
-		items: Array<{ name: string }>;
-		nextItem: number;
-	}>;
 
-	export async function getCollectionsPaginated({
-		limit = 5,
-		skip = 0
-	}: {
-		limit?: number;
-		skip?: number;
-	}) {
-		const requestOptions = {
-			method: 'GET'
-		};
+	export let collections: Promise<PaginatedResponse<{ name: string }>>;
 
-		const queryParams = new URLSearchParams();
-		queryParams.append('skip', `${skip}`);
-		queryParams.append('limit', `${limit}`);
-
-		const url = `${PUBLIC_BACKEND_URL}/collection?`;
-
-		try {
-			const response = await (await fetch(url + queryParams, requestOptions)).json();
-			const { data } = response;
+	onMount(() => {
+		collections.then((data) => {
 			total = data.totalItems;
-			return data;
-		} catch (error: any) {
-			throw new Error(error.message);
-		}
-	}
+		});
+	});
 
 	const previous = async () => {
 		if (page_number > 0) {
 			page_number--;
-			collections = getCollectionsPaginated({
+			collections = getCollectionImagesPaginated({
 				skip: page_number * page_size,
 				limit: page_size
 			});
@@ -61,16 +40,12 @@
 		if ((page_number + 1) * page_size < total) {
 			page_number++;
 
-			collections = getCollectionsPaginated({
+			collections = getCollectionImagesPaginated({
 				skip: page_number * page_size,
 				limit: page_size
 			});
 		}
 	};
-	collections = getCollectionsPaginated({
-		skip: page_number * page_size,
-		limit: page_size
-	});
 </script>
 
 <div
@@ -106,12 +81,12 @@
 					<Spinner size="3" class="mr-1" />
 				</span>
 			{:then { items }}
-				{#each items as collection, i}
+				{#each items as { name }, i}
 					<TableBodyRow>
-						<TableBodyCell>{collection.name}</TableBodyCell>
+						<TableBodyCell>{name}</TableBodyCell>
 						<TableBodyCell>
 							<a
-								href={`/editor/${collection.name}`}
+								href={`/editor/${name}`}
 								class="font-medium text-primary-600 hover:underline dark:text-white">Load</a
 							>
 						</TableBodyCell>

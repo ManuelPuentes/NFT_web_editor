@@ -1,66 +1,28 @@
 <script lang="ts">
-	import { Gallery, Spinner } from 'flowbite-svelte';
-	import GalleryELement from './GalleryELement.svelte';
+	import { onMount } from 'svelte';
+
 	import { PaginationItem } from 'flowbite-svelte';
+	import { Gallery, Spinner } from 'flowbite-svelte';
 	import { ArrowLeftOutline, ArrowRightOutline } from 'flowbite-svelte-icons';
 
-	import CollectionProfile from './collectionProfile.svelte';
-	import { PUBLIC_BACKEND_URL } from '$env/static/public';
+	import GalleryELement from './GalleryELement.svelte';
+	import { getCollectionImagesPaginated } from '$lib/api/get-collection-images';
+	import { PUBLIC_GET_COLLECTION_IMAGES_PAGE_SIZE } from '$env/static/public';
+	import type { PaginatedResponse } from '$lib/interfaces/pagintated-response.interface';
 
-	import { page } from '$app/stores';
+	export let images: Promise<PaginatedResponse<{ url: string; metadata: any; hash: string }>>;
+	export let collection_name: string;
 
-	async function getCollectionImagesPaginated({
-		collection_name,
-		limit = 5,
-		skip = 0
-	}: {
-		collection_name: string;
-		limit?: number;
-		skip?: number;
-	}): Promise<{
-		totalItems: number;
-		items: Array<{ url: string; metadata: any; hash: string }>;
-		nextItem: number;
-	}> {
-		const requestOptions = {
-			method: 'GET'
-		};
-
-		const queryParams = new URLSearchParams();
-		queryParams.append('skip', `${skip}`);
-		queryParams.append('limit', `${limit}`);
-
-		const url = `${PUBLIC_BACKEND_URL}/collection/images/${collection_name}?`;
-
-		try {
-			const response = await (await fetch(url + queryParams, requestOptions)).json();
-
-			const { data } = response;
-
-			total = data.totalItems;
-			return data;
-		} catch (error: any) {
-			throw new Error(error.message);
-		}
-	}
-
-	let images: Promise<{
-		totalItems: number;
-		items: Array<{ url: string; metadata: any; hash: string }>;
-		nextItem: number;
-	}>;
-
-	let collection_name: string = $page.params.collection;
 	let page_number: number = 0;
-	const page_size = 20;
-
-	images = getCollectionImagesPaginated({
-		collection_name,
-		skip: page_number * page_size,
-		limit: page_size
-	});
+	const page_size = Number(PUBLIC_GET_COLLECTION_IMAGES_PAGE_SIZE);
 
 	let total: number = 0;
+
+	onMount(() => {
+		images.then((data) => {
+			total = data.totalItems;
+		});
+	});
 
 	const previous = async () => {
 		if (page_number > 0) {
@@ -84,9 +46,7 @@
 	};
 </script>
 
-<div
-	class="gallery space-between flex h-[100%] w-[100%] select-none flex-col items-center self-center"
->
+<div class=" space-between flex h-[100%] w-[100%] select-none flex-col items-center self-center">
 	<div class=" grid aspect-square w-[70%] grid-cols-1 gap-5 border">
 		{#await images}
 			<span class=" ">
@@ -101,7 +61,7 @@
 				{/each}
 			</Gallery>
 
-			<div class=" mt-5 flex flex-col items-center justify-center gap-2 p-5">
+			<div class=" mt-5 flex flex-col items-center justify-center gap-2 self-end p-5">
 				<div class="text-sm text-gray-700 dark:text-gray-400">
 					Showing <span class="font-semibold text-gray-900 dark:text-white"
 						>{page_number * page_size}</span

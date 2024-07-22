@@ -8,6 +8,7 @@
 	export let data: PageData;
 
 	const { form } = superForm(data.createCollectionForm);
+	const collections = data.collections;
 </script>
 
 <div
@@ -17,5 +18,5 @@ dark:bg-slate-700 dark:bg-[repeating-linear-gradient(0deg,black_0_1px,transparen
 "
 >
 	<CreateCollectionForm data={form} />
-	<ListCollections />
+	<ListCollections {collections} />
 </div>

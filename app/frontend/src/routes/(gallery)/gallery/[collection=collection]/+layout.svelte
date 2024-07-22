@@ -38,7 +38,7 @@
 		<NavUl>
 			<NavLi href="/">Home</NavLi>
 			<NavLi href={`/editor/${collection_name}`}>Editor</NavLi>
-			<NavLi href={`/gallery/${collection_name}`}>Generate</NavLi>
+			<NavLi href={`/generate/${collection_name}`}>Generate</NavLi>
 			<NavLi href="/docs">Docs</NavLi>
 		</NavUl>
 		<DarkMode btnClass={darkmodebtn} />

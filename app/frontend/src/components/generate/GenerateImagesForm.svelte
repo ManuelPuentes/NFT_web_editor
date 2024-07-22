@@ -11,8 +11,6 @@
 	});
 </script>
 
-
-
 <form
 	method="POST"
 	use:enhance
