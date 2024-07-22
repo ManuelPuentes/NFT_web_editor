@@ -7,4 +7,8 @@ export const creatCollectionSchema = z.object({
 		.refine((f) => f.type === 'application/zip', 'provided file is invalid')
 });
 
+export const generateImagesSchema = z.object({
+	imagesAmount: z.number().positive().max(20).default(5)
+});
+
 export type creatCollectionSchema = typeof creatCollectionSchema;

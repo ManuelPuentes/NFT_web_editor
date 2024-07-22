@@ -1,7 +1,6 @@
 import type { Actions, PageServerLoad } from './$types';
 import { redirect, type RequestEvent } from '@sveltejs/kit';
 
-import { z } from 'zod';
 import { zod } from 'sveltekit-superforms/adapters';
 import { fail } from 'sveltekit-superforms';
 import { superValidate, setError } from 'sveltekit-superforms/server';
@@ -11,12 +10,7 @@ import { getCollectionImagesPaginated } from '$lib/api/get-collections';
 
 import { PUBLIC_GET_COLLECTIONS_PAGE_SIZE } from '$env/static/public';
 
-const creatCollectionSchema = z.object({
-	collectionName: z.string().min(5),
-	collectionAssets: z
-		.instanceof(File, { message: 'Please upload a file.' })
-		.refine((f) => f.type === 'application/zip')
-});
+import { creatCollectionSchema } from '$lib/schemas';
 
 export const load = (async () => {
 	const createCollectionForm = await superValidate(zod(creatCollectionSchema));

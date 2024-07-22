@@ -1,20 +1,16 @@
-import { ensureCollectionExist } from '$lib/api/collection-exist';
-import { getCollectionStatus } from '$lib/api/collection-status';
-import { error, type Actions, type RequestEvent } from '@sveltejs/kit';
-import { z } from 'zod';
+import type { Actions, RequestEvent } from '@sveltejs/kit';
 import { superValidate, setError } from 'sveltekit-superforms/server';
-import { fail } from 'sveltekit-superforms';
 import { zod } from 'sveltekit-superforms/adapters';
 
 import { generateImages } from '$lib/api/generate-images';
+import { getCollectionStatus } from '$lib/api/collection-status';
+import { ensureCollectionExist } from '$lib/api/collection-exist';
 
-/** @type {import('./$types').PageLoad} */
+import { generateImagesSchema } from '$lib/schemas';
 
-const generateImagesSchema = z.object({
-	imagesAmount: z.number().positive().max(20).default(5)
-});
+import type { PageServerLoad } from './$types';
 
-export async function load({ params }: any) {
+export const load = (async ({ params }) => {
 	const collection_name = params.collection;
 	const generateImagesForm = await superValidate(zod(generateImagesSchema));
 
@@ -28,7 +24,7 @@ export async function load({ params }: any) {
 	} catch (error: any) {
 		throw error(400, error.message);
 	}
-}
+}) satisfies PageServerLoad;
 
 export const actions: Actions = {
 	generateImages: async (event: RequestEvent) => {
