@@ -1,5 +1,3 @@
-/** @type {import('./$types').PageLoad} */
-
 import { ensureCollectionExist } from '$lib/api/collection-exist';
 import { error } from '@sveltejs/kit';
 
