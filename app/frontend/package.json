@@ -39,6 +39,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"svelte-boring-avatars": "1.2.6",
 		"svelte-moveable": "0.45.0",
 		"svelte-sortable-list": "1.1.0",
 		"sveltekit-superforms": "2.15.2"
