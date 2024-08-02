@@ -9,7 +9,7 @@ export class SetAssetDetailsController {
   constructor(
     private readonly setAssetsDetailsService: SetAssetsDetailsService,
   ) {}
-  @Put('asset-datails/:collection_name')
+  @Put('asset_details/:collection_name')
   @UseGuards(CollectionMustExistGuard)
   async execute(
     @Param() { collection_name }: CollectionDto,

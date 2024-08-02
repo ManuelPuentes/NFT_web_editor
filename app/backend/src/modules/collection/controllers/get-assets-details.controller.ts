@@ -8,7 +8,7 @@ export class GetAssetDetailsController {
   constructor(
     private readonly getAssetsDetailsService: GetAssetsDetailsService,
   ) {}
-  @Get('asset-details/:collection_name')
+  @Get('asset_details/:collection_name')
   @UseGuards(CollectionMustExistGuard)
   async execute(@Param() { collection_name }: CollectionDto) {
     return {

@@ -40,6 +40,7 @@ import { GenerateImagesMetadataService } from './services/generate-images-metada
 import { QueuesModule } from '../queues/queues.module';
 import { GetStatusController } from './controllers/get-collection-status.controller';
 import { GetCollectionStatusService } from './services/get-collection-status.service';
+import { GetAssetsListController } from './controllers/get-assets-list.controller';
 
 @Module({
   imports: [
@@ -52,6 +53,7 @@ import { GetCollectionStatusService } from './services/get-collection-status.ser
     CreateController,
     GetStatusController,
     SetDrawOrderController,
+    GetAssetsListController,
     SetCanvasSizeController,
     GetDrawOrderController,
     GetCanvasSizeController,
@@ -82,4 +84,4 @@ import { GetCollectionStatusService } from './services/get-collection-status.ser
     GetCollectionStatusService,
   ],
 })
-export class CollectionModule { }
+export class CollectionModule {}
