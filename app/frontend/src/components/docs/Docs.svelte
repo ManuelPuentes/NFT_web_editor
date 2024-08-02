@@ -1,5 +1,5 @@
 <script>
-	import { Timeline, TimelineItem, Button } from 'flowbite-svelte';
+	import { Timeline } from 'flowbite-svelte';
 
 	import Step1 from '$components/docs/steps/Step1.svelte';
 	import Step2 from '$components/docs/steps/Step2.svelte';

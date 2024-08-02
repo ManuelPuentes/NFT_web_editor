@@ -1,64 +1,32 @@
 <script lang="ts">
-	import Moveable from 'svelte-moveable';
-	import {
-		draw_order,
-		canvas_size,
-		selected_items,
-		workspace_details,
-		last_selected_item_id,
-		canvas_ref
-	} from '$stores/web_app_state';
-
 	import { onMount } from 'svelte';
+	import InfiniteViewer from 'svelte-infinite-viewer';
+
+	// components
+	import Canvas from './Canvas.svelte';
 	import Image from './Image.svelte';
 
-	import type { MoveableBounds } from '../../interfaces/BoundingRect';
-	import type { AssetDetails } from '../../interfaces/AssetDetails';
-	import { DimensionViewable } from '$lib/moveable-able';
+	// stores
+	import { viewer_ref, use_mouse_drag, selected_items, draw_order } from '$stores/web_app_state';
 
-	import { setCanvasSize, getCanvasSize } from '$lib/api/canvas-size';
-	import ChangesIndicator from './ChangesIndicator.svelte';
+	// interfaces
+	import type { AssetDetails } from '$interfaces/asset_details.interface';
 
-	export let collection_name = '';
-
-	const canvas_id = 'canvas';
-
-	let canvas: HTMLElement;
-	let workspace: HTMLElement;
-	let bounds: MoveableBounds = { left: 0, top: 0, right: 0, bottom: 0 };
-
-	let images_data = [];
+	$: viewerRef = $viewer_ref;
+	$: useMouseDrag = $use_mouse_drag;
 
 	onMount(async () => {
-		const { left, top, right, bottom } = workspace.getBoundingClientRect();
-		bounds = { left, top, right, bottom };
-		$workspace_details = bounds;
-
-		await loadCanvasSize({ collection_name });
-		canvas.style.height = `${$canvas_size.height}px`;
-		canvas.style.width = `${$canvas_size.width}px`;
-
-		$canvas_ref = canvas;
+		setTimeout(() => {
+			viewerRef.scrollCenter();
+		}, 100);
 	});
 
-	const loadCanvasSize = async ({ collection_name }: { collection_name: string }) => {
-		const result = await getCanvasSize({ collection_name });
-		if (result) {
-			$canvas_size = result;
-		}
-		return $canvas_size;
-	};
-
-	const handleCanvasClick = () => {
-		$last_selected_item_id = canvas_id;
-	};
-
-	const drawImagesOrder = (drawOrder: string[], selectedItems: Record<string, AssetDetails>) => {
+	const drawImagesOrder = (draw_order: string[], selected_items: Record<string, AssetDetails>) => {
 		let order: Array<AssetDetails> = [];
 
-		drawOrder.map((element) => {
-			if (selectedItems[element]) {
-				order.push(selectedItems[element]);
+		draw_order.map((element) => {
+			if (selected_items[element]) {
+				order.push(selected_items[element]);
 			}
 		});
 
@@ -66,67 +34,27 @@
 	};
 
 	$: images_data = drawImagesOrder($draw_order, $selected_items);
-
-	const throttleDragRotate = 0;
-	const scalable = true;
-	const throttleScale = 0;
-	const snappable = true;
 </script>
 
-<div
-	class="
-		flex
-		w-[80%]
-		items-center justify-center
-	"
-	bind:this={workspace}
-	id="workspace"
->
-	<!-- svelte-ignore a11y-no-static-element-interactions -->
-	<div
-		id={canvas_id}
-		class="
-			flex !transform-none
-			bg-[repeating-linear-gradient(0deg,black_0_1px,transparent_1px_20px),repeating-linear-gradient(90deg,black_0_1px,transparent_1px_20px)] dark:bg-slate-700 dark:bg-[repeating-linear-gradient(0deg,black_0_1px,transparent_1px_20px),repeating-linear-gradient(90deg,black_0_1px,transparent_1px_20px)]
-    	"
-		bind:this={canvas}
-		on:click={handleCanvasClick}
-		on:keypress={handleCanvasClick}
-	>
+<InfiniteViewer className="viewer" bind:this={$viewer_ref} {useMouseDrag} useResizeObserver>
+	<Canvas>
 		{#each images_data as data (data.file_asset_path)}
-			<Image {data} />
+			<Image {data} {viewerRef} />
 		{/each}
-	</div>
+	</Canvas>
+</InfiniteViewer>
 
-	<ChangesIndicator />
-
-	{#if $last_selected_item_id === canvas_id}
-		<Moveable
-			target={canvas}
-			origin={false}
-			resizable={true}
-			ables={[DimensionViewable]}
-			props={{ dimensionViewable: true }}
-			{throttleDragRotate}
-			{scalable}
-			{throttleScale}
-			{snappable}
-			{bounds}
-			on:render={({ detail: e }) => {
-				e.target.style.cssText += e.cssText;
-			}}
-			on:resizeEnd={({ detail: e }) => {
-				if (e.lastEvent) {
-					setCanvasSize({
-						collection_name,
-						size: {
-							height: e.lastEvent.height,
-							width: e.lastEvent.width
-						}
-					});
-				}
-			}}
-			on:bound={({ detail: e }) => {}}
-		/>
-	{/if}
-</div>
+<style>
+	:global(html),
+	:global(body),
+	:global(#app) {
+		width: 100%;
+		height: 100%;
+		padding: 0;
+		margin: 0;
+	}
+	:global(.viewer) {
+		width: 100%;
+		height: 100%;
+	}
+</style>

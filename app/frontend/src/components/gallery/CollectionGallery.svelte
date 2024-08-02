@@ -3,12 +3,11 @@
 
 	import { PaginationItem } from 'flowbite-svelte';
 	import { Gallery, Spinner } from 'flowbite-svelte';
-	import { ArrowLeftOutline, ArrowRightOutline } from 'flowbite-svelte-icons';
 
 	import GalleryELement from './GalleryELement.svelte';
 	import { getCollectionImagesPaginated } from '$lib/api/get-collection-images';
 	import { PUBLIC_GET_COLLECTION_IMAGES_PAGE_SIZE } from '$env/static/public';
-	import type { PaginatedResponse } from '$lib/interfaces/pagintated-response.interface';
+	import type { PaginatedResponse } from '$lib/interfaces/paginated-response.interface';
 
 	export let images: Promise<PaginatedResponse<{ url: string; metadata: any; hash: string }>>;
 	export let collection_name: string;
@@ -47,10 +46,10 @@
 </script>
 
 <div class=" space-between flex h-[100%] w-[100%] select-none flex-col items-center self-center">
-	<div class=" grid aspect-square w-[70%] grid-cols-1 gap-5 border">
+	<div class=" grid aspect-square w-[50%] grid-cols-1 gap-5 border">
 		{#await images}
-			<span class=" ">
-				<Spinner size="3" class="mr-1" />
+			<span class="flex items-center justify-center">
+				<Spinner size="10" />
 			</span>
 		{:then { totalItems, items }}
 			<Gallery
@@ -77,12 +76,12 @@
 
 				<div class="flex space-x-3 rtl:space-x-reverse">
 					<PaginationItem class="flex items-center" on:click={previous}>
-						<ArrowLeftOutline class="me-2 h-3.5 w-3.5" />
+						<!-- <ArrowLeftOutline class="me-2 h-3.5 w-3.5" /> -->
 						Previous
 					</PaginationItem>
 					<PaginationItem class="flex items-center" on:click={next}>
 						Next
-						<ArrowRightOutline class="ms-2 h-3.5 w-3.5" />
+						<!-- <ArrowRightOutline class="ms-2 h-3.5 w-3.5" /> -->
 					</PaginationItem>
 				</div>
 			</div>

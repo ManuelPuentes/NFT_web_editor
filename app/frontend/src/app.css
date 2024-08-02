@@ -1,37 +1,31 @@
-/* Write your global styles here, in PostCSS syntax */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,200;1,100&display=swap');
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+:root {
+	--background_color: #282a36;
+	--primary_color: #44475a;
+	--secondary_color: #6272a4;
+	--border_color: lightslategray;
+}
 
-body {
-	font-family: 'Poppins', sans-serif;
-	font-size: 20pt;
-	margin: 0;
-	padding: 0;
-	background-color: #12151c;
+html {
+	user-select: none;
+	color: black;
 }
 
 html.dark {
 	color: white;
 }
 
-:root {
-	--background_color: #282a36;
-	--primary_hover_color: #44475a;
-	--secondary_hover_color: #6272a4;
-	--border_color: lightslategray;
-
-	--scroll_color: #6272a4;
-	--scroll_box_shadow: #f8f8f2;
+.sortable-item {
+	width: 100%;
 }
 
-*,
 *::after,
 *::before,
 *::marker {
-	/* box-sizing: inherit; */
+	box-sizing: inherit;
 }
 
 /* width */
@@ -40,14 +34,8 @@ html.dark {
 	height: 10px;
 }
 
-/* Track */
-::-webkit-scrollbar-track {
-	box-shadow: inset 0 0 2px var(--scroll_box_shadow);
-	/* border-radius: 10px; */
-}
-
 /* Handle */
 ::-webkit-scrollbar-thumb {
-	background: var(--scroll_color);
+	background: var(--secondary_color);
 	/* border-radius: 10px; */
 }

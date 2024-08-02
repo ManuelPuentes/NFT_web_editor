@@ -13,7 +13,7 @@
 		variant="beam"
 		colors={['#19381fff', '#eee82cff', '#91cb3eff', '#53a548ff', '#4c934cff']}
 	/>
-	<Heading tag="h1" class="mb-4" customSize="text-4xl font-extrabold  md:text-5xl lg:text-6xl"
+	<Heading tag="h1" class="mb-4" customSize="text-4xl  md:text-5xl lg:text-6xl"
 		>{collection_name}</Heading
 	>
 </div>

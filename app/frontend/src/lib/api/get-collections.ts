@@ -1,8 +1,8 @@
-import { PUBLIC_BACKEND_URL } from '$env/static/public';
-import type { PaginatedResponse } from '$lib/interfaces/pagintated-response.interface';
+import { PUBLIC_BACKEND_URL, PUBLIC_GET_COLLECTIONS_PAGE_SIZE } from '$env/static/public';
+import type { PaginatedResponse } from '$lib/interfaces/paginated-response.interface';
 
 export async function getCollectionImagesPaginated({
-	limit = 5,
+	limit = Number(PUBLIC_GET_COLLECTIONS_PAGE_SIZE),
 	skip = 0,
 	orderBy = 'id',
 	orderType = 'ASC'

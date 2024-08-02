@@ -2,4 +2,3 @@ node_modules
 app/backend/node_modules
 app/frontend/node_modules
 package-lock.json
-app/web_app/static/imgs/assets/

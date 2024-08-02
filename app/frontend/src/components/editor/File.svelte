@@ -1,53 +1,43 @@
 <script lang="ts">
-	import type { AssetDetails } from '../../interfaces/AssetDetails';
-	import { selected_items, context_menu } from '$stores/web_app_state';
+	import EyeIcon from '$icons/eye.icon.svelte';
+	import EyeCloseIcon from '$icons/eye.close.icon.svelte';
 
-	let file = null;
+	// stores
+	import { selected_items, assets_details } from '$stores/web_app_state';
+	import type { AssetDetails } from '$interfaces/asset_details.interface';
+
 	let active_item = false;
 
-	export let folder_name = 'folder';
-	export let file_name = 'file';
-	export let file_data: AssetDetails;
+	export let file_name;
+	export let folder_name;
 
-	$: active_item = $selected_items[folder_name] == file_data;
+	$: active_item = $selected_items[folder_name] == $assets_details[folder_name][file_name];
 
 	const handleClick = (e: MouseEvent) => {
-		const current_item_selected: any = $selected_items[folder_name];
+		const current_trait_active_element: AssetDetails = $selected_items[folder_name];
 
-		let new_state = {};
-
-		delete $selected_items[folder_name];
-
-		if (current_item_selected != file_data) {
-			new_state = {
-				...$selected_items,
-				[folder_name]: file_data
-			};
+		if (current_trait_active_element != $assets_details[folder_name][file_name]) {
+			$selected_items[folder_name] = $assets_details[folder_name][file_name];
 		} else {
-			new_state = $selected_items;
+			delete $selected_items[folder_name];
 		}
-
-		selected_items.set(new_state);
-		$context_menu.status = false;
+		selected_items.set($selected_items);
 	};
 </script>
 
-<!-- svelte-ignore a11y-no-static-element-interactions -->
-<!-- svelte-ignore a11y-click-events-have-key-events -->
 <div
-	class="
-	mx-5 my-0
-	overflow-hidden
-	truncate whitespace-nowrap
-	p-2
-	hover:bg-slate-400
-	dark:hover:bg-[--secondary_hover_color]
-"
-	on:click={handleClick}
-	bind:this={file}
+	class="  m-1
+  w-[100%]
+  truncate
+  p-4
+  hover:bg-slate-200 dark:hover:bg-[--primary_color]"
 >
-	{file_name}
-	{#if active_item}
-		<span class="fa-regular fa-eye" />
-	{/if}
+	<button on:click|stopPropagation={handleClick} class="w-[100%] text-left">
+		{#if active_item}
+			<EyeIcon class="mr-2 inline" />
+		{:else}
+			<EyeCloseIcon class="mr-2 inline" />
+		{/if}
+		{file_name}
+	</button>
 </div>

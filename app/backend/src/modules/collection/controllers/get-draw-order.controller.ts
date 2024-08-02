@@ -5,7 +5,7 @@ import { CollectionDto } from '../dto/collection.dto';
 @Controller('collection')
 export class GetDrawOrderController {
   constructor(private readonly getDrawOrderService: GetDrawOrderService) {}
-  @Get('draw-order/:collection_name')
+  @Get('draw_order/:collection_name')
   @UseGuards(CollectionMustExistGuard)
   async execute(@Param() { collection_name }: CollectionDto) {
     return {

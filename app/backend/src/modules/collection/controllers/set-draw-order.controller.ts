@@ -6,7 +6,7 @@ import { CollectionDto } from '../dto/collection.dto';
 @Controller('collection')
 export class SetDrawOrderController {
   constructor(private readonly setDrawOrderService: SetDrawOrderService) {}
-  @Put('draw-order/:collection_name')
+  @Put('draw_order/:collection_name')
   @UseGuards(CollectionMustExistGuard)
   async execute(
     @Param() { collection_name }: CollectionDto,

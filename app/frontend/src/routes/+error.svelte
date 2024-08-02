@@ -1,39 +1,7 @@
-<script lang="ts">
-	import '../app.css';
-
-	import { DarkMode } from 'flowbite-svelte';
-	import { Navbar, NavBrand, NavLi, NavUl, NavHamburger } from 'flowbite-svelte';
-
-	let darkmodebtn =
-		'text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg text-lg p-2.5  right-4 top-2 z-50';
-	import Avatar from 'svelte-boring-avatars';
-</script>
-
 <div
 	class="	h-screen
 	w-screen overflow-hidden"
 >
-	<Navbar>
-		<NavBrand>
-			<div class="mr-3">
-				<Avatar
-					size={40}
-					name="SVGeditor"
-					variant="beam"
-					colors={['#19381fff', '#eee82cff', '#91cb3eff', '#53a548ff', '#4c934cff']}
-				/>
-			</div>
-
-			<span class="self-center whitespace-nowrap text-xl font-semibold dark:text-white"
-				>SVGeditor</span
-			>
-		</NavBrand>
-		<NavHamburger />
-		<NavUl>
-			<NavLi href="/">Home</NavLi>
-		</NavUl>
-		<DarkMode btnClass={darkmodebtn} />
-	</Navbar>
 	<header class="top-header"></header>
 
 	<!--dust particel-->
@@ -539,17 +507,6 @@
 			263px 604px #ff5722,
 			1546px 692px #f44336;
 		animation: animStar 80s linear infinite;
-	}
-
-	.e-nav__icon {
-		position: absolute;
-		right: 15px;
-		top: 50%;
-		-webkit-transform: translateY(-50%);
-		transform: translateY(-50%);
-		color: #212121;
-		-webkit-transition: color 0.25s ease;
-		transition: color 0.25s ease;
 	}
 
 	.e-nav__link {
