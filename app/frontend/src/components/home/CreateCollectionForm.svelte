@@ -1,10 +1,9 @@
 <script lang="ts">
 	import { superForm } from 'sveltekit-superforms/client';
-
 	import { Input, Button, Spinner, Alert, Label } from 'flowbite-svelte';
-	import { InfoCircleSolid } from 'flowbite-svelte-icons';
 
 	import FileInput from './FileInput.svelte';
+	import InfoIcon from '$icons/info.icon.svelte';
 
 	export let data: any;
 
@@ -56,7 +55,7 @@
 
 	{#if $errors._errors}
 		<Alert border color="dark">
-			<InfoCircleSolid slot="icon" class="size-5" />
+			<InfoIcon class="inline" />
 			<span class="font-medium">Alert!</span>
 			{$errors._errors}
 		</Alert>
@@ -64,7 +63,7 @@
 
 	{#if $errors.collectionAssets}
 		<Alert border color="dark">
-			<InfoCircleSolid slot="icon" class="size-5" />
+			<InfoIcon class="inline" />
 			<span class="font-medium">Alert!</span>
 			{$errors.collectionAssets}
 		</Alert>
@@ -72,7 +71,7 @@
 
 	{#if $errors.collectionName}
 		<Alert border color="dark">
-			<InfoCircleSolid slot="icon" class="size-5" />
+			<InfoIcon class="inline" />
 			<span class="font-medium">Alert!</span>
 			{$errors.collectionName}
 		</Alert>
@@ -81,7 +80,7 @@
 	{#if $submitting}
 		<Spinner size="6" class="mt-auto" />
 	{:else}
-		<Button type="submit" color="light" class=" dark:color-primary mt-auto max-w-[30%]">send</Button
+		<Button type="submit" color="light" class=" dark:color-primary mt-auto max-w-[30%]">Send</Button
 		>
 	{/if}
 </form>

@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { Alert, Button, Label, Range, Spinner } from 'flowbite-svelte';
-	import { InfoCircleSolid } from 'flowbite-svelte-icons';
 	import { onMount } from 'svelte';
+	import { Alert, Button, Label, Range, Spinner } from 'flowbite-svelte';
+	import InfoIcon from '$icons/info.icon.svelte';
 	import { superForm } from 'sveltekit-superforms/client';
 	export let data: any;
 	const { form, errors, enhance, constraints, submitting } = superForm(data);
@@ -43,7 +43,7 @@
 
 	{#if $errors._errors}
 		<Alert border color="dark">
-			<InfoCircleSolid slot="icon" class="size-5" />
+			<InfoIcon />
 			<span class="font-medium">Alert!</span>
 			{$errors._errors}
 		</Alert>
@@ -51,7 +51,7 @@
 
 	{#if $errors.imagesAmount}
 		<Alert border color="dark">
-			<InfoCircleSolid slot="icon" class="size-5" />
+			<InfoIcon />
 			<span class="font-medium">Alert!</span>
 			{$errors.collectionAssets}
 		</Alert>
@@ -59,7 +59,7 @@
 
 	{#if $errors.collectionName}
 		<Alert border color="dark">
-			<InfoCircleSolid slot="icon" class="size-5" />
+			<InfoIcon />
 			<span class="font-medium">Alert!</span>
 			{$errors.collectionName}
 		</Alert>

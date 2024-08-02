@@ -10,10 +10,13 @@
 		TableHead,
 		TableHeadCell
 	} from 'flowbite-svelte';
-	import { ArrowLeftOutline, ArrowRightOutline } from 'flowbite-svelte-icons';
+
+	import ArrowLeftIcon from '$icons/arrow-left.icon.svelte';
+	import ArrowRightIcon from '$icons/arrow-right.icon.svelte';
+
 	import { PUBLIC_GET_COLLECTIONS_PAGE_SIZE } from '$env/static/public';
 	import { getCollectionImagesPaginated } from '$lib/api/get-collections';
-	import type { PaginatedResponse } from '$lib/interfaces/pagintated-response.interface';
+	import type { PaginatedResponse } from '$lib/interfaces/paginated-response.interface';
 
 	let page_number: number = 0;
 	const page_size: number = Number(PUBLIC_GET_COLLECTIONS_PAGE_SIZE);
@@ -60,27 +63,27 @@
 >
 	<caption
 		class="
-		w-[100%] text-left text-lg
+		w-[100%] text-center text-lg
 		font-semibold
 		text-gray-900 dark:text-white
+
 		"
 	>
 		Collections
 	</caption>
-	<Table hoverable={true} divClass="w-[100%]">
-		<TableHead>
-			<TableHeadCell>Collection name</TableHeadCell>
-			<TableHeadCell>
-				<span class="sr-only">Edit</span>
-			</TableHeadCell>
-		</TableHead>
-
-		<TableBody tableBodyClass="divide-y">
-			{#await collections}
-				<span class=" ">
-					<Spinner size="3" class="mr-1" />
-				</span>
-			{:then { items }}
+	{#await collections}
+		<span class="flex w-[100%] justify-center">
+			<Spinner size="4" class="" />
+		</span>
+	{:then { items }}
+		<Table hoverable={true} divClass="w-[100%] ">
+			<TableHead>
+				<TableHeadCell>Collection name</TableHeadCell>
+				<TableHeadCell>
+					<span class="sr-only">Edit</span>
+				</TableHeadCell>
+			</TableHead>
+			<TableBody tableBodyClass="divide-y">
 				{#each items as { name }, i}
 					<TableBodyRow>
 						<TableBodyCell>{name}</TableBodyCell>
@@ -92,17 +95,17 @@
 						</TableBodyCell>
 					</TableBodyRow>
 				{/each}
-			{/await}
-		</TableBody>
-	</Table>
-	<div class="flex w-[100%] justify-center space-x-3 rtl:space-x-reverse">
-		<PaginationItem class="flex items-center" on:click={previous}>
-			<ArrowLeftOutline class="me-2 h-3.5 w-3.5" />
-			Previous
-		</PaginationItem>
-		<PaginationItem class="flex items-center" on:click={next}>
-			Next
-			<ArrowRightOutline class="ms-2 h-3.5 w-3.5" />
-		</PaginationItem>
-	</div>
+			</TableBody>
+		</Table>
+		<div class="flex w-[100%] justify-center space-x-3 rtl:space-x-reverse">
+			<PaginationItem class="flex items-center" on:click={previous}>
+				<ArrowLeftIcon class="inline" />
+				Previous
+			</PaginationItem>
+			<PaginationItem class="flex items-center" on:click={next}>
+				Next
+				<ArrowRightIcon class="inline" />
+			</PaginationItem>
+		</div>
+	{/await}
 </div>

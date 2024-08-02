@@ -1,47 +1,28 @@
 <script lang="ts">
-	import { onMount, onDestroy } from 'svelte';
-	import ResetStyles from './context_menu/ResetStyles.svelte';
-	import FitIntoCanvas from './context_menu/FitIntoCanvas.svelte';
-
 	import { context_menu, last_selected_item_id } from '$stores/web_app_state';
-
-	let pos: { x: number; y: number } = { x: 0, y: 0 };
-	let menu: { h: number; w: number } = { h: 0, w: 0 };
+	import FitIntoCanvas from './context_menu_items/FitIntoCanvas.svelte';
+	import ResetStyles from './context_menu_items/ResetStyles.svelte';
 
 	$: pos = $context_menu.pos;
-
-	const getContextMenuDimension = (node: any) => {
-		let height = node.offsetHeight;
-		let width = node.offsetWidth;
-		menu = {
-			h: height,
-			w: width
-		};
-	};
-
-	function onPageClick(e: any) {
-		$context_menu.status = false;
-	}
 </script>
 
 {#if $context_menu.status}
-	<nav
-		use:getContextMenuDimension
+	<div
 		style="top:{pos.y}px; left:{pos.x}px"
-		class="absolute z-[5000] rounded-lg border dark:border-[--border_color] dark:bg-[--background_color]"
+		class="absolute z-[5000] flex flex-col gap-3 rounded-xl p-4 text-center dark:bg-[--background_color]"
+		id="navbar"
 	>
-		<div class="mb-2 mt-2 p-1 text-center text-base" id="navbar">
-			{$last_selected_item_id}
-			<ul>
-				<li class="p-1 text-base">
-					<FitIntoCanvas />
-				</li>
-				<li class="p-1 text-base">
-					<ResetStyles />
-				</li>
-			</ul>
-		</div>
-	</nav>
+		<span class="p-1 font-extrabold">{$last_selected_item_id.replace('_', ' ')}</span>
+
+		<ul>
+			<FitIntoCanvas />
+			<ResetStyles />
+		</ul>
+	</div>
 {/if}
 
-<svelte:window on:click={onPageClick} />
+<svelte:window
+	on:click={() => {
+		$context_menu.status = false;
+	}}
+/>

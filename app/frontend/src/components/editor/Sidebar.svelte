@@ -1,30 +1,82 @@
-<script>
-	// @ts-nocheck
-	import Folder from './Folder.svelte';
-	import File from './File.svelte';
-	import { draw_order, assets_details, collection_name } from '$stores/web_app_state';
-	import SortableList from 'svelte-sortable-list';
-	import { setDrawOrder } from '$lib/api/draw-order';
+<script lang="ts">
+	import { onMount } from 'svelte';
+	import { sineIn } from 'svelte/easing';
+	import { Drawer, Button, CloseButton, Tooltip } from 'flowbite-svelte';
+	import {
+		SortableList,
+		sortItems,
+		type SortableListProps
+	} from '@rodrigodagostino/svelte-sortable-list';
 
-	const sortList = async (e) => {
-		$draw_order = e.detail;
-		await setDrawOrder({ collection_name: $collection_name, draw_order: $draw_order });
+	// components
+	import File from './File.svelte';
+	import Folder from './Folder.svelte';
+
+	//icons
+	import SortIcon from '$icons/sort.icon.svelte';
+	import BurgerIcon from '$icons/burger.icon.svelte';
+
+	// stores
+	import { draw_order } from '$stores/web_app_state';
+
+	export let assets_list: Record<string, string[]>;
+	export let traits_order: string[];
+
+	let items: SortableListProps['items'] = [];
+
+	let hidden = true;
+
+	onMount(() => {
+		traits_order.map((trait) => {
+			items.push({
+				id: items.length,
+				trait,
+				files: assets_list[trait]
+			});
+		});
+	});
+
+	function handleSort(event: CustomEvent) {
+		const { prevIndex, nextIndex } = event.detail;
+		items = sortItems(items, prevIndex, nextIndex);
+		$draw_order = items.map((item) => item.trait as string);
+	}
+	let transitionParams = {
+		x: -320,
+		duration: 200,
+		easing: sineIn
 	};
 </script>
 
-<div
-	class="
-	h-[100%] w-[20%]
-	overflow-y-auto
-	overflow-x-hidden
-	border-r dark:border-[--border_color]
-"
+<Button
+	color="light"
+	class=" dark:color-primary m-2 mt-auto max-w-[30%] p-1 focus:border"
+	on:click={() => {
+		hidden = false;
+	}}><BurgerIcon /></Button
 >
-	<SortableList list={$draw_order} key="" on:sort={sortList} let:item let:index>
-		<Folder folder_name={item}>
-			{#each Object.keys($assets_details[item]) as file}
-				<File folder_name={item} file_name={file} file_data={$assets_details[item][file]} />
+
+<Drawer transitionType="fly" {transitionParams} bind:hidden id="sidebar">
+	<CloseButton
+		on:click={() => {
+			hidden = true;
+		}}
+	/>
+	<SortableList {items} let:item on:sort={handleSort}>
+		<SortIcon
+			id="handle-icon"
+			slot="handle"
+			class="absolute right-0 m-4  rounded-xl p-1 dark:hover:bg-[--primary_color]"
+		/>
+
+		<Tooltip triggeredBy="#handle-icon" placement="left">Drag!</Tooltip>
+
+		<Folder folder_name={item.trait}>
+			{#each item.files as file}
+				<File file_name={file} folder_name={item.trait} />
 			{/each}
 		</Folder>
 	</SortableList>
-</div>
+</Drawer>
+
+<!-- <Button type="submit" color="light" class=" dark:color-primary mt-auto max-w-[30%]">send</Button> -->

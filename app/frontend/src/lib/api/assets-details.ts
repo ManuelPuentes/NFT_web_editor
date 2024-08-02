@@ -1,5 +1,5 @@
 import { PUBLIC_BACKEND_URL } from '$env/static/public';
-import type { AssetDetails } from '../../interfaces/AssetDetails';
+import type { AssetDetails } from '$interfaces/asset_details.interface';
 
 export async function setAssetsDetails({ assets_details, collection_name }: SetAssetsDetails) {
 	const myHeaders = new Headers();
@@ -11,7 +11,7 @@ export async function setAssetsDetails({ assets_details, collection_name }: SetA
 		body: raw
 	};
 
-	const url = `${PUBLIC_BACKEND_URL}/collection/asset-datails/${collection_name}`;
+	const url = `${PUBLIC_BACKEND_URL}/collection/asset_details/${collection_name}`;
 
 	try {
 		let response: any = await fetch(url, requestOptions);
@@ -29,7 +29,7 @@ export async function getCollectionAssetsDetails({ collection_name }: Collection
 		method: 'GET'
 	};
 
-	const url = `${PUBLIC_BACKEND_URL}/collection/asset-details/${collection_name}`;
+	const url = `${PUBLIC_BACKEND_URL}/collection/asset_details/${collection_name}`;
 	try {
 		const result = await (await fetch(url, requestOptions)).json();
 		return result.data;

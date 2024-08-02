@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Button } from 'flowbite-svelte';
-	import { DownloadSolid } from 'flowbite-svelte-icons';
+	import DownloadIcon from '$icons/download.icon.svelte';
 	export let item: { url: string; hash: string; metadata: any };
 
 	let flipped = false;
@@ -24,8 +24,7 @@
 			e.stopPropagation();
 		}}
 	>
-		<DownloadSolid class=" h-4 w-4" />
-
+		<DownloadIcon class="inline" />
 		<a href={item.url} download={item.hash}> </a></Button
 	>
 

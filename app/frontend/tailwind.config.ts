@@ -1,3 +1,5 @@
+import flowbitePlugin from 'flowbite/plugin';
+
 import type { Config } from 'tailwindcss';
 
 import plugin from 'tailwindcss/plugin';
@@ -39,7 +41,5 @@ export default {
 		}
 	},
 
-	plugins: [require('@tailwindcss/typography'), backfaceVisibility],
-
-	darkMode: 'class'
+	plugins: [flowbitePlugin, backfaceVisibility]
 } as Config;

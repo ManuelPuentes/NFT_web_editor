@@ -3,14 +3,30 @@
 	<head>
 		<meta charset="utf-8" />
 		<link rel="icon" href="%sveltekit.assets%/favicon.svg" />
-		<script src="https://unpkg.com/flowbite@1.4.4/dist/flowbite.js"></script>
-		<link rel="stylesheet" href="%sveltekit.assets%/icons/css/all.min.css" />
-		<meta name="viewport" content="width=device-width" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<title>SVGeditor</title>
 		%sveltekit.head%
 	</head>
 
-	<body data-sveltekit-preload-data="hover" class="bg-white dark:bg-gray-800">
+	<body data-sveltekit-preload-data="hover" class="overflow-hidden bg-slate-100 dark:bg-slate-700">
 		<div style="display: contents">%sveltekit.body%</div>
 	</body>
 </html>
+
+<style>
+	body {
+		background-color: #e1e1e6;
+		opacity: 0.9;
+		background-image: linear-gradient(#6272a4 0.9px, transparent 0.9px),
+			linear-gradient(to right, #6272a4 0.9px, #e1e1e6 0.9px);
+		background-size: 18px 18px;
+	}
+
+	.dark body {
+		background-color: var(--secondary_color);
+		opacity: 0.9;
+		background-image: linear-gradient(#6272a4 0.9px, transparent 0.9px),
+			linear-gradient(to right, #6272a4 0.9px, #334155 0.9px);
+		background-size: 18px 18px;
+	}
+</style>

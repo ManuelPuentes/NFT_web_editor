@@ -1,18 +1,8 @@
 <script>
-	import {
-		TimelineItem,
-		A,
-		Accordion,
-		AccordionItem,
-		List,
-		Li,
-		Kbd,
-		Indicator,
+	import { TimelineItem, A, Accordion, AccordionItem, List, Li, Kbd, Alert } from 'flowbite-svelte';
+	// import { CheckCircleSolid } from 'flowbite-svelte-icons';
 
-		Alert
-
-	} from 'flowbite-svelte';
-	import { CheckCircleSolid, CloseCircleSolid } from 'flowbite-svelte-icons';
+	import CheckSolidIcon from '$icons/check.icon.svelte';
 
 	const items = Array(5);
 </script>
@@ -34,15 +24,15 @@
 
 				<List tag="ul" class="space-y-1 text-gray-500 dark:text-gray-400" list="none">
 					<Li icon>
-						<CheckCircleSolid class="me-2 h-5 w-5 text-green-500 dark:text-green-400" />
+						<CheckSolidIcon class="me-2 h-5 w-5 text-green-500 dark:text-green-400" />
 						draggin the elements to change the draw order of the layers.
 					</Li>
 					<Li icon>
-						<CheckCircleSolid class="me-2 h-5 w-5 text-green-500 dark:text-green-400" />
+						<CheckSolidIcon class="me-2 h-5 w-5 text-green-500 dark:text-green-400" />
 						clicking the items to display the subfolder files.
 					</Li>
 					<Li icon>
-						<CheckCircleSolid class="me-2 h-5 w-5 text-green-500 dark:text-green-400" />
+						<CheckSolidIcon class="me-2 h-5 w-5 text-green-500 dark:text-green-400" />
 						clicking the subfolder elements to display them in the editor workspace
 					</Li>
 				</List>
@@ -69,13 +59,14 @@
 				</p>
 
 				<p class="mb-2 text-gray-500 dark:text-gray-400">
-					the workspace also display the canvas, canvas can be also resized to change the images size
+					the workspace also display the canvas, canvas can be also resized to change the images
+					size
 				</p>
 
 				<Alert color="blue" border>
-					Changes in the canvas will generate changes on the assets positions, you will need to check them after you resize the canvas
+					Changes in the canvas will generate changes on the assets positions, you will need to
+					check them after you resize the canvas
 				</Alert>
-
 			</AccordionItem>
 		</Accordion>
 	</div>

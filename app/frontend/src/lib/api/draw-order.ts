@@ -4,7 +4,7 @@ export async function getDrawOrder({ collection_name }: Collection) {
 	const requestOptions = {
 		method: 'GET'
 	};
-	const url = `${PUBLIC_BACKEND_URL}/collection/draw-order/${collection_name}`;
+	const url = `${PUBLIC_BACKEND_URL}/collection/draw_order/${collection_name}`;
 
 	try {
 		const result = await (await fetch(url, requestOptions)).json();
@@ -26,7 +26,7 @@ export async function setDrawOrder({ collection_name, draw_order }: SetDrawOrder
 		body: raw
 	};
 
-	const url = `${PUBLIC_BACKEND_URL}/collection/draw-order/${collection_name}`;
+	const url = `${PUBLIC_BACKEND_URL}/collection/draw_order/${collection_name}`;
 
 	try {
 		let response: any = await fetch(url, requestOptions);

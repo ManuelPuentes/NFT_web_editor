@@ -1,6 +1,6 @@
 import { PUBLIC_BACKEND_URL } from '$env/static/public';
 
-export async function getCollectionStatus({ collection_name }: getCollectionStatus) {
+export async function getCollectionStatus({ collection_name }: getCollectionStatus): Promise<any> {
 	const requestOptions = {
 		method: 'GET'
 	};

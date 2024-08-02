@@ -1,40 +1,46 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import Moveable from 'svelte-moveable';
+	import type MoveableComponent from 'svelte-moveable';
+	import type InfiniteViewerComponent from 'svelte-infinite-viewer';
+
+	// interfaces
+	import type { AssetDetails } from '$interfaces/asset_details.interface';
+
+	// stores
 	import {
-		context_menu,
-		moveablea_ref,
-		assets_details,
-		workspace_details,
-		changes_indicator,
+		use_mouse_drag,
 		last_selected_item_id,
-		canvas_ref
+		assets_details,
+		canvas_ref,
+		context_menu,
+		moveablea_ref
 	} from '$stores/web_app_state';
 
-	import type { MoveableBounds } from '../../interfaces/BoundingRect';
-	import type { AssetDetails } from '../../interfaces/AssetDetails';
-	import type MoveableComponent from 'svelte-moveable';
-	import { DimensionViewable } from '$lib/moveable-able';
-
 	export let data: AssetDetails;
-
-	let targetRef: HTMLElement;
+	export let viewerRef: InfiniteViewerComponent;
+	let id: string;
+	let img: HTMLElement;
 	let moveableRef: MoveableComponent;
-	const scalable = true;
-	const draggable = true;
-	const snappable = true;
-	const rotatable = true;
-	const keepRatio = true;
-	const edgeDraggable = false;
-	const throttleDrag = 1;
-	const throttleScale = 0;
-	const startDragRotate = 0;
-	const throttleDragRotate = 0;
-
-	let id = 'id';
 	let is_mouse_over = false;
-	let bounds: MoveableBounds = { left: 0, top: 0, right: 0, bottom: 0 };
+	const bounds = { left: 0, top: 0, right: 0, bottom: 0 };
 
+	const scrollOptions = {
+		container: () => viewerRef.getContainer(),
+		threshold: 20,
+		getScrollPosition: () => {
+			return [
+				viewerRef.getScrollLeft({ absolute: true }),
+				viewerRef.getScrollTop({ absolute: true })
+			];
+		}
+	};
+	onMount(() => {
+		id = `${data.directory_name}_${data.file_name}`;
+		img.style.cssText = $assets_details[data.directory_name][data.file_name].styles;
+	});
+
+	// events handlers
 	const handleMouseOver = () => {
 		is_mouse_over = true;
 	};
@@ -44,8 +50,6 @@
 	};
 
 	const handleClick = (e: MouseEvent) => {
-		e.stopPropagation();
-		$context_menu.status = false;
 		$last_selected_item_id = id;
 	};
 
@@ -62,12 +66,6 @@
 
 		moveablea_ref.set(moveableRef);
 	};
-
-	onMount(() => {
-		bounds = $workspace_details;
-		id = `${data.directory_name}_${data.file_name}`;
-		// $assets_details[data.directory_name][data.file_name].styles
-	});
 </script>
 
 <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
@@ -75,9 +73,8 @@
 <img
 	alt={id}
 	{id}
-	bind:this={targetRef}
 	src={data.file_asset_path}
-	style={$assets_details[data.directory_name][data.file_name].styles}
+	bind:this={img}
 	on:click|preventDefault={handleClick}
 	on:contextmenu|preventDefault={rightClickContextMenu}
 	on:mouseover={handleMouseOver}
@@ -89,24 +86,29 @@
 {#if is_mouse_over || $last_selected_item_id === id}
 	<Moveable
 		bind:this={moveableRef}
-		target={targetRef}
+		scrollable={true}
+		{scrollOptions}
 		origin={false}
-		{draggable}
-		{rotatable}
-		{throttleDrag}
-		{edgeDraggable}
-		{startDragRotate}
-		{throttleDragRotate}
-		{scalable}
-		{keepRatio}
-		{throttleScale}
-		{snappable}
+		target={img}
+		draggable={true}
+		resizable={true}
+		rotatable={true}
+		scalable={true}
+		keepRatio={true}
+		useResizeObserver={true}
 		{bounds}
-		ables={[DimensionViewable]}
-		props={{ dimensionViewable: true }}
 		on:render={({ detail: e }) => {
 			e.target.style.cssText += e.cssText;
-			$assets_details[data.directory_name][data.file_name].styles = e.cssText;
+			$assets_details[data.directory_name][data.file_name].styles = e.target.style.cssText;
+		}}
+		on:dragStart={({ detail: e }) => {
+			$use_mouse_drag = false;
+		}}
+		on:scaleStart={({ detail: e }) => {
+			$use_mouse_drag = false;
+		}}
+		on:rotateStart={({ detail: e }) => {
+			$use_mouse_drag = false;
 		}}
 		on:dragEnd={({ detail: { target, isDrag } }) => {
 			if (isDrag) {
@@ -117,34 +119,27 @@
 					x: offset.x,
 					y: offset.y
 				};
-				$changes_indicator = true;
 			}
-		}}
-		on:scaleEnd={({ detail: { lastEvent } }) => {
-			const regex = /scale\(([\d.]+), ([\d.]+)\)/;
-			const match = lastEvent.transform.match(regex);
 
-			if (match) {
-				const scaleX = parseFloat(parseFloat(match[1]).toFixed(2));
-				const scaleY = parseFloat(parseFloat(match[2]).toFixed(2));
-				const { height, width } = targetRef.getBoundingClientRect();
-				$assets_details[data.directory_name][data.file_name].scale = { x: scaleX, y: scaleY };
-				$assets_details[data.directory_name][data.file_name].size = { height, width };
-			}
-			$changes_indicator = true;
+			$use_mouse_drag = true;
+		}}
+		on:scaleEnd={({ detail }) => {
+			$use_mouse_drag = true;
+		}}
+		on:resizeEnd={({ detail: { lastEvent } }) => {
+			const { width, height } = lastEvent;
+			$assets_details[data.directory_name][data.file_name].size = { height, width };
+			$use_mouse_drag = true;
 		}}
 		on:rotateEnd={({ detail: { lastEvent } }) => {
-			const regex = /rotate\(([\d.]+)deg\)/;
-			const match = lastEvent.transform.match(regex);
-
-			if (match) {
-				const rotationValue = parseFloat(parseFloat(match[1]).toFixed(2));
-				$assets_details[data.directory_name][data.file_name].rotate = rotationValue;
-			}
-			$changes_indicator = true;
+			const rotationValue = lastEvent.rotate.toFixed(2);
+			$assets_details[data.directory_name][data.file_name].rotate = rotationValue;
+			$use_mouse_drag = true;
 		}}
-		on:bound={({ detail: e }) => {}}
-	/>
+		on:scroll={({ detail: { direction } }) => {
+			viewerRef.scrollBy(direction[0] * 10, direction[1] * 10);
+		}}
+	></Moveable>
 {/if}
 
 <style>
