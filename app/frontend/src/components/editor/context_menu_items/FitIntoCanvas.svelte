@@ -8,7 +8,8 @@
 		assets_details,
 		context_menu,
 		selected_items,
-		moveablea_ref
+		moveablea_ref,
+		canvas_ref
 	} from '$stores/web_app_state';
 	import type { AssetDetails } from '$interfaces/asset_details.interface';
 
@@ -20,10 +21,8 @@
 	});
 
 	export const fit_into_canvas = () => {
-		reset_styles();
-
-		const canvas = window.document.getElementById('canvas');
-		const element = window.document.getElementById($last_selected_item_id);
+		const canvas = $canvas_ref;
+		const element = $moveablea_ref.getTargets()[0];
 
 		if (!canvas || !element) return;
 
@@ -37,35 +36,34 @@
 
 		switch (resize_axis) {
 			case 'height':
-				const deltaHeight = canvas_height - element_height;
-				$moveablea_ref.request('scalable', { deltaWidth: 0, deltaHeight }, true);
+				$moveablea_ref.request('resizable', { offsetHeight: canvas_height }, true);
 				break;
 
 			case 'width':
-				const deltaWidth = canvas_width - element_width;
-				$moveablea_ref.request('scalable', { deltaWidth, deltaHeight: 0 }, true);
+				$moveablea_ref.request('resizable', { offsetWidth: canvas_width }, true);
 				break;
 		}
 
 		update_stores();
 	};
 
-	const reset_styles = () => {
+	const update_stores = () => {
+		const element = $moveablea_ref.getTargets()[0];
+
+		const { width, height } = element.getBoundingClientRect();
+
 		let value = $assets_details[directory][file];
 
 		const default_value: AssetDetails = {
 			...value,
 			styles: '',
-			scale: { x: 0, y: 0 },
-			rotate: 0,
-			translate: { x: 0, y: 0 },
-			size: { width: 0, height: 0 }
+			scale: null,
+			rotate: null,
+			translate: null,
+			size: { width, height }
 		};
 
 		$assets_details[directory][file] = default_value;
-	};
-
-	const update_stores = () => {
 		$selected_items[directory] = $assets_details[directory][file];
 		$context_menu.status = false;
 	};

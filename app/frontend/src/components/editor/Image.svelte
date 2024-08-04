@@ -38,6 +38,12 @@
 	onMount(() => {
 		id = `${data.directory_name}_${data.file_name}`;
 		img.style.cssText = $assets_details[data.directory_name][data.file_name].styles;
+		img.onload = function () {
+			if (!$assets_details[data.directory_name][data.file_name].size) {
+				const { width, height } = img.getBoundingClientRect();
+				$assets_details[data.directory_name][data.file_name].size = { width, height };
+			}
+		};
 	});
 
 	// events handlers
@@ -110,6 +116,9 @@
 		on:rotateStart={({ detail: e }) => {
 			$use_mouse_drag = false;
 		}}
+		on:resizeStart={({ detail: e }) => {
+			$use_mouse_drag = false;
+		}}
 		on:dragEnd={({ detail: { target, isDrag } }) => {
 			if (isDrag) {
 				const { x: canvas_x, y: canvas_y } = $canvas_ref.getBoundingClientRect();
@@ -121,9 +130,6 @@
 				};
 			}
 
-			$use_mouse_drag = true;
-		}}
-		on:scaleEnd={({ detail }) => {
 			$use_mouse_drag = true;
 		}}
 		on:resizeEnd={({ detail: { lastEvent } }) => {

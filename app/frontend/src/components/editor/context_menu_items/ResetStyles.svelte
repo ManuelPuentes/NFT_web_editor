@@ -26,13 +26,15 @@
 
 		target.style.cssText = '';
 
+		const { width, height } = target.getBoundingClientRect();
+
 		const default_value: AssetDetails = {
 			...value,
 			styles: '',
-			scale: { x: 0, y: 0 },
-			rotate: 0,
-			translate: { x: 0, y: 0 },
-			size: { width: 0, height: 0 }
+			scale: null,
+			rotate: null,
+			translate: null,
+			size: { width, height }
 		};
 
 		update_stores({ default_value });
