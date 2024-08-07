@@ -16,7 +16,7 @@
 
 ```bash
 npm i
-cd app/backend npm run docker:build 
+cd app/backend && npm run docker:build 
 ```
 
 ## Use
@@ -25,7 +25,7 @@ cd app/backend npm run docker:build
 
 ```bash
 npm i
-cd app/backend npm run docker:build 
+cd app/backend && npm run docker:build 
 ```
 Use the package manager [npm](https://www.npmjs.com/) to install foobar.
 
